@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors | Imad Dabbura</title>
+    <link>https://imaddabbura.github.io/authors/</link>
+      <atom:link href="https://imaddabbura.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
+    <description>Authors</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Imad Dabbura 2018</copyright>
+    <image>
+      <url>https://imaddabbura.github.io/img/icon-192.png</url>
+      <title>Authors</title>
+      <link>https://imaddabbura.github.io/authors/</link>
+    </image>
+    
+    <item>
+      <title></title>
+      <link>https://imaddabbura.github.io/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://imaddabbura.github.io/authors/admin/</guid>
+      <description>&lt;p&gt;Imad Dabbura is a Data Scientist at Baylor Scott and White Health. He has many years of experience in predictive analytics where he worked in a variety of industries such as &lt;strong&gt;Consumer Goods, Real Estate, Marketing, and Healthcare&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Among other things, Imad is interested in Artificial Intelligence and Machine Learning. He writes articles related to machine learning and AI on &lt;a href=&#34;https://medium.com/@ImadPhd&#34; target=&#34;_blank&#34;&gt;&lt;em&gt;Medium&lt;/em&gt;&lt;/a&gt; and contributes to open source such as publishing his educational notebooks on &lt;a href=&#34;https://github.com/ImadDabbura&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

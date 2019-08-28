@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Imad Dabbura">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&#39;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/coding-nn-dropout/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-127825273-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://imaddabbura.github.io/post/coding-nn-dropout/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@ImadPhd">
+  <meta property="twitter:creator" content="@ImadPhd">
+  
+  <meta property="og:site_name" content="Imad Dabbura">
+  <meta property="og:url" content="https://imaddabbura.github.io/post/coding-nn-dropout/">
+  <meta property="og:title" content="Coding Neural Network - Dropout | Imad Dabbura">
+  <meta property="og:description" content="Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&#39;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units)."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-dropout/featured.png">
+  <meta property="twitter:image" content="https://imaddabbura.github.io/post/coding-nn-dropout/featured.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2018-05-20T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2018-05-20T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Coding Neural Network - Dropout | Imad Dabbura</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Imad Dabbura</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1 itemprop="name">Coding Neural Network - Dropout</h1>
+
+  
+
+  
+
+
+
+<meta content="2018-05-20 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2018-05-20 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>May 20, 2018</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/coding-nn-dropout/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/machine-learning/">Machine Learning</a>, <a href="/categories/deep-learning/">Deep Learning</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://imaddabbura.github.io/post/coding-nn-dropout/&amp;text=Coding%20Neural%20Network%20-%20Dropout" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://imaddabbura.github.io/post/coding-nn-dropout/&amp;t=Coding%20Neural%20Network%20-%20Dropout" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Coding%20Neural%20Network%20-%20Dropout&amp;body=https://imaddabbura.github.io/post/coding-nn-dropout/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://imaddabbura.github.io/post/coding-nn-dropout/&amp;title=Coding%20Neural%20Network%20-%20Dropout" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Coding%20Neural%20Network%20-%20Dropout%20https://imaddabbura.github.io/post/coding-nn-dropout/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://imaddabbura.github.io/post/coding-nn-dropout/&amp;title=Coding%20Neural%20Network%20-%20Dropout" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header container-fluid featured-image-wrapper mt-4 mb-4" style="max-width: 513px; max-height: 382px;">
+  <div style="position: relative">
+    <img src="/post/coding-nn-dropout/featured.png" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      <p><strong>Dropout</strong> is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don't use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).
+Moreover, dropout help improving generalization error by:</p>
+
+<ul>
+<li>Since we drop some units on each iteration, this will lead to smaller network which in turns means simpler network (regularization).</li>
+<li>Can be seen as an approximation to bagging techniques. Each iteration can be viewed as different model since we're dropping randomly different units on each layer. This means that the error would be the average of errors from all different models (iterations). Therefore, averaging errors from different models especially if those errors are uncorrelated would reduce the overall errors. In the worst case where errors are perfectly correlated, averaging among all models won't help at all; however, we know that in practice errors have some degree of uncorrelation. As result, it will always improve generalization error.</li>
+</ul>
+
+<p>We can use different probabilities on each layer; however, the output layer would always have <code>keep_prob = 1</code> and the input layer has high <code>keep_prob</code> such as 0.9 or 1. If a hidden layer has <code>keep_prob = 0.8</code>, this means that; on each iteration, each unit has 80% probablitity of being included and 20% probability of being dropped out.</p>
+
+<p>Dropout is used a lot in computer vision problems because we have a lot of features and not a lot of data. Also, features (pixels) next to each other usually don't add a lot of information. Therefore, models always suffer from overfitting.</p>
+
+<p>To illustrate how dropout helps us reduce generalization error, we'll use the same dataset we've used in the previous posts. The dataset has images for cats and non-cat. We'll try to build a neural network to classify if the image has cat or not. Each image is 64 x 64 pixels on RGB scale. Let's import the data and take a look at the shape as well as a sample of a cat image from the training set.</p>
+
+<pre><code class="language-python"># Loading packages
+import os
+
+import h5py
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
+# local modules
+os.chdir(&quot;../scripts/&quot;)
+from coding_neural_network_from_scratch import (initialize_parameters,
+                                                linear_activation_forward,
+                                                compute_cost,
+                                                linear_activation_backward,
+                                                update_parameters,
+                                                accuracy)
+
+%matplotlib inline
+sns.set_context(&quot;notebook&quot;)
+plt.style.use(&quot;fivethirtyeight&quot;)
+plt.rcParams['figure.figsize'] = (12, 6)
+</code></pre>
+
+<pre><code class="language-python"># Import training data
+train_dataset = h5py.File(&quot;../data/train_catvnoncat.h5&quot;)
+X_train = np.array(train_dataset[&quot;train_set_x&quot;])
+Y_train = np.array(train_dataset[&quot;train_set_y&quot;])
+
+# Plot a sample image
+plt.imshow(X_train[50])
+plt.axis(&quot;off&quot;);
+
+# Import test data
+test_dataset = h5py.File(&quot;../data/test_catvnoncat.h5&quot;)
+X_test = np.array(test_dataset[&quot;test_set_x&quot;])
+Y_test = np.array(test_dataset[&quot;test_set_y&quot;])
+
+# Transform data
+X_train = X_train.reshape(209, -1).T
+X_train = X_train / 255
+Y_train = Y_train.reshape(-1, 209)
+
+X_test = X_test.reshape(50, -1).T
+X_test = X_test / 255
+Y_test = Y_test.reshape(-1, 50)
+
+# print the new shape of both training and test datasets
+print(&quot;Training data dimensions:&quot;)
+print(&quot;X's dimension: {}, Y's dimension: {}&quot;.format(X_train.shape, Y_train.shape))
+print(&quot;Test data dimensions:&quot;)
+print(&quot;X's dimension: {}, Y's dimension: {}&quot;.format(X_test.shape, Y_test.shape))
+</code></pre>
+
+<pre><code>Training data dimensions:
+X's dimension: (12288, 209), Y's dimension: (1, 209)
+Test data dimensions:
+X's dimension: (12288, 50), Y's dimension: (1, 50)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/cat_sample.png" >
+
+<img src="/img/coding-nn-from-scratch/cat_sample.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Sample image.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Now, we'll write the functions needed to apply dropout on both forward propagation and back-propagation. Note that we'll utilize the functions we wrote in previous posts such as <code>initialize_parameters</code>.</p>
+
+<pre><code class="language-python">def drop_out_matrices(layers_dims, m, keep_prob):
+    np.random.seed(1)
+    D = {}
+    L = len(layers_dims)
+
+    for l in range(L):
+        # initialize the random values for the dropout matrix
+        D[str(l)] = np.random.rand(layers_dims[l], m)
+        # Convert it to 0/1 to shut down neurons corresponding to each element
+        D[str(l)] = D[str(l)] &lt; keep_prob[l]
+        assert(D[str(l)].shape == (layers_dims[l], m))
+    return D
+
+
+def L_model_forward(
+        X, parameters, D, keep_prob, hidden_layers_activation_fn=&quot;relu&quot;):
+    A = X                           # since input matrix A0
+    A = np.multiply(A, D[str(0)])
+    A /= keep_prob[0]
+    caches = []                     # initialize the caches list
+    L = len(parameters) // 2        # number of layer in the network
+
+    for l in range(1, L):
+        A_prev = A
+        A, cache = linear_activation_forward(
+            A_prev, parameters[&quot;W&quot; + str(l)], parameters[&quot;b&quot; + str(l)],
+            hidden_layers_activation_fn)
+        # shut down some units
+        A = np.multiply(A, D[str(l)])
+        # scale that value of units to keep expected value the same
+        A /= keep_prob[l]
+        caches.append(cache)
+
+    AL, cache = linear_activation_forward(
+        A, parameters[&quot;W&quot; + str(L)], parameters[&quot;b&quot; + str(L)], &quot;sigmoid&quot;)
+    AL = np.multiply(AL, D[str(L)])
+    AL /= keep_prob[L]
+    caches.append(cache)
+    assert(AL.shape == (1, X.shape[1]))
+
+    return AL, caches
+
+
+def L_model_backward(
+        AL, Y, caches, D, keep_prob, hidden_layers_activation_fn=&quot;relu&quot;):
+    Y = Y.reshape(AL.shape)
+    L = len(caches)
+    grads = {}
+
+    # dA for output layer
+    dAL = np.divide(AL - Y, np.multiply(AL, 1 - AL))
+    dAL = np.multiply(dAL, D[str(L)])
+    dAL /= keep_prob[L]
+
+    grads[&quot;dA&quot; + str(L - 1)], grads[&quot;dW&quot; + str(L)], grads[
+        &quot;db&quot; + str(L)] = linear_activation_backward(
+            dAL, caches[L - 1], &quot;sigmoid&quot;)
+    grads[&quot;dA&quot; + str(L - 1)] = np.multiply(
+        grads[&quot;dA&quot; + str(L - 1)], D[str(L - 1)])
+    grads[&quot;dA&quot; + str(L - 1)] /= keep_prob[L - 1]
+
+    for l in range(L - 1, 0, -1):
+        current_cache = caches[l - 1]
+        grads[&quot;dA&quot; + str(l - 1)], grads[&quot;dW&quot; + str(l)], grads[
+            &quot;db&quot; + str(l)] = linear_activation_backward(
+                grads[&quot;dA&quot; + str(l)], current_cache,
+                hidden_layers_activation_fn)
+
+        grads[&quot;dA&quot; + str(l - 1)] = np.multiply(
+            grads[&quot;dA&quot; + str(l - 1)], D[str(l - 1)])
+        grads[&quot;dA&quot; + str(l - 1)] /= keep_prob[l - 1]
+
+    return grads
+
+
+def model_with_dropout(
+        X, Y, layers_dims, keep_prob, learning_rate=0.01, num_iterations=3000,
+        print_cost=True, hidden_layers_activation_fn=&quot;relu&quot;):
+    # get number of examples
+    m = X.shape[1]
+
+    # to get consistents output
+    np.random.seed(1)
+
+    # initialize parameters
+    parameters = initialize_parameters(layers_dims)
+
+    # intialize cost list
+    cost_list = []
+
+    # implement gradient descent
+    for i in range(num_iterations):
+        # Initialize dropout matrices
+        D = drop_out_matrices(layers_dims, m, keep_prob)
+
+        # compute forward propagation
+        AL, caches = L_model_forward(
+            X, parameters, D, keep_prob, hidden_layers_activation_fn)
+
+        # compute regularized cost
+        cost = compute_cost(AL, Y)
+
+        # compute gradients
+        grads = L_model_backward(
+            AL, Y, caches, D, keep_prob, hidden_layers_activation_fn)
+
+        # update parameters
+        parameters = update_parameters(parameters, grads, learning_rate)
+
+        # print cost
+        if (i + 1) % 100 == 0 and print_cost:
+            print(f&quot;The cost after {i + 1} iterations : {cost:.4f}.&quot;)
+        # append cost
+        if i % 100 == 0:
+            cost_list.append(cost)
+
+    # plot the cost curve
+    plt.plot(cost_list)
+    plt.xlabel(&quot;Iteration (per hundreds)&quot;)
+    plt.ylabel(&quot;Cost&quot;)
+    plt.title(f&quot;Cost curve for the learning rate = {learning_rate}&quot;)
+
+    return parameters
+</code></pre>
+
+<p>Finally, we're ready to build our neural network. First, we'll build one fully connected network without dropout. That is to say, <code>keep_prob = 1</code>. Next, we'll build another network where <code>keep_prob &lt; 1</code>. Lastly, we'll compare the generalization error of both networks and see how dropout technique can help us in improving our generalization error.</p>
+
+<pre><code class="language-python"># setup layers dimensions, number of examples, and keep probabilities list
+m = X_train.shape[0]
+keep_prob = [1, 1, 1, 1]
+layers_dims = [m, 10, 10, 1]
+
+# train NN with no dropout
+parameters = model_with_dropout(X_train, Y_train, layers_dims, keep_prob=keep_prob,
+                                learning_rate=0.03, num_iterations=1000,
+                                hidden_layers_activation_fn=&quot;relu&quot;)
+
+# print the test accuracy
+print(&quot;The training accuracy rate: {}&quot;.format(accuracy(X_train, parameters, Y_train, &quot;relu&quot;)[-7:]))
+print(&quot;The test accuracy rate: {}&quot;.format(accuracy(X_test, parameters, Y_test, &quot;relu&quot;)[-7:]))
+</code></pre>
+
+<pre><code>The cost after 100 iterations : 0.6555.
+The cost after 200 iterations : 0.6468.
+The cost after 300 iterations : 0.6447.
+The cost after 400 iterations : 0.6442.
+The cost after 500 iterations : 0.6440.
+The cost after 600 iterations : 0.6440.
+The cost after 700 iterations : 0.6440.
+The cost after 800 iterations : 0.6440.
+The cost after 900 iterations : 0.6440.
+The cost after 1000 iterations : 0.6440.
+The training accuracy rate: 65.55%.
+The test accuracy rate: 34.00%.
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/no_dropout.png" >
+
+<img src="/img/coding-nn-from-scratch/no_dropout.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Cost curve with no dropout.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<pre><code class="language-python"># setup keep probabilities list
+keep_prob = [1, 0.5, 0.5, 1]
+
+# train NN with no dropout
+parameters = model_with_dropout(X_train, Y_train, layers_dims, keep_prob=keep_prob,
+                                learning_rate=0.03, num_iterations=1000,
+                                hidden_layers_activation_fn=&quot;relu&quot;)
+
+# print the test accuracy
+print(&quot;The training accuracy rate: {}&quot;.format(accuracy(X_train, parameters, Y_train, &quot;relu&quot;)[-7:]))
+print(&quot;The test accuracy rate: {}&quot;.format(accuracy(X_test, parameters, Y_test, &quot;relu&quot;)[-7:]))
+</code></pre>
+
+<pre><code>The cost after 100 iterations : 0.6555.
+The cost after 200 iterations : 0.6467.
+The cost after 300 iterations : 0.6445.
+The cost after 400 iterations : 0.6437.
+The cost after 500 iterations : 0.6412.
+The cost after 600 iterations : 0.6338.
+The cost after 700 iterations : 0.6108.
+The cost after 800 iterations : 0.5367.
+The cost after 900 iterations : 0.4322.
+The cost after 1000 iterations : 0.3114.
+The training accuracy rate: 74.16%.
+The test accuracy rate: 44.00%.
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/dropout.png" >
+
+<img src="/img/coding-nn-from-scratch/dropout.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Cost curve with dropout.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>As the results above showed, the network with dropout improved on test accuracy rate by 30%. Note that this is just an illustrative example to show the effectiveness of the dropout technique. We chose an arbitrary probabilities in this example; however, we can tune the dropout probabilities on each layer to yield the best validation loss and accuracy.</p>
+
+<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+Conclusion
+</h2>
+
+<p>Dropout is a very effective regularization technique that is used a lot in <em>Convolutional Neural Networks</em>. Below are some takeaways:</p>
+
+<ul>
+<li>Set <code>keep_prob = 1</code> when using gradient checking; otherwise, it won't work.</li>
+<li>Dropout is used only during training. Don't use it when testing/predicting new examples.</li>
+<li>The lowest the <code>keep_prob</code> $\rightarrow$ the simpler the neural network. As <code>keep_prob</code> decreases, the bias increases and the variance decreases. Therefore, layers with more neurons are expected to have lower <code>keep_prob</code> to avoid overfitting.</li>
+<li>It's computationally a cheap way to improve generalization error and help resolve overfitting.</li>
+<li>One can tune <code>keep_prob</code> to get the best results out of the task at hand.</li>
+</ul>
+
+<p>The source code that created this post can be found <a href="https://github.com/ImadDabbura/blog-posts/blob/master/notebooks/Coding-Neural-Network-Dropout.ipynb">here</a>.
+The post is inspired by deeplearning.ai courses.</p>
+
+    </div>
+
+    
+
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/deep-learning/">Deep Learning</a>
+  
+  <a class="badge badge-light" href="/tags/ai/">AI</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu057a6ce318cedc9fff5e5d4bcb0cb87d_16356_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://imaddabbura.github.io">Imad Dabbura</a></h5>
+      <h6 class="card-subtitle">Data Scientist</h6>
+      <p class="card-text" itemprop="description">My interests include data science, machine learning and artificial intelligence.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/imadphd" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//www.linkedin.com/in/imaddabbura" >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/imaddabbura" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//medium.com/@ImadPhd" >
+              <i class="fab fa-medium"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/coding-nn-regularization/">Coding Neural Network - Regularization</a></li>
+          
+          <li><a href="/post/coding-nn-params-init/">Coding Neural Network - Parameters&#39; Initialization</a></li>
+          
+          <li><a href="/post/coding-nn-gradient-checking/">Coding Neural Network - Gradient Checking</a></li>
+          
+          <li><a href="/post/coding-nn-fwd-bckwd-prop/">Coding Neural Network - Forward Propagation and Backpropagtion</a></li>
+          
+          <li><a href="/post/character-level-language-model/">Character-level Language Model</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/kmeans-clustering/" rel="next">K-means Clustering - Algorithm, Applications, Evaluation Methods, and Drawbacks</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/coding-nn-regularization/" rel="prev">Coding Neural Network - Regularization</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "ImadDabbura" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://ImadDabbura.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    &copy; Imad Dabbura 2018 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

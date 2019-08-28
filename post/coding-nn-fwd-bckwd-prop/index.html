@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Imad Dabbura">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Why Neural Networks?
+According to Universal Approximate Theorem, Neural Networks can approximate as well as learn and represent any function given a large enough layer and desired error margin. The way neural network learns the true function is by building complex representations on top of simple ones. On each hidden layer, the neural network learns new feature space by first compute the affine (linear) transformations of the given inputs and then apply non-linear function which in turn will be the input of the next layer.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-127825273-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@ImadPhd">
+  <meta property="twitter:creator" content="@ImadPhd">
+  
+  <meta property="og:site_name" content="Imad Dabbura">
+  <meta property="og:url" content="https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/">
+  <meta property="og:title" content="Coding Neural Network - Forward Propagation and Backpropagtion | Imad Dabbura">
+  <meta property="og:description" content="Why Neural Networks?
+According to Universal Approximate Theorem, Neural Networks can approximate as well as learn and represent any function given a large enough layer and desired error margin. The way neural network learns the true function is by building complex representations on top of simple ones. On each hidden layer, the neural network learns new feature space by first compute the affine (linear) transformations of the given inputs and then apply non-linear function which in turn will be the input of the next layer."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/featured.png">
+  <meta property="twitter:image" content="https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/featured.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2018-04-01T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2018-04-01T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Coding Neural Network - Forward Propagation and Backpropagtion | Imad Dabbura</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Imad Dabbura</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1 itemprop="name">Coding Neural Network - Forward Propagation and Backpropagtion</h1>
+
+  
+
+  
+
+
+
+<meta content="2018-04-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2018-04-01 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Apr 1, 2018</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    18 min read
+  </span>
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/coding-nn-fwd-bckwd-prop/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/machine-learning/">Machine Learning</a>, <a href="/categories/deep-learning/">Deep Learning</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/&amp;text=Coding%20Neural%20Network%20-%20Forward%20Propagation%20and%20Backpropagtion" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/&amp;t=Coding%20Neural%20Network%20-%20Forward%20Propagation%20and%20Backpropagtion" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Coding%20Neural%20Network%20-%20Forward%20Propagation%20and%20Backpropagtion&amp;body=https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/&amp;title=Coding%20Neural%20Network%20-%20Forward%20Propagation%20and%20Backpropagtion" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Coding%20Neural%20Network%20-%20Forward%20Propagation%20and%20Backpropagtion%20https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://imaddabbura.github.io/post/coding-nn-fwd-bckwd-prop/&amp;title=Coding%20Neural%20Network%20-%20Forward%20Propagation%20and%20Backpropagtion" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 839px;">
+  <div style="position: relative">
+    <img src="/post/coding-nn-fwd-bckwd-prop/featured_hu9cb68b8ebbc13218b4ea8134708a1538_119462_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      <p><strong>Why Neural Networks?</strong></p>
+
+<p>According to <em>Universal Approximate Theorem</em>, Neural Networks can approximate as well as learn and represent any function given a large enough layer and desired error margin. The way neural network learns the true function is by building complex representations on top of simple ones. On each hidden layer, the neural network learns new feature space by first compute the affine (linear) transformations of the given inputs and then apply non-linear function which in turn will be the input of the next layer. This process will continue until we reach the output layer. Therefore, we can define neural network as information flows from inputs through hidden layers towards the output. For a 3-layers neural network, the learned function would be: $f(x) = f_3(f_2(f_1(x)))$ where:</p>
+
+<ul>
+<li>$f_1(x)$: Function learned on first hidden layer</li>
+<li>$f_2(x)$: Function learned on second hidden layer</li>
+<li>$f_3(x)$: Function learned on output layer</li>
+</ul>
+
+<p>Therefore, on each layer we learn different representation that gets more complicated with later hidden layers.Below is an example of a 3-layers neural network (we don't count input layer):</p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/neural_net.jpg" >
+
+<img src="/img/coding-nn-from-scratch/neural_net.jpg" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Neural Network with two hidden layers.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>For example, computers can't understand images directly and don't know what to do with pixels data. However, a neural network can build a simple representation of the image in the early hidden layers that identifies edges. Given the first hidden layer output, it can learn corners and contours. Given the second hidden layer, it can learn parts such as nose. Finally, it can learn the object identity.</p>
+
+<p>Since <strong>truth is never linear</strong> and representation is very critical to the performance of a machine learning algorithm, neural network can help us build very complex models and leave it to the algorithm to learn such representations without worrying about feature engineering that takes practitioners very long time and effort to curate a good representation.</p>
+
+<p>The post has two parts:</p>
+
+<ol>
+<li><a href="#CodingNN">Coding the neural network</a>: This entails writing all the helper functions that would allow us to implement a multi-layer neural network. While doing so, I'll explain the theoretical parts whenever possible and give some advices on implementations.</li>
+<li><a href="#Application">Application</a>: We'll implement the neural network we coded in the first part on image recognition problem to see if the network we built will be able to detect if the image has a cat or a dog and see it working :)</li>
+</ol>
+
+<p>This post will be the first in a series of posts that cover implementing neural network in numpy including <em>gradient checking, parameter initialization, L2 regularization, dropout</em>. The code that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Coding-Neural-Network-Forwad-Back-Propagation.ipynb">here</a>.</p>
+
+<pre><code class="language-python"># Import packages
+import h5py
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+</code></pre>
+
+<p><a id="CodingNN"></a></p>
+
+<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+I. Coding The Neural Network
+</h2>
+
+<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
+Forward Propagation
+</h3>
+
+<p>The input $X$ provides the initial information that then propagates to the hidden units at each layer and finally produce the output $\widehat{Y}$. The architecture of the network entails determining its depth, width, and activation functions used on each layer. <strong>Depth</strong> is the number of hidden layers. <strong>Width</strong> is the number of units (nodes) on each hidden layer since we don't control neither input layer nor output layer dimensions. There are quite a few set of activation functions such <em>Rectified Linear Unit, Sigmoid, Hyperbolic tangent, etc</em>. Research has proven that deeper networks outperform networks with more hidden units. Therefore, it's always better and won't hurt to train a deeper network (with diminishing returns).</p>
+
+<p>Lets first introduce some notations that will be used throughout the post:</p>
+
+<ul>
+<li>$W^l$: Weights matrix for the $l^{th}$ layer</li>
+<li>$b^l$: Bias vector for the $l^{th}$ layer</li>
+<li>$Z^l$: Linear (affine) transformations of given inputs for the $l^{th}$ layer</li>
+<li>$g^l$: Activation function applied on the $l^{th}$ layer</li>
+<li>$A^l$: Post-activation output for the $l^{th}$ layer</li>
+<li>$dW^l$: Derivative of the cost function w.r.t  $W^l$ ($\frac{\partial J}{\partial W^l}$)</li>
+<li>$db^l$: Derivative of the cost function w.r.t $b^l$ ($\frac{\partial J}{\partial b^l})$)</li>
+<li>$dZ^l$: Derivative of the cost function w.r.t $Z^l$ ($\frac{\partial J}{\partial Z^l}$)</li>
+<li>$dA^l$: Derivative of the cost function w.r.t $A^l$ ($\frac{\partial J}{\partial A^l}$)</li>
+<li>$n^l$: Number of units (nodes) of the $l^{th}$ layer</li>
+<li>$m$: Number of examples</li>
+<li>$L$: Number of layers in the network (not including the input layer)</li>
+</ul>
+
+<p>Next, we'll write down the dimensions of a multi-layer neural network in the general form to help us in matrix multiplication because one of the major challenges in implementing a neural network is getting the dimensions right.</p>
+
+<ul>
+<li>$W<sup>l, dW</sup>l$: Number of units (nodes) in $l^{th}$ layer x Number of units (nodes) in $l - 1$ layer</li>
+<li>$b<sup>l, db</sup>l$: Number of units (nodes) in $l^{th}$ layer x 1</li>
+<li>$Z<sup>l, dZ</sup>l$: Number of units (nodes) in $l^{th}$ layer x number of examples</li>
+<li>$A<sup>l, dA</sup>l$: Number of units (nodes) in $l^{th}$ layer x number of examples</li>
+</ul>
+
+<p>The two equations we need to implement forward propagations are:</p>
+
+<p><span  class="math">\(Z^l = W^lA^{l - 1} + b ^l\tag1\)</span>
+<span  class="math">\(A^l = g^l(Z^l) = g^l(W^lA^{l - 1} + b ^l)\tag2\)</span>
+These computations will take place on each layer.</p>
+
+<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
+Parameters Initialization
+</h3><br>
+We'll first initialize the weight matrices and the bias vectors. It's important to note that we shouldn't initialize all the parameters to zero because doing so will lead the gradients to be equal and on each iteration the output would be the same and the learning algorithm won't learn anything. Therefore, it's important to randomly initialize the parameters to values between 0 and 1. It's also recommended to multiply the random values by small scalar such as 0.01 to make the activation units active and be on the regions where activation functions' derivatives are not close to zero.</p>
+
+<pre><code class="language-python"># Initialize parameters
+def initialize_parameters(layers_dims):
+    np.random.seed(1)               
+    parameters = {}
+    L = len(layers_dims)            
+
+    for l in range(1, L):           
+        parameters[&quot;W&quot; + str(l)] = np.random.randn(
+            layers_dims[l], layers_dims[l - 1]) * 0.01
+        parameters[&quot;b&quot; + str(l)] = np.zeros((layers_dims[l], 1))
+
+        assert parameters[&quot;W&quot; + str(l)].shape == (
+            layers_dims[l], layers_dims[l - 1])
+        assert parameters[&quot;b&quot; + str(l)].shape == (layers_dims[l], 1)
+
+    return parameters
+</code></pre>
+
+<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
+Activation Functions
+</h3><br>
+There is no definitive guide for which activation function works best on specific problems. It's a trial and error process where one should try different set of functions and see which one works best on the problem at hand. We'll cover 4 of the most commonly used activation functions:</p>
+
+<ul>
+<li><strong>Sigmoid function ($\sigma$)</strong>: $g(z) = \frac{1}{1 + e^{-z}}$. It's recommended to be used only on the output layer so that we can easily interpret the output as probabilities since it has restricted output between 0 and 1. One of the main disadvantages for using sigmoid function on hidden layers is that the gradient is very close to zero over a large portion of its domain which makes it slow and harder for the learning algorithm to learn.</li>
+<li><strong>Hyperbolic Tangent function</strong>: $g(z) = \frac{e^z - e<sup>{-z}}{e</sup>z + e^{-z}}$. It's superior to sigmoid function in which the mean of its output is very close to zero, which in other words center the output of the activation units around zero and make the range of values very small which means faster to learn. The disadvantage that it shares with sigmoid function is that the gradient is very small on good portion of the domain.</li>
+<li><strong>Rectified Linear Unit (ReLU)</strong>: $g(z) = max(0, z)$. The models that are close to linear are easy to optimize. Since ReLU shares a lot of the properties of linear functions, it tends to work well on most of the problems. The only issue is that the derivative is not defined at $z = 0$, which we can overcome by assigning the derivative to 0 at $z = 0$. However, this means that for $z\leq 0$ the gradient is zero and again can't learn.</li>
+<li><strong>Leaky Rectified Linear Unit</strong>: $g(z) = max(\alpha*z, z)$. It overcomes the zero gradient issue from ReLU and assigns $\alpha$ which is a small value for $z\leq 0$.</li>
+</ul>
+
+<p>If you're not sure which activation function to choose, start with ReLU.
+Next, we'll implement the above activation functions and draw a graph for each one to make it easier to see the domain and range of each function.</p>
+
+<pre><code class="language-python"># Define activation functions that will be used in forward propagation
+def sigmoid(Z):
+    A = 1 / (1 + np.exp(-Z))
+    return A, Z
+
+
+def tanh(Z):
+    A = np.tanh(Z)
+    return A, Z
+
+
+def relu(Z):
+    A = np.maximum(0, Z)
+    return A, Z
+
+
+def leaky_relu(Z):
+    A = np.maximum(0.1 * Z, Z)
+
+    return A, Z
+</code></pre>
+
+<pre><code class="language-python"># Plot the 4 activation functions
+z = np.linspace(-10, 10, 100)
+
+# Computes post-activation outputs
+A_sigmoid, z = sigmoid(z)
+A_tanh, z = tanh(z)
+A_relu, z = relu(z)
+A_leaky_relu, z = leaky_relu(z)
+
+# Plot sigmoid
+plt.figure(figsize=(12, 8))
+plt.subplot(2, 2, 1)
+plt.plot(z, A_sigmoid, label = &quot;Function&quot;)
+plt.plot(z, A_sigmoid * (1 - A_sigmoid), label = &quot;Derivative&quot;)
+plt.legend(loc = &quot;upper left&quot;)
+plt.xlabel(&quot;z&quot;)
+plt.ylabel(r&quot;$\frac{1}{1 + e^{-z}}$&quot;)
+plt.title(&quot;Sigmoid Function&quot;, fontsize = 16)
+# Plot tanh
+plt.subplot(2, 2, 2)
+plt.plot(z, A_tanh, 'b', label = &quot;Function&quot;)
+plt.plot(z, 1 - np.square(A_tanh), 'r',label = &quot;Derivative&quot;)
+plt.legend(loc = &quot;upper left&quot;)
+plt.xlabel(&quot;z&quot;)
+plt.ylabel(r&quot;$\frac{e^z - e^{-z}}{e^z + e^{-z}}$&quot;)
+plt.title(&quot;Hyperbolic Tangent Function&quot;, fontsize = 16)
+# plot relu
+plt.subplot(2, 2, 3)
+plt.plot(z, A_relu, 'g')
+plt.xlabel(&quot;z&quot;)
+plt.ylabel(r&quot;$max\{0, z\}$&quot;)
+plt.title(&quot;ReLU Function&quot;, fontsize = 16)
+# plot leaky relu
+plt.subplot(2, 2, 4)
+plt.plot(z, A_leaky_relu, 'y')
+plt.xlabel(&quot;z&quot;)
+plt.ylabel(r&quot;$max\{0.1z, z\}$&quot;)
+plt.title(&quot;Leaky ReLU Function&quot;, fontsize = 16)
+plt.tight_layout();
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/activation_fns.png" >
+
+<img src="/img/coding-nn-from-scratch/activation_fns.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Activation functions and their derivatives.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
+Feed Forward
+</h3><br>
+Given its inputs from previous layer, each unit computes affine transformation $z = W^Tx + b$ and then apply an activation function $g(z)$ such as ReLU element-wise. During the process, we'll store (cache) all variables computed and used on each layer to be used in back-propagation. We'll write first two helper functions that will be used in the L-model forward propagation to make it easier to debug. Keep in mind that on each layer, we may have different activation function.</p>
+
+<pre><code class="language-python"># Define helper functions that will be used in L-model forward prop
+def linear_forward(A_prev, W, b):
+    Z = np.dot(W, A_prev) + b
+    cache = (A_prev, W, b)
+
+    return Z, cache
+
+
+def linear_activation_forward(A_prev, W, b, activation_fn):
+    assert activation_fn == &quot;sigmoid&quot; or activation_fn == &quot;tanh&quot; or \
+        activation_fn == &quot;relu&quot;
+
+    if activation_fn == &quot;sigmoid&quot;:
+        Z, linear_cache = linear_forward(A_prev, W, b)
+        A, activation_cache = sigmoid(Z)
+
+    elif activation_fn == &quot;tanh&quot;:
+        Z, linear_cache = linear_forward(A_prev, W, b)
+        A, activation_cache = tanh(Z)
+
+    elif activation_fn == &quot;relu&quot;:
+        Z, linear_cache = linear_forward(A_prev, W, b)
+        A, activation_cache = relu(Z)
+
+    assert A.shape == (W.shape[0], A_prev.shape[1])
+
+    cache = (linear_cache, activation_cache)
+
+    return A, cache
+
+
+def L_model_forward(X, parameters, hidden_layers_activation_fn=&quot;relu&quot;):
+    A = X                           
+    caches = []                     
+    L = len(parameters) // 2        
+
+    for l in range(1, L):
+        A_prev = A
+        A, cache = linear_activation_forward(
+            A_prev, parameters[&quot;W&quot; + str(l)], parameters[&quot;b&quot; + str(l)],
+            activation_fn=hidden_layers_activation_fn)
+        caches.append(cache)
+
+    AL, cache = linear_activation_forward(
+        A, parameters[&quot;W&quot; + str(L)], parameters[&quot;b&quot; + str(L)],
+        activation_fn=&quot;sigmoid&quot;)
+    caches.append(cache)
+
+    assert AL.shape == (1, X.shape[1])
+
+    return AL, caches
+</code></pre>
+
+<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
+Cost
+</h3><br>
+We'll use the binary <strong>Cross-Entropy</strong> cost. It uses the log-likelihood method to estimate its error. The cost is:
+<span  class="math">\(J(W, b) = -\frac{1}{m}\sum_{i = 1}^m\big(y^ilog(\widehat{y^i}) + (1 - y^i)log(1 - \widehat{y^i}\big)\tag3\)</span>
+The above cost function is convex; however, neural network usually stuck on a local minimum and is not guaranteed to find the optimal parameters. We'll use here gradient-based learning.</p>
+
+<pre><code class="language-python"># Compute cross-entropy cost
+def compute_cost(AL, y):
+    m = y.shape[1]              
+    cost = - (1 / m) * np.sum(
+        np.multiply(y, np.log(AL)) + np.multiply(1 - y, np.log(1 - AL)))
+
+    return cost
+</code></pre>
+
+<h2 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
+Back-Propagation
+</h2>
+
+<p>Allows the information to go back from the cost backward through the network in order to compute the gradient. Therefore, loop over the nodes starting at the final node in reverse topological order to compute the derivative of the final node output with respect to each edge's node tail. Doing so will help us know who is responsible for the most error and change the parameters in that direction. The following derivatives' formulas will help us write the back-propagate functions:
+<span  class="math">\(dA^L = \frac{A^L - Y}{A^L(1 - A^L)}\tag4\)</span>
+<span  class="math">\(dZ^L = A^L - Y\tag5\)</span>
+<span  class="math">\(dW^l = \frac{1}{m}dZ^l{A^{l - 1}}^T\tag6\)</span>
+<span  class="math">\(db^l = \frac{1}{m}\sum_i(dZ^l)\tag7\)</span>
+<span  class="math">\(dA^{l - 1} = {W^l}^TdZ^l\tag8\)</span>
+<span  class="math">\(dZ^{l} = dA^l*g^{'l}(Z^l)\tag9\)</span>
+Since $b^l$ is always a vector, the sum would be across rows (since each column is an example).</p>
+
+<pre><code class="language-python"># Define derivative of activation functions w.r.t z that will be used in back-propagation
+def sigmoid_gradient(dA, Z):
+    A, Z = sigmoid(Z)
+    dZ = dA * A * (1 - A)
+
+    return dZ
+
+
+def tanh_gradient(dA, Z):
+    A, Z = tanh(Z)
+    dZ = dA * (1 - np.square(A))
+
+    return dZ
+
+
+def relu_gradient(dA, Z):
+    A, Z = relu(Z)
+    dZ = np.multiply(dA, np.int64(A &gt; 0))
+
+    return dZ
+
+
+# define helper functions that will be used in L-model back-prop
+def linear_backword(dZ, cache):
+    A_prev, W, b = cache
+    m = A_prev.shape[1]
+
+    dW = (1 / m) * np.dot(dZ, A_prev.T)
+    db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
+    dA_prev = np.dot(W.T, dZ)
+
+    assert dA_prev.shape == A_prev.shape
+    assert dW.shape == W.shape
+    assert db.shape == b.shape
+
+    return dA_prev, dW, db
+
+
+def linear_activation_backward(dA, cache, activation_fn):
+    linear_cache, activation_cache = cache
+
+    if activation_fn == &quot;sigmoid&quot;:
+        dZ = sigmoid_gradient(dA, activation_cache)
+        dA_prev, dW, db = linear_backword(dZ, linear_cache)
+
+    elif activation_fn == &quot;tanh&quot;:
+        dZ = tanh_gradient(dA, activation_cache)
+        dA_prev, dW, db = linear_backword(dZ, linear_cache)
+
+    elif activation_fn == &quot;relu&quot;:
+        dZ = relu_gradient(dA, activation_cache)
+        dA_prev, dW, db = linear_backword(dZ, linear_cache)
+
+    return dA_prev, dW, db
+
+
+def L_model_backward(AL, y, caches, hidden_layers_activation_fn=&quot;relu&quot;):
+    y = y.reshape(AL.shape)
+    L = len(caches)
+    grads = {}
+
+    dAL = np.divide(AL - y, np.multiply(AL, 1 - AL))
+
+    grads[&quot;dA&quot; + str(L - 1)], grads[&quot;dW&quot; + str(L)], grads[
+        &quot;db&quot; + str(L)] = linear_activation_backward(
+            dAL, caches[L - 1], &quot;sigmoid&quot;)
+
+    for l in range(L - 1, 0, -1):
+        current_cache = caches[l - 1]
+        grads[&quot;dA&quot; + str(l - 1)], grads[&quot;dW&quot; + str(l)], grads[
+            &quot;db&quot; + str(l)] = linear_activation_backward(
+                grads[&quot;dA&quot; + str(l)], current_cache,
+                hidden_layers_activation_fn)
+
+    return grads
+
+
+# define the function to update both weight matrices and bias vectors
+def update_parameters(parameters, grads, learning_rate):
+    L = len(parameters) // 2
+
+    for l in range(1, L + 1):
+        parameters[&quot;W&quot; + str(l)] = parameters[
+            &quot;W&quot; + str(l)] - learning_rate * grads[&quot;dW&quot; + str(l)]
+        parameters[&quot;b&quot; + str(l)] = parameters[
+            &quot;b&quot; + str(l)] - learning_rate * grads[&quot;db&quot; + str(l)]
+
+    return parameters
+</code></pre>
+
+<p><a id="Application"></a></p>
+
+<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+II. Application
+</h2>
+
+<p>The dataset that we'll be working on has 209 images. Each image is 64 x 64 pixels on RGB scale. We'll build a neural network to classify if the image has a cat or not. Therefore, $y^i \in {0, 1}.$</p>
+
+<ul>
+<li>We'll first load the images.</li>
+<li>Show sample image for a cat.</li>
+<li>Reshape input matrix so that each column would be one example. Also, since each image is 64 x 64 x 3, we'll end up having 12,288 features for each image. Therefore, the input matrix would be 12,288 x 209.</li>
+<li>Standardize the data so that the gradients don't go out of control. Also, it will help hidden units have similar range of values. For now, we'll divide every pixel by 255 which shouldn't be an issue. However, it's better to standardize the data to have a mean of 0 and a standard deviation of 1.</li>
+</ul>
+
+<pre><code class="language-python"># Import training dataset
+train_dataset = h5py.File(&quot;../data/train_catvnoncat.h5&quot;)
+X_train = np.array(train_dataset[&quot;train_set_x&quot;])
+y_train = np.array(train_dataset[&quot;train_set_y&quot;])
+
+test_dataset = h5py.File(&quot;../data/test_catvnoncat.h5&quot;)
+X_test = np.array(test_dataset[&quot;test_set_x&quot;])
+y_test = np.array(test_dataset[&quot;test_set_y&quot;])
+
+# print the shape of input data and label vector
+print(f&quot;&quot;&quot;Original dimensions:\n{20 * '-'}\nTraining: {X_train.shape}, {y_train.shape}
+Test: {X_test.shape}, {y_test.shape}&quot;&quot;&quot;)
+
+# plot cat image
+plt.figure(figsize=(6, 6))
+plt.imshow(X_train[50])
+plt.axis(&quot;off&quot;);
+
+# Transform input data and label vector
+X_train = X_train.reshape(209, -1).T
+y_train = y_train.reshape(-1, 209)
+
+X_test = X_test.reshape(50, -1).T
+y_test = y_test.reshape(-1, 50)
+
+# standarize the data
+X_train = X_train / 255
+X_test = X_test / 255
+
+print(f&quot;&quot;&quot;\nNew dimensions:\n{15 * '-'}\nTraining: {X_train.shape}, {y_train.shape}
+Test: {X_test.shape}, {y_test.shape}&quot;&quot;&quot;)
+</code></pre>
+
+<pre><code>Original dimensions:
+--------------------
+Training: (209, 64, 64, 3), (209,)
+Test: (50, 64, 64, 3), (50,)
+
+New dimensions:
+---------------
+Training: (12288, 209), (1, 209)
+Test: (12288, 50), (1, 50)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/cat_sample.png" >
+
+<img src="/img/coding-nn-from-scratch/cat_sample.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Sample image.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Now, our dataset is ready to be used and test our neural network implementation. Let's first write <strong>multi-layer model</strong> function to implement gradient-based learning using predefined number of iterations and learning rate.</p>
+
+<pre><code class="language-python"># Define the multi-layer model using all the helper functions we wrote before
+def L_layer_model(
+        X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
+        print_cost=True, hidden_layers_activation_fn=&quot;relu&quot;):
+    np.random.seed(1)
+
+    # initialize parameters
+    parameters = initialize_parameters(layers_dims)
+
+    # intialize cost list
+    cost_list = []
+
+    # iterate over num_iterations
+    for i in range(num_iterations):
+        # iterate over L-layers to get the final output and the cache
+        AL, caches = L_model_forward(
+            X, parameters, hidden_layers_activation_fn)
+
+        # compute cost to plot it
+        cost = compute_cost(AL, y)
+
+        # iterate over L-layers backward to get gradients
+        grads = L_model_backward(AL, y, caches, hidden_layers_activation_fn)
+
+        # update parameters
+        parameters = update_parameters(parameters, grads, learning_rate)
+
+        # append each 100th cost to the cost list
+        if (i + 1) % 100 == 0 and print_cost:
+            print(f&quot;The cost after {i + 1} iterations is: {cost:.4f}&quot;)
+
+        if i % 100 == 0:
+            cost_list.append(cost)
+
+    # plot the cost curve
+    plt.figure(figsize=(10, 6))
+    plt.plot(cost_list)
+    plt.xlabel(&quot;Iterations (per hundreds)&quot;)
+    plt.ylabel(&quot;Loss&quot;)
+    plt.title(f&quot;Loss curve for the learning rate = {learning_rate}&quot;)
+
+    return parameters
+
+
+def accuracy(X, parameters, y, activation_fn=&quot;relu&quot;):
+    probs, caches = L_model_forward(X, parameters, activation_fn)
+    labels = (probs &gt;= 0.5) * 1
+    accuracy = np.mean(labels == y) * 100
+
+    return f&quot;The accuracy rate is: {accuracy:.2f}%.&quot;
+</code></pre>
+
+<p>Next, we'll train two versions of the neural network where each one will use different activation function on hidden layers: One will use rectified linear unit (<strong>ReLU</strong>) and the second one will use hyperbolic tangent function (<strong>tanh</strong>). Finally we'll use the parameters we get from both neural networks to classify training examples and compute the training accuracy rates for each version to see which activation function works best on this problem.</p>
+
+<pre><code class="language-python"># Setting layers dims
+layers_dims = [X_train.shape[0], 5, 5, 1]
+
+# NN with tanh activation fn
+parameters_tanh = L_layer_model(
+    X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
+    hidden_layers_activation_fn=&quot;tanh&quot;)
+
+# Print the accuracy
+accuracy(X_test, parameters_tanh, y_test, activation_fn=&quot;tanh&quot;)
+</code></pre>
+
+<pre><code>The cost after 100 iterations is: 0.6556
+The cost after 200 iterations is: 0.6468
+The cost after 300 iterations is: 0.6447
+The cost after 400 iterations is: 0.6441
+The cost after 500 iterations is: 0.6440
+The cost after 600 iterations is: 0.6440
+The cost after 700 iterations is: 0.6440
+The cost after 800 iterations is: 0.6439
+The cost after 900 iterations is: 0.6439
+The cost after 1000 iterations is: 0.6439
+The cost after 1100 iterations is: 0.6439
+The cost after 1200 iterations is: 0.6439
+The cost after 1300 iterations is: 0.6438
+The cost after 1400 iterations is: 0.6438
+The cost after 1500 iterations is: 0.6437
+The cost after 1600 iterations is: 0.6434
+The cost after 1700 iterations is: 0.6429
+The cost after 1800 iterations is: 0.6413
+The cost after 1900 iterations is: 0.6361
+The cost after 2000 iterations is: 0.6124
+The cost after 2100 iterations is: 0.5112
+The cost after 2200 iterations is: 0.5288
+The cost after 2300 iterations is: 0.4312
+The cost after 2400 iterations is: 0.3821
+The cost after 2500 iterations is: 0.3387
+The cost after 2600 iterations is: 0.2349
+The cost after 2700 iterations is: 0.2206
+The cost after 2800 iterations is: 0.1927
+The cost after 2900 iterations is: 0.4669
+The cost after 3000 iterations is: 0.1040
+
+'The accuracy rate is: 68.00%.'
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/loss_tanh.png" >
+
+<img src="/img/coding-nn-from-scratch/loss_tanh.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Loss curve with tanh activation function.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<pre><code class="language-python"># NN with relu activation fn
+parameters_relu = L_layer_model(
+    X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
+    hidden_layers_activation_fn=&quot;relu&quot;)
+
+# Print the accuracy
+accuracy(X_test, parameters_relu, y_test, activation_fn=&quot;relu&quot;)
+</code></pre>
+
+<pre><code>The cost after 100 iterations is: 0.6556
+The cost after 200 iterations is: 0.6468
+The cost after 300 iterations is: 0.6447
+The cost after 400 iterations is: 0.6441
+The cost after 500 iterations is: 0.6440
+The cost after 600 iterations is: 0.6440
+The cost after 700 iterations is: 0.6440
+The cost after 800 iterations is: 0.6440
+The cost after 900 iterations is: 0.6440
+The cost after 1000 iterations is: 0.6440
+The cost after 1100 iterations is: 0.6439
+The cost after 1200 iterations is: 0.6439
+The cost after 1300 iterations is: 0.6439
+The cost after 1400 iterations is: 0.6439
+The cost after 1500 iterations is: 0.6439
+The cost after 1600 iterations is: 0.6439
+The cost after 1700 iterations is: 0.6438
+The cost after 1800 iterations is: 0.6437
+The cost after 1900 iterations is: 0.6435
+The cost after 2000 iterations is: 0.6432
+The cost after 2100 iterations is: 0.6423
+The cost after 2200 iterations is: 0.6395
+The cost after 2300 iterations is: 0.6259
+The cost after 2400 iterations is: 0.5408
+The cost after 2500 iterations is: 0.5262
+The cost after 2600 iterations is: 0.4727
+The cost after 2700 iterations is: 0.4386
+The cost after 2800 iterations is: 0.3493
+The cost after 2900 iterations is: 0.1877
+The cost after 3000 iterations is: 0.3641
+
+'The accuracy rate is: 42.00%.'
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/coding-nn-from-scratch/loss_relu.png" >
+
+<img src="/img/coding-nn-from-scratch/loss_relu.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Loss curve with ReLU activation function.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Please note that the accuracy rates above are expected to overestimate the generalization accuracy rates.</p>
+
+<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+Conclusion
+</h2>
+
+<p>The purpose of this post is to code Deep Neural Network step-by-step and explain the important concepts while doing that. We don't really care about the accuracy rate at this moment since there are tons of things we could've done to increase the accuracy which would be the subject of following posts. Below are some takeaways:</p>
+
+<ul>
+<li>Even if neural network can represent any function, it may fail to learn for two reasons:
+
+<ol>
+<li>The optimization algorithm may fail to find the best value for the parameters of the desired (true) function.
+It can stuck in a local optimum.</li>
+<li>The learning algorithm may find different functional form that is different than the intended function due to overfitting.</li>
+</ol></li>
+<li>Even if neural network rarely converges and always stuck in a local minimum, it is still able to reduce the cost significantly and come up with very complex models with high test accuracy.</li>
+<li>The neural network we used in this post is standard fully connected network. However, there are two other kinds of networks:
+
+<ul>
+<li>Convolutional NN: Where not all nodes are connected. It's best in class for image recognition.</li>
+<li>Recurrent NN: There is a feedback connections where output of the model is fed back into itself. It's used mainly in sequence modeling.</li>
+</ul></li>
+<li>The fully connected neural network also forgets what happened in previous steps and also doesn't know anything about the output.</li>
+<li>There are number of hyperparameters that we can tune using cross validation to get the best performance of our network:
+
+<ol>
+<li>Learning rate ($\alpha$): Determines how big the step for each update of parameters.
+
+<ul>
+<li>Small $\alpha$ leads to slow convergence and may become computationally very expensive.</li>
+<li>Large $\alpha$ may lead to overshooting where our learning algorithm may never converge.</li>
+</ul></li>
+<li>Number of hidden layers (depth): The more hidden layers the better, but comes at a cost computationally.</li>
+<li>Number of units per hidden layer (width): Research proven that huge number of hidden units per layer doesn't add to the improvement of the network.</li>
+<li>Activation function: Which function to use on hidden layers differs among applications and domains. It's a trial and error process to try different functions and see which one works best.</li>
+<li>Number of iterations.</li>
+</ol></li>
+<li>Standardize data would help activation units have similar range of values and avoid gradients to go out of control.</li>
+</ul>
+
+    </div>
+
+    
+
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/deep-learning/">Deep Learning</a>
+  
+  <a class="badge badge-light" href="/tags/ai/">AI</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu057a6ce318cedc9fff5e5d4bcb0cb87d_16356_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://imaddabbura.github.io">Imad Dabbura</a></h5>
+      <h6 class="card-subtitle">Data Scientist</h6>
+      <p class="card-text" itemprop="description">My interests include data science, machine learning and artificial intelligence.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/imadphd" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//www.linkedin.com/in/imaddabbura" >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/imaddabbura" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//medium.com/@ImadPhd" >
+              <i class="fab fa-medium"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/character-level-language-model/">Character-level Language Model</a></li>
+          
+          <li><a href="/post/gradient-descent-algorithm/">Gradient Descent Algorithm and Its Variants</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/coding-nn-gradient-checking/" rel="next">Coding Neural Network - Gradient Checking</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/epsilon-greedy-algorithm/" rel="prev">epsilon-Greedy Algorithm</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "ImadDabbura" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://ImadDabbura.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    &copy; Imad Dabbura 2018 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Imad Dabbura">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Employee turnover refers to the percentage of workers who leave an organization and are replaced by new employees. It is very costly for organizations, where costs include but not limited to: separation, vacancy, recruitment, training and replacement. On average, organizations invest between four weeks and three months training new employees. This investment would be a loss for the company if the new employee decided to leave the first year. Furthermore, organizations such as consulting firms would suffer from deterioration in customer satisfaction due to regular changes in Account Reps and/or Consultants that would lead to loss of businesses with clients.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/pred-employee-turnover/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-127825273-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://imaddabbura.github.io/post/pred-employee-turnover/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@ImadPhd">
+  <meta property="twitter:creator" content="@ImadPhd">
+  
+  <meta property="og:site_name" content="Imad Dabbura">
+  <meta property="og:url" content="https://imaddabbura.github.io/post/pred-employee-turnover/">
+  <meta property="og:title" content="Predicting Employee Turnover | Imad Dabbura">
+  <meta property="og:description" content="Employee turnover refers to the percentage of workers who leave an organization and are replaced by new employees. It is very costly for organizations, where costs include but not limited to: separation, vacancy, recruitment, training and replacement. On average, organizations invest between four weeks and three months training new employees. This investment would be a loss for the company if the new employee decided to leave the first year. Furthermore, organizations such as consulting firms would suffer from deterioration in customer satisfaction due to regular changes in Account Reps and/or Consultants that would lead to loss of businesses with clients."><meta property="og:image" content="https://imaddabbura.github.io/post/pred-employee-turnover/featured.png">
+  <meta property="twitter:image" content="https://imaddabbura.github.io/post/pred-employee-turnover/featured.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2017-12-11T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2017-12-11T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>Predicting Employee Turnover | Imad Dabbura</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Imad Dabbura</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1 itemprop="name">Predicting Employee Turnover</h1>
+
+  
+
+  
+
+
+
+<meta content="2017-12-11 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2017-12-11 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 11, 2017</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    12 min read
+  </span>
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/pred-employee-turnover/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/machine-learning/">Machine Learning</a>, <a href="/categories/data-science/">Data Science</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://imaddabbura.github.io/post/pred-employee-turnover/&amp;text=Predicting%20Employee%20Turnover" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://imaddabbura.github.io/post/pred-employee-turnover/&amp;t=Predicting%20Employee%20Turnover" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Predicting%20Employee%20Turnover&amp;body=https://imaddabbura.github.io/post/pred-employee-turnover/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://imaddabbura.github.io/post/pred-employee-turnover/&amp;title=Predicting%20Employee%20Turnover" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Predicting%20Employee%20Turnover%20https://imaddabbura.github.io/post/pred-employee-turnover/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://imaddabbura.github.io/post/pred-employee-turnover/&amp;title=Predicting%20Employee%20Turnover" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header container-fluid featured-image-wrapper mt-4 mb-4" style="max-width: 750px; max-height: 290px;">
+  <div style="position: relative">
+    <img src="/post/pred-employee-turnover/featured.png" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      <p><strong>Employee turnover</strong> refers to the percentage of workers who leave an organization and are replaced by new employees. It is very costly for organizations, where costs include but not limited to: separation, vacancy, recruitment, training and replacement. On average, organizations invest between four weeks and three months training new employees. This investment would be a loss for the company if the new employee decided to leave the first year. Furthermore, organizations such as consulting firms would suffer from deterioration in customer satisfaction due to regular changes in <em>Account Reps</em> and/or <em>Consultants</em> that would lead to loss of businesses with clients.</p>
+
+<p>In this post, we’ll work on simulated HR data from <a href="https://www.kaggle.com/ludobenistant/hr-analytics-1">kaggle</a> to build a classifier that helps us predict what kind of employees will be more likely to leave given some attributes. Such classifier would help an organization predict employee turnover and be pro-active in helping to solve such costly matter. We’ll restrict ourselves to use the most common classifiers: Random Forest, Gradient Boosting Trees, K-Nearest Neighbors, Logistic Regression and Support Vector Machine.</p>
+
+<p>The data has 14,999 examples (samples). Below are the features and the definitions of each one:</p>
+
+<ul>
+<li>satisfaction_level: Level of satisfaction {0–1}.</li>
+<li>last_evaluationTime: Time since last performance evaluation (in years).</li>
+<li>number_project: Number of projects completed while at work.</li>
+<li>average_montly_hours: Average monthly hours at workplace.</li>
+<li>time_spend_company: Number of years spent in the company.</li>
+<li>Work_accident: Whether the employee had a workplace accident.</li>
+<li>left: Whether the employee left the workplace or not {0, 1}.</li>
+<li>promotion_last_5years: Whether the employee was promoted in the last five years.</li>
+<li>sales: Department the employee works for.</li>
+<li>salary: Relative level of salary {low, medium, high}.</li>
+</ul>
+
+<p>Source code that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Employee-Turnover.ipynb">here</a>.</p>
+
+<h2 style="font-family: Georgia; font-size: 2em; color:purple; font-style:bold">
+Data Preprocessing
+</h2>
+
+<p>Let’s take a look at the data (check if there are missing values and the data type of each features):</p>
+
+<pre><code class="language-python"># Load the data
+df = pd.read_csv(“data/HR_comma_sep.csv”)
+# Check both the datatypes and if there is missing values
+print(“\033[1m” + “\033[94m” + “Data types:\n” + 11 * “-”)
+print(“\033[30m” + “{}\n”.format(df.dtypes))
+print(“\033[1m” + “\033[94m” + “Sum of null values in each column:\n” + 35 * “-”)
+print(“\033[30m” + “{}”.format(df.isnull().sum()))
+df.head()
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/data_types.PNG" >
+
+<img src="/img/employee-turnover/data_types.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Data overview.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Since there are no missing values, we do not have to do any imputation. However, there are some data preprocessing needed:</p>
+
+<ol>
+<li>Change <strong>sales</strong> feature name to <strong>department</strong>.</li>
+<li>Convert <strong>salary</strong> into ordinal categorical feature since there is intrinsic order between: low, medium and high.</li>
+<li>Create dummy features from <strong>department</strong> feature and drop the first one to avoid linear dependency where some learning algorithms may struggle.</li>
+</ol>
+
+<pre><code class="language-python"># Rename sales feature into department
+df = df.rename(columns={&quot;sales&quot;: &quot;department&quot;})
+# Map salary into integers
+salary_map = {&quot;low&quot;: 0, &quot;medium&quot;: 1, &quot;high&quot;: 2}
+df[&quot;salary&quot;] = df[&quot;salary&quot;].map(salary_map)
+# Create dummy variables for department feature
+df = pd.get_dummies(df, columns=[&quot;department&quot;], drop_first=True)
+</code></pre>
+
+<p>The data is now ready to be used for modeling. The final number of features are now 17.</p>
+
+<h2 style="font-family: Georgia; font-size: 2em; color:purple; font-style:bold">
+Modeling
+</h2>
+
+<p>Let’s first take a look at the proportion of each class to see if we’re dealing with balanced or imbalanced data, since each one has its own set of tools to be used when fitting classifiers.</p>
+
+<pre><code class="language-python"># Get number of positve and negative examples
+pos = df[df[&quot;left&quot;] == 1].shape[0]
+neg = df[df[&quot;left&quot;] == 0].shape[0]
+print(&quot;Positive examples = {}&quot;.format(pos))
+print(&quot;Negative examples = {}&quot;.format(neg))
+print(&quot;Proportion of positive to negative examples = {:.2f}%&quot;.format((pos / neg) * 100))
+sns.countplot(df[&quot;left&quot;])
+plt.xticks((0, 1), [&quot;Didn't leave&quot;, &quot;Left&quot;])
+plt.xlabel(&quot;Left&quot;)
+plt.ylabel(&quot;Count&quot;)
+plt.title(&quot;Class counts&quot;);
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/class_counts.PNG" >
+
+<img src="/img/employee-turnover/class_counts.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Class counts.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>As the graph shows, we have an imbalanced dataset. As a result, when we fit classifiers on such datasets, we should use metrics other than accuracy when comparing models such as <em>f1-score</em> or <em>AUC</em> (area under ROC curve). Moreover, class imbalance influences a learning algorithm during training by making the decision rule biased towards the majority class by implicitly learns a model that optimizes the predictions based on the majority class in the dataset. There are three ways to deal with this issue:</p>
+
+<ol>
+<li>Assign a larger penalty to wrong predictions from the minority class.</li>
+<li>Upsampling the minority class or downsampling the majority class.</li>
+<li>Generate synthetic training examples.</li>
+</ol>
+
+<p>Nonetheless, there is no definitive guide or best practices to deal with such situations. Therefore, we have to try them all and see which one works best for the problem on hand. We’ll restrict ourselves to use the first two, i.e, assign larger penalty to wrong predictions from the minority class using <code>class_weight</code> in classifiers that allows us do that and evaluate upsampling/downsampling on the training data to see which gives higher performance.
+First, split the data into training and test sets using 80/20 split; 80% of the data will be used to train the models and 20% to test the performance of the models. Second, Upsample the minority class and downsample the majority class. For this data set, positive class is the minority class and negative class is the majority class.</p>
+
+<pre><code class="language-python"># Convert dataframe into numpy objects and split them into
+# train and test sets: 80/20
+X = df.loc[:, df.columns != &quot;left&quot;].values
+y = df.loc[:, df.columns == &quot;left&quot;].values.flatten()
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=1)
+# Upsample minority class
+X_train_u, y_train_u = resample(X_train[y_train == 1],
+                                y_train[y_train == 1],
+                                replace=True,
+                                n_samples=X_train[y_train == 0].shape[0],
+                                random_state=1)
+X_train_u = np.concatenate((X_train[y_train == 0], X_train_u))
+y_train_u = np.concatenate((y_train[y_train == 0], y_train_u))
+# Downsample majority class
+X_train_d, y_train_d = resample(X_train[y_train == 0],
+                                y_train[y_train == 0],
+                                replace=True,
+                                n_samples=X_train[y_train == 1].shape[0],
+                                random_state=1)
+X_train_d = np.concatenate((X_train[y_train == 1], X_train_d))
+y_train_d = np.concatenate((y_train[y_train == 1], y_train_d))
+print(&quot;Original shape:&quot;, X_train.shape, y_train.shape)
+print(&quot;Upsampled shape:&quot;, X_train_u.shape, y_train_u.shape)
+print(&quot;Downsampled shape:&quot;, X_train_d.shape, y_train_d.shape)
+</code></pre>
+
+<ul>
+<li>Original shape: (11999, 17) (11999,)</li>
+<li>Upsampled shape: (18284, 17) (18284,)</li>
+<li>Downsampled shape: (5714, 17) (5714,)</li>
+</ul>
+
+<p>I don’t think we need to apply dimensionality reduction such as PCA because: 1) We want to know the importance of each feature in determining who will leave versus who will not (inference). 2) Dimension of the data set is decent (17 features). However, it’s good to see how many principal components needed to explain 90%, 95% and 99% of the variation in the data.</p>
+
+<pre><code class="language-python"># Build PCA using standarized trained data
+pca = PCA(n_components=None, svd_solver=&quot;full&quot;)
+pca.fit(StandardScaler().fit_transform(X_train))
+cum_var_exp = np.cumsum(pca.explained_variance_ratio_)
+plt.figure(figsize=(12, 6))
+plt.bar(range(1, 18), pca.explained_variance_ratio_, align=&quot;center&quot;,
+        color='red', label=&quot;Individual explained variance&quot;)
+plt.step(range(1, 18), cum_var_exp, where=&quot;mid&quot;, label=&quot;Cumulative explained variance&quot;)
+plt.xticks(range(1, 18))
+plt.legend(loc=&quot;best&quot;)
+plt.xlabel(&quot;Principal component index&quot;, {&quot;fontsize&quot;: 14})
+plt.ylabel(&quot;Explained variance ratio&quot;, {&quot;fontsize&quot;: 14})
+plt.title(&quot;PCA on training data&quot;, {&quot;fontsize&quot;: 16});
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/PCA.PNG" >
+
+<img src="/img/employee-turnover/PCA.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>PCA.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Looks like it needs 14, 15 and 16 principal components to capture 90%, 95% and 99% of the variation in the data respectively. In other words, this means that the data is already in a good space since eigenvalues are very close to each other and gives further evidence that we don’t need to compress the data.
+The methodology that we’ll follow when building the classifiers goes as follows:</p>
+
+<ol>
+<li>Build a pipeline that handles all the steps when fitting the classifier using scikit-learn’s <code>make_pipeline</code> which will have two steps:
+I. Standardizing the data to speed up convergence and make all features on the same scale.
+II. The classifier (<code>estimator</code>) we want to use to fit the model.</li>
+<li>Use <code>GridSearchCV</code> to tune hyperparameters using 10-folds cross validation. We can use <code>RandomizedSearchCV</code> which is faster and may outperform <code>GridSearchCV</code> especially if we have more than two hyperparameters and the range for each one is very big; however, <code>GridSearchCV</code> will work just fine since we have only two hyperparameters and descent range.</li>
+<li>Fit the model using training data.</li>
+<li>Plot both confusion matrix and ROC curve for the best estimator using test data.</li>
+</ol>
+
+<p>Repeat the above steps for <em>Random Forest, Gradient Boosting Trees, K-Nearest Neighbors, Logistic Regression and Support Vector Machine</em>. Next, pick the classifier that has the highest cross validation f1 score. Note: some of the hyperparameter ranges will be guided by the paper <a href="https://arxiv.org/pdf/1708.05070.pdf">Data-driven Advice for Applying Machine Learning to Bioinformatics Problems</a>.</p>
+
+<h3 style="font-family: Georgia; font-size: 1.5em; color:purple; font-style:bold">
+Random Forest
+</h3>
+
+<p>First, we will start by fitting a Random Forest classifier using <em>unsampled, upsampled and downsampled</em> data. Second, we will evaluate each method using cross validation (CV) f1-score and pick the one with the highest CV f1-score. Finally, we will use that method to fit the rest of the classifiers.
+The only hyperparameters we’ll tune are:</p>
+
+<ul>
+<li><code>max_feature</code>: how many features to consider randomly on each split. This will help avoid having few strong features to be picked on each split and let other features have the chance to contribute. Therefore, predictions will be less correlated and the variance of each tree will decrease.</li>
+<li><code>min_samples_leaf</code>: how many examples to have for each split to be a final leaf node.
+Random Forest is an ensemble model that has multiple trees (<code>n_estimators</code>). The final prediction would be a weighting average (regression) or mode (classification) of the predictions from all estimators. Note: a high number of trees doesn't cause overfitting.</li>
+</ul>
+
+<pre><code class="language-python"># Build random forest classifier
+methods_data = {&quot;Original&quot;: (X_train, y_train),
+                &quot;Upsampled&quot;: (X_train_u, y_train_u),
+                &quot;Downsampled&quot;: (X_train_d, y_train_d)}
+for method in methods_data.keys():
+    pip_rf = make_pipeline(StandardScaler(),
+                           RandomForestClassifier(n_estimators=500,
+                                                  class_weight=&quot;balanced&quot;,
+                                                  random_state=123))
+    
+    hyperparam_grid = {
+        &quot;randomforestclassifier__n_estimators&quot;: [10, 50, 100, 500],
+        &quot;randomforestclassifier__max_features&quot;: [&quot;sqrt&quot;, &quot;log2&quot;, 0.4, 0.5],
+        &quot;randomforestclassifier__min_samples_leaf&quot;: [1, 3, 5],
+        &quot;randomforestclassifier__criterion&quot;: [&quot;gini&quot;, &quot;entropy&quot;]}
+    
+    gs_rf = GridSearchCV(pip_rf,
+                         hyperparam_grid,
+                         scoring=&quot;f1&quot;,
+                         cv=10,
+                         n_jobs=-1)
+    
+    gs_rf.fit(methods_data[method][0], methods_data[method][1])
+    
+    print(&quot;\033[1m&quot; + &quot;\033[0m&quot; + &quot;The best hyperparameters for {} data:&quot;.format(method))
+    for hyperparam in gs_rf.best_params_.keys():
+        print(hyperparam[hyperparam.find(&quot;__&quot;) + 2:], &quot;: &quot;, gs_rf.best_params_[hyperparam])
+        
+    print(&quot;\033[1m&quot; + &quot;\033[94m&quot; + &quot;Best 10-folds CV f1-score: {:.2f}%.&quot;.format((gs_rf.best_score_) * 100))
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/rf_hyperparam.PNG" >
+
+<img src="/img/employee-turnover/rf_hyperparam.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Random Forest hyperparameter tuning results.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Upsampling yielded the highest CV f1-score with 99.8%. Therefore, we’ll be using the upsampled data to fit the rest of the classifiers. The new data now has 18,284 examples: 50% belonging to the positive class, and 50% belonging to the negative class.</p>
+
+<p>Let’s refit the Random Forest with Upsampled data using best hyperparameters tuned above and plot confusion matrix and ROC curve using test data.</p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/rf_roc.PNG" >
+
+<img src="/img/employee-turnover/rf_roc.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Random Forest.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<h3 style="font-family: Georgia; font-size: 1.5em; color:purple; font-style:bold">
+Gradient Boosting Trees
+</h3>
+
+<p>Gradient Boosting trees are the same as Random Forest except for:</p>
+
+<ul>
+<li>It starts with small tree and start learning from grown trees by taking into account the residual of grown trees.</li>
+<li>More trees can lead to overfitting; opposite to Random Forest.</li>
+</ul>
+
+<p>Therefore, we can think of each tree as a weak learner. The two other hyperparameters than <code>max_features</code> and <code>n_estimators</code> that we're going to tune are:</p>
+
+<ul>
+<li><code>learning_rate</code>: rate the tree learns, the slower the better.</li>
+<li><code>max_depth</code>: number of split each time a tree is growing which limits the number of nodes in each tree.</li>
+</ul>
+
+<p>Let’s fit GB classifier and plot confusion matrix and ROC curve using test data.</p>
+
+<pre><code class="language-python"># Build Gradient Boosting classifier
+pip_gb = make_pipeline(StandardScaler(),
+                       GradientBoostingClassifier(loss=&quot;deviance&quot;,
+                                                  random_state=123))
+hyperparam_grid = {&quot;gradientboostingclassifier__max_features&quot;: [&quot;log2&quot;, 0.5],
+                   &quot;gradientboostingclassifier__n_estimators&quot;: [100, 300, 500],
+                   &quot;gradientboostingclassifier__learning_rate&quot;: [0.001, 0.01, 0.1],
+                   &quot;gradientboostingclassifier__max_depth&quot;: [1, 2, 3]}
+gs_gb = GridSearchCV(pip_gb,
+                      param_grid=hyperparam_grid,
+                      scoring=&quot;f1&quot;,
+                      cv=10,
+                      n_jobs=-1)
+gs_gb.fit(X_train, y_train)
+print(&quot;\033[1m&quot; + &quot;\033[0m&quot; + &quot;The best hyperparameters:&quot;)
+print(&quot;-&quot; * 25)
+for hyperparam in gs_gb.best_params_.keys():
+    print(hyperparam[hyperparam.find(&quot;__&quot;) + 2:], &quot;: &quot;, gs_gb.best_params_[hyperparam])
+print(&quot;\033[1m&quot; + &quot;\033[94m&quot; + &quot;Best 10-folds CV f1-score: {:.2f}%.&quot;.format((gs_gb.best_score_) * 100))
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/gb_hyperparam.PNG" >
+
+<img src="/img/employee-turnover/gb_hyperparam.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Gradient Boosting Trees hyperparameter tuning results.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/gb_roc.PNG" >
+
+<img src="/img/employee-turnover/gb_roc.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Gradient Boosting Trees.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<h3 style="font-family: Georgia; font-size: 1.5em; color:purple; font-style:bold">
+K-Nearest Neighbors
+</h3>
+
+<p>KNN is called a lazy learning algorithm because it doesn’t learn or fit any parameter. It takes <code>n_neighbors</code> points from the training data closest to the point we're interested to predict it's class and take the mode (majority vote) of the classes for the neighboring point as its class. The two hyperparameters we're going to tune are:</p>
+
+<ul>
+<li><code>n_neighbors</code>: number of neighbors to use in prediction.</li>
+<li><code>weights</code>: how much weight to assign neighbors based on:</li>
+<li>“uniform”: all neighboring points have the same weight.</li>
+<li>“distance”: use the inverse of euclidean distance of each neighboring point used in prediction.</li>
+</ul>
+
+<p>Let’s fit KNN classifier and plot confusion matrix and ROC curve.</p>
+
+<pre><code class="language-python"># Build KNN classifier
+pip_knn = make_pipeline(StandardScaler(), KNeighborsClassifier())
+hyperparam_range = range(1, 20)
+gs_knn = GridSearchCV(pip_knn,
+                      param_grid={&quot;kneighborsclassifier__n_neighbors&quot;: hyperparam_range,
+                                  &quot;kneighborsclassifier__weights&quot;: [&quot;uniform&quot;, &quot;distance&quot;]},
+                      scoring=&quot;f1&quot;,
+                      cv=10,
+                      n_jobs=-1)
+gs_knn.fit(X_train, y_train)
+print(&quot;\033[1m&quot; + &quot;\033[0m&quot; + &quot;The best hyperparameters:&quot;)
+print(&quot;-&quot; * 25)
+for hyperparam in gs_knn.best_params_.keys():
+    print(hyperparam[hyperparam.find(&quot;__&quot;) + 2:], &quot;: &quot;, gs_knn.best_params_[hyperparam])
+print(&quot;\033[1m&quot; + &quot;\033[94m&quot; + &quot;Best 10-folds CV f1-score: {:.2f}%.&quot;.format((gs_knn.best_score_) * 100))
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/knn_hyperparam.PNG" >
+
+<img src="/img/employee-turnover/knn_hyperparam.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>K-Nearest Neighbors hyperparameter tuning results.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/knn_roc.PNG" >
+
+<img src="/img/employee-turnover/knn_roc.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>K-Nearest Neighbors.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<h3 style="font-family: Georgia; font-size: 1.5em; color:purple; font-style:bold">
+Logistic Regression
+</h3>
+
+<p>For logistic regression, we’ll tune three hyperparameters:</p>
+
+<ul>
+<li><code>penalty</code>: type of regularization, L2 or L1 regularization.</li>
+<li><code>C</code>: the opposite of regularization of parameter λλ. The higher C the less regularization. We'll use values that cover the full range between unregularized to fully regularized where model is the mode of the examples' label.</li>
+<li><code>fit_intercept</code>: whether to include intercept or not.</li>
+</ul>
+
+<p>We won’t use any non-linearities such as polynomial features.</p>
+
+<pre><code class="language-python"># Build logistic model classifier
+pip_logmod = make_pipeline(StandardScaler(),
+                           LogisticRegression(class_weight=&quot;balanced&quot;))
+hyperparam_range = np.arange(0.5, 20.1, 0.5)
+hyperparam_grid = {&quot;logisticregression__penalty&quot;: [&quot;l1&quot;, &quot;l2&quot;],
+                   &quot;logisticregression__C&quot;:  hyperparam_range,
+                   &quot;logisticregression__fit_intercept&quot;: [True, False]
+                  }
+gs_logmodel = GridSearchCV(pip_logmod,
+                           hyperparam_grid,
+                           scoring=&quot;accuracy&quot;,
+                           cv=2,
+                           n_jobs=-1)
+gs_logmodel.fit(X_train, y_train)
+print(&quot;\033[1m&quot; + &quot;\033[0m&quot; + &quot;The best hyperparameters:&quot;)
+print(&quot;-&quot; * 25)
+for hyperparam in gs_logmodel.best_params_.keys():
+    print(hyperparam[hyperparam.find(&quot;__&quot;) + 2:], &quot;: &quot;, gs_logmodel.best_params_[hyperparam])
+print(&quot;\033[1m&quot; + &quot;\033[94m&quot; + &quot;Best 10-folds CV f1-score: {:.2f}%.&quot;.format((gs_logmodel.best_score_) * 100))
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/logmodel_hyperparam.PNG" >
+
+<img src="/img/employee-turnover/logmodel_hyperparam.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Logistic Regression hyperparameter tuning results.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/logmodel_roc.PNG" >
+
+<img src="/img/employee-turnover/logmodel_roc.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Logistic Regression.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<h3 style="font-family: Georgia; font-size: 1.5em; color:purple; font-style:bold">
+Support Vector Machine
+</h3>
+
+<p>SVM is comutationally very expensive to tune it’s hyperparameters for two reasons:</p>
+
+<ol>
+<li>With big datasets, it becomes very slow.</li>
+<li>It has good number of hyperparameters to tune that takes very long time to tune on a CPU.</li>
+</ol>
+
+<p>Therefore, we’ll use recommended hyperparameters’ values from the paper we mentioned before that showed to yield the best performane on Penn Machine Learning Benchmark 165 datasets. The hyperparameters that we usually look to tune are:</p>
+
+<ul>
+<li><code>C, gamma, kernel, degree</code> and <code>coef0</code></li>
+</ul>
+
+<pre><code class="language-python"># Build SVM classifier
+clf_svc = make_pipeline(StandardScaler(),
+                        SVC(C=0.01,
+                            gamma=0.1,
+                            kernel=&quot;poly&quot;,
+                            degree=5,
+                            coef0=10,
+                            probability=True))
+clf_svc.fit(X_train, y_train)
+svc_cv_scores = cross_val_score(clf_svc,
+                                X=X_train,
+                                y=y_train,
+                                scoring=&quot;f1&quot;,
+                                cv=10,
+                                n_jobs=-1)
+# Print CV
+print(&quot;\033[1m&quot; + &quot;\033[94m&quot; + &quot;The 10-folds CV f1-score is: {:.2f}%&quot;.format(
+       np.mean(svc_cv_scores) * 100))
+The 10-folds CV f1-score is: 96.38%
+</code></pre>
+
+<p><strong>The 10-folds CV f1-score is: 96.38%</strong></p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/svc_roc.PNG" >
+
+<img src="/img/employee-turnover/svc_roc.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Support Vector Machine.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<h2 style="font-family: Georgia; font-size: 2em; color:purple; font-style:bold">
+Conclusion
+</h2>
+
+<p>Let’s conclude by printing out the test accuracy rates for all classifiers we’ve trained so far and plot ROC curves. Then we will pick the classifier that has the highest area under ROC curve.</p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/overall.PNG" >
+
+<img src="/img/employee-turnover/overall.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Comparing ROC curves for all classifiers.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Even though Random Forest and Gradient Boosting Trees have almost equal AUC, Random Forest has higher accuracy rate and an f1-score with 99.27% and 99.44% respectively. Therefore, we safely say Random Forest outperforms the rest of the classifiers. Let’s have a look of feature importances from Random Forest classifier.</p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/employee-turnover/feature_importance.PNG" >
+
+<img src="/img/employee-turnover/feature_importance.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Random Forest feature importance.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Looks like the five most important features are:</p>
+
+<ul>
+<li>satisfaction_level</li>
+<li>time_spend_company</li>
+<li>average_montly_hours</li>
+<li>number_project</li>
+<li>lats_evaluation</li>
+</ul>
+
+<p>The take home message is the following:</p>
+
+<ul>
+<li>When dealing with imbalanced classes, accuracy is not a good method for model evaluation. AUC and f1-score are examples of metrics we can use.</li>
+<li>Upsampling/downsampling, data synthetic and using balanced class weights are good strategies to try to improve the accuracy of a classifier for imbalanced classes datasets.</li>
+<li><code>GridSearchCV</code> helps tune hyperparameters for each learning algorithm. <code>RandomizedSearchCV</code> is faster and may outperform <code>GridSearchCV</code> especially when we have more than two hyperparameters to tune.</li>
+<li>Principal Component Analysis (PCA) isn’t always recommended especially if the data is in a good feature space and their eigen values are very close to each other.</li>
+<li>As expected, ensemble models outperforms other learning algorithms in most cases.</li>
+</ul>
+
+    </div>
+
+    
+
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/classification/">Classification</a>
+  
+  <a class="badge badge-light" href="/tags/machine-learning/">Machine Learning</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu057a6ce318cedc9fff5e5d4bcb0cb87d_16356_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://imaddabbura.github.io">Imad Dabbura</a></h5>
+      <h6 class="card-subtitle">Data Scientist</h6>
+      <p class="card-text" itemprop="description">My interests include data science, machine learning and artificial intelligence.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/imadphd" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//www.linkedin.com/in/imaddabbura" >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/imaddabbura" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//medium.com/@ImadPhd" >
+              <i class="fab fa-medium"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/gradient-descent-algorithm/" rel="next">Gradient Descent Algorithm and Its Variants</a>
+  </div>
+  
+  
+</div>
+
+    </div>
+    
+
+    
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "ImadDabbura" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://ImadDabbura.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    &copy; Imad Dabbura 2018 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

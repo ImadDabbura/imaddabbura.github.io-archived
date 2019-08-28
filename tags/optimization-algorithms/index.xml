@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Optimization Algorithms | Imad Dabbura</title>
+    <link>https://imaddabbura.github.io/tags/optimization-algorithms/</link>
+      <atom:link href="https://imaddabbura.github.io/tags/optimization-algorithms/index.xml" rel="self" type="application/rss+xml" />
+    <description>Optimization Algorithms</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Imad Dabbura 2018</copyright><lastBuildDate>Thu, 21 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://imaddabbura.github.io/img/icon-192.png</url>
+      <title>Optimization Algorithms</title>
+      <link>https://imaddabbura.github.io/tags/optimization-algorithms/</link>
+    </image>
+    
+    <item>
+      <title>Gradient Descent Algorithm and Its Variants</title>
+      <link>https://imaddabbura.github.io/post/gradient-descent-algorithm/</link>
+      <pubDate>Thu, 21 Dec 2017 00:00:00 +0000</pubDate>
+      <guid>https://imaddabbura.github.io/post/gradient-descent-algorithm/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Optimization&lt;/strong&gt; refers to the task of minimizing/maximizing an objective function &lt;em&gt;f(x)&lt;/em&gt; parameterized by &lt;em&gt;x&lt;/em&gt;. In machine/deep learning terminology, it&#39;s the task of minimizing the cost/loss function &lt;em&gt;J(w)&lt;/em&gt; parameterized by the model&#39;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum.&lt;/li&gt;
+&lt;li&gt;Find the lowest possible value of the objective function within its neighborhood. That&#39;s usually the case if the objective function is not convex as the case in most deep learning problems.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are three kinds of optimization algorithms:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Optimization algorithm that is not iterative and simply solves for one point.&lt;/li&gt;
+&lt;li&gt;Optimization algorithm that is iterative in nature and converges to acceptable solution regardless of the parameters initialization such as gradient descent applied to logistic regression.&lt;/li&gt;
+&lt;li&gt;Optimization algorithm that is iterative in nature and applied to a set of problems that have non-convex cost functions such as neural networks. Therefore, parameters&#39; initialization plays a critical role in speeding up convergence and achieving lower error rates.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Gradient Descent&lt;/strong&gt; is the most common optimization algorithm in &lt;em&gt;machine learning&lt;/em&gt; and &lt;em&gt;deep learning&lt;/em&gt;. It is a first-order optimization algorithm. This means it only takes into account the first derivative when performing the updates on the parameters. On each iteration, we update the parameters in the opposite direction of the gradient of the objective function &lt;em&gt;J(w)&lt;/em&gt; w.r.t the parameters where the gradient gives the direction of the steepest ascent. The size of the step we take on each iteration to reach the local minimum is determined by the learning rate α. Therefore, we follow the direction of the slope downhill until we reach a local minimum.&lt;/p&gt;
+
+&lt;p&gt;In this post, we&#39;ll cover gradient descent algorithm and its variants: &lt;em&gt;Batch Gradient Descent, Mini-batch Gradient Descent, and Stochastic Gradient Descent&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&#39;s first see how gradient descent and its associated steps works on logistic regression before going into the details of its variants. For the sake of simplicity, let&#39;s assume that the logistic regression model has only two parameters: weight &lt;em&gt;w&lt;/em&gt; and bias &lt;em&gt;b&lt;/em&gt;.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Initialize weight &lt;em&gt;w&lt;/em&gt; and bias &lt;em&gt;b&lt;/em&gt; to any random numbers.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Pick a value for the learning rate α. The learning rate determines how big the step would be on each iteration.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If α is very small, it would take long time to converge and become computationally expensive.&lt;/li&gt;
+&lt;li&gt;IF α is large, it may fail to converge and overshoot the minimum.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn&#39;t converge so that we would have a very fast learning algorithm that converges (see figure 2).
+   
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/learning_rate.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/learning_rate.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient descent with different learning rates.&lt;/h4&gt;
+  &lt;p&gt;
+    
+    &lt;a href=&#34;http://cs231n.github.io/neural-networks-3/&#34;&gt; 
+    Source
+    &lt;/a&gt; 
+  &lt;/p&gt; 
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The most commonly used rates are : &lt;em&gt;0.001, 0.003, 0.01, 0.03, 0.1, 0.3&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Make sure to scale the data if it&#39;s on very different scales. If we don&#39;t scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 3).
+
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient descent: normalized versus unnormalized level curves.&lt;/h4&gt;
+  
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Scale the data to have μ = 0 and σ = 1. Below is the formula for scaling each example:
+&lt;span  class=&#34;math&#34;&gt;\(\frac {x_i - \mu}{\sigma}\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;On each iteration, take the partial derivative of the cost function &lt;em&gt;J(w)&lt;/em&gt; w.r.t each parameter (gradient):&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\)&lt;/span&gt;
+&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\)&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The update equations are:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$$w = w - \alpha \nabla_w J$$
+$$b = b - \alpha \nabla_b J$$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of &lt;em&gt;w &amp;gt; 0&lt;/em&gt;, this means that we are to the right of optimal &lt;em&gt;w&lt;/em&gt;*. Therefore, the update will be negative, and will start getting close to the optimal values of &lt;em&gt;w&lt;/em&gt;*. However, if it’s negative, the update will be positive and will increase the current values of &lt;em&gt;w&lt;/em&gt; to converge to the optimal values of &lt;em&gt;w&lt;/em&gt;*(see figure 4):
+
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradients.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradients.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient descent. An illustration of how gradient descent algorithm uses the first derivative of the loss function to follow downhill it&amp;rsquo;s minimum.&lt;/h4&gt;
+  
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Continue the process until the cost function converges. That is, until the error curve becomes flat and doesn&#39;t change.&lt;/li&gt;
+&lt;li&gt;In addition, on each iteration, the step would be in the direction that gives the &lt;em&gt;maximum&lt;/em&gt; change since it&#39;s perpendicular to level curves at each step.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now let&#39;s discuss the three variants of gradient descent algorithm. The main difference between them is the amount of data we use when computing the gradients for each learning step. The trade-off between them is the accuracy of the gradient versus the time complexity to perform each parameter&#39;s update (learning step).&lt;/p&gt;
+
+&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+Batch Gradient Descent
+&lt;/h3&gt;
+
+&lt;p&gt;Batch Gradient Descent is when we sum up over all examples on each iteration when performing the updates to the parameters. Therefore, for each update, we have to sum over all examples:
+&lt;span  class=&#34;math&#34;&gt;\(w = w - \alpha \nabla_w J\)&lt;/span&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for i in range(num_epochs):
+  grad = compute_gradient(data, params)
+  params = params - learning_rate * grad
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The main advantages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;We can use fixed learning rate during training without worrying about learning rate decay.&lt;/li&gt;
+&lt;li&gt;It has straight trajectory towards the minimum and it is guaranteed to converge in theory to the global minimum if the loss function is convex and to a local minimum if the loss function is not convex.&lt;/li&gt;
+&lt;li&gt;It has unbiased estimate of gradients. The more the examples, the lower the standard error.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The main disadvantages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Even though we can use vectorized implementation, it may still be slow to go over all examples especially when we have large datasets.&lt;/li&gt;
+&lt;li&gt;Each step of learning happens after going over all examples where some examples may be redundant and don&#39;t contribute much to the update.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+Mini-Batch Gradient Descent
+&lt;/h3&gt;
+
+&lt;p&gt;Instead of going over all examples, Mini-batch Gradient Descent sums up over lower number of examples based on batch size. Therefore, learning happens on each mini-batch of &lt;em&gt;b&lt;/em&gt; examples:
+&lt;span  class=&#34;math&#34;&gt;\(w = w - \alpha \nabla_w J(x^{\{i:i + b\}}, y^{\{i: i + b\}}; w, b)\)&lt;/span&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Shuffle the training dataset to avoid pre-existing order of examples.&lt;/li&gt;
+&lt;li&gt;Partition the training dataset into &lt;em&gt;b&lt;/em&gt; mini-batches based on the batch size. If the training set size is not divisible by batch size, the remaining will be its own batch.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for i in range(num_epochs):
+    np.random.shuffle(data)
+    for batch in radom_minibatches(data, batch_size=32):
+        grad = compute_gradient(batch, params)
+        params = params - learning_rate * grad
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The batch size is something we can tune. It is usually chosen as power of 2 such as 32, 64, 128, 256, 512, etc. The reason behind it is because some hardware such as GPUs achieve better runtime with common batch sizes such as power of 2.&lt;/p&gt;
+
+&lt;p&gt;The main advantages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Faster than Batch version because it goes through a lot less examples than Batch (all examples).&lt;/li&gt;
+&lt;li&gt;Randomly selecting examples will help avoid redundant examples or examples that are very similar that don&#39;t contribute much to the learning.&lt;/li&gt;
+&lt;li&gt;With batch size &amp;lt; size of training set, it adds noise to the learning process that helps improving generalization error.&lt;/li&gt;
+&lt;li&gt;Even though with more examples the estimate would have lower standard error, the return is less than linear compared to the computational burden we incur.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The main disadvantages:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It won&#39;t converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.&lt;/li&gt;
+&lt;li&gt;Due to the noise, the learning steps have more oscillations (see figure 5) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
+
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient descent: batch versus mini-batch loss function.&lt;/h4&gt;
+  
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+
+With large training datasets, we don&#39;t usually need more than 2-10 passes over all training examples (epochs). Note: with batch size &lt;em&gt;b = m&lt;/em&gt;, we get the Batch Gradient Descent.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+Stochastic Gradient Descent
+&lt;/h3&gt;
+
+&lt;p&gt;Instead of going through all examples, Stochastic Gradient Descent (SGD) performs the parameters update on each example &lt;em&gt;(x^i, y^i)&lt;/em&gt;. Therefore, learning happens on every example:
+&lt;span  class=&#34;math&#34;&gt;\(w = w - \alpha \nabla_w J(x^i, y^i; w, b)\)&lt;/span&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Shuffle the training dataset to avoid pre-existing order of examples.&lt;/li&gt;
+&lt;li&gt;Partition the training dataset into &lt;em&gt;m&lt;/em&gt; examples.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for i in range(num_epochs):
+    np.random.shuffle(data)
+    for example in data:
+        grad = compute_gradient(example, params)
+        params = params - learning_rate * grad
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It shares most of the advantages and the disadvantages with mini-batch version. Below are the ones that are specific to SGD:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It adds even more noise to the learning process than mini-batch that helps improving generalization error. However, this would increase the run time.&lt;/li&gt;
+&lt;li&gt;We can&#39;t utilize vectorization over 1 example and becomes very slow. Also, the variance becomes large since we only use 1 example for each learning step.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Below is a graph that shows the gradient descent&#39;s variants and their direction towards the minimum:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch-vs-stochastic.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch-vs-stochastic.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient descent variants&amp;rsquo; trajectory towards minimum&lt;/h4&gt;
+  
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As the figure above shows, SGD direction is very noisy compared to mini-batch.&lt;/p&gt;
+
+&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
+Challenges
+&lt;/h2&gt;
+
+&lt;p&gt;Below are some challenges regarding gradient descent algorithm in general as well as its variants - mainly batch and mini-batch:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Gradient descent is a first-order optimization algorithm, which means it doesn&#39;t take into account the second derivatives of the cost function. However, the curvature of the function affects the size of each learning step. The gradient measures the steepness of the curve but the second derivative measures the curvature of the curve. Therefore, if:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Second derivative = 0 --&amp;gt; the curvature is linear. Therefore, the step size = the learning rate α.&lt;/li&gt;
+&lt;li&gt;Second derivative &amp;gt; 0 --&amp;gt; the curvature is going upward. Therefore, the step size &amp;lt; the learning rate α and may lead to divergence.&lt;/li&gt;
+&lt;li&gt;Second derivative &amp;lt; 0 --&amp;gt; the curvature is going downward. Therefore, the step size &amp;gt; the learning rate α.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;As a result, the direction that looks promising to the gradient may not be so and may lead to slow the learning process or even diverge.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 7).
+
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/curvature.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/curvature.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient descent fails to exploit the curvature information contained in the Hessian matrix.&lt;/h4&gt;
+  
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients&#39; norm is increasing, we&#39;re able to achieve a very low error rates  (see figure 8).
+
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradient_norm.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradient_norm.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Gradient norm.&lt;/h4&gt;
+  &lt;p&gt;
+    
+    &lt;a href=&#34;http://www.deeplearningbook.org/contents/numerical.html&#34;&gt; 
+    Source
+    &lt;/a&gt; 
+  &lt;/p&gt; 
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 9). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
+
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/saddle.PNG&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/saddle.PNG&#34; &gt;
+&lt;/a&gt;
+
+
+&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+  &lt;h4&gt;Saddle point.&lt;/h4&gt;
+  
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;As discussed previously, choosing a proper learning rate is hard. Also, for mini-batch gradient descent, we have to adjust the learning rate during the training process to make sure it converges to the local minimum and not wander around it. Figuring out the decay rate of the learning rate is also hard and changes with different datasets.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;All parameter updates have the same learning rate; however, we may want to perform larger updates to some parameters that have their directional derivatives more inline with the trajectory towards the minimum than other parameters.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

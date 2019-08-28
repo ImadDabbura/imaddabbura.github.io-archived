@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Software Development | Imad Dabbura</title>
+    <link>https://imaddabbura.github.io/tags/software-development/</link>
+      <atom:link href="https://imaddabbura.github.io/tags/software-development/index.xml" rel="self" type="application/rss+xml" />
+    <description>Software Development</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Imad Dabbura 2018</copyright><lastBuildDate>Mon, 18 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://imaddabbura.github.io/img/icon-192.png</url>
+      <title>Software Development</title>
+      <link>https://imaddabbura.github.io/tags/software-development/</link>
+    </image>
+    
+    <item>
+      <title>Conda Essentials Notes</title>
+      <link>https://imaddabbura.github.io/post/conda-essentials/</link>
+      <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://imaddabbura.github.io/post/conda-essentials/</guid>
+      <description>&lt;!-- 
+
+
+  
+
+
+
+
+&lt;figure&gt;
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/conda/conda.png&#34; &gt;
+
+&lt;img src=&#34;https://imaddabbura.github.io/img/conda/conda.png&#34; &gt;
+&lt;/a&gt;
+
+&lt;/figure&gt;
+ --&gt;
+
+&lt;h2 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Conda&lt;/strong&gt; in an open source package management system that works on all platforms. It is a tool that helps manage packages and environments for different programming languages. Develop a high level understanding of how Conda works helped me at so many levels especially when it comes to managing environments and make my work more reproducable. Below are the notes that I wrote down during my journey of learning Conda and I always refere back to them:&lt;/p&gt;
+
+&lt;h2 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+General&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Conda packages are files and executables that can in principle contain images, data, noteboeeks, files, etc.&lt;/li&gt;
+&lt;li&gt;Conda mainly used in Python ecosystem; however, it can be used with other languages such R, Julia, Scala, etc.&lt;/li&gt;
+&lt;li&gt;When installing a package using Conda, it installs its dependencies with it. Also, Conda is able to figure out the platform you&#39;re using without the need to specify the platform when installing packages.&lt;/li&gt;
+&lt;li&gt;When installing a package, Conda:
+
+&lt;ul&gt;
+&lt;li&gt;Checks the platform.&lt;/li&gt;
+&lt;li&gt;Checks the Python version.&lt;/li&gt;
+&lt;li&gt;Install the latest version of the package that is compatible with Python.&lt;/li&gt;
+&lt;li&gt;If it has dependencies, installs the latest versions of the dependencies that are also compatible with each other.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Under semantic versioning, software is labeled with a three-part version identifier of the form &lt;code&gt;MAJOR.MINOR.PATCH&lt;/code&gt;; the label components are non-negative integers separated by periods. Assuming all software starts at version 0.0.0, the &lt;code&gt;MAJOR&lt;/code&gt; version number is increased when significant new functionality is introduced (often with corresponding API changes). Increases in the &lt;code&gt;MINOR&lt;/code&gt; version number generally reflect improvements (e.g., new features) that avoid backward-incompatible API changes. For instance, adding an optional argument to a function API (in a way that allows old code to run unchanged) is a change worthy of increasing the &lt;code&gt;MINOR&lt;/code&gt; version number. An increment to the &lt;code&gt;PATCH&lt;/code&gt; version number is approriate mostly for bug fixes that preserve the same &lt;code&gt;MAJOR&lt;/code&gt; and MINOR revision numbers. Software patches do not typically introduce new features or change APIs at all (except sometimes to address security issues).&lt;/li&gt;
+&lt;li&gt;We can specify &lt;code&gt;MAJOR&lt;/code&gt;, &lt;code&gt;MAJOR.MINOR&lt;/code&gt;, or &lt;code&gt;MAJOR.MINOR.PATCH&lt;/code&gt; when installing any package.&lt;/li&gt;
+&lt;li&gt;We can use logical operators to install versions of a package. Examples:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;conda install &#39;python=3.6|3.7&#39;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda install &#39;python=3.6|3.7*&#39;&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda install &#39;python&amp;gt;=3.6, &amp;lt;=3.7&#39;&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+Common Commands&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To update a package, &lt;code&gt;conda update pckg&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;To uninstall a package, &lt;code&gt;conda remove pckg&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;To search what available versions of a specific package is available, use &lt;code&gt;conda search pckg&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda list&lt;/code&gt; will list all installed packages.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda list -n env-name&lt;/code&gt; will list all packages in the environment env-name.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda list pckg&lt;/code&gt; will give information about pckg.&lt;/li&gt;
+&lt;li&gt;When installing a pckg without including a channel, it defaults to the main channel that is maintained by Anaconda Inc.&lt;/li&gt;
+&lt;li&gt;There other channels where people can upload their packages to and we can reach to those channels when looking for installation such fastai. We use &lt;code&gt;conda install -c fastai fastai&lt;/code&gt;. Here the channel is fastai and the pckg is also fastai.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda search -c conda-forge -c fastai --override-channels --platform osx-64 fastai&lt;/code&gt; means:
+
+&lt;ul&gt;
+&lt;li&gt;Search for fastai in two channels: conda-forge, fastai.&lt;/li&gt;
+&lt;li&gt;override-channels means do not go to default main channel.&lt;/li&gt;
+&lt;li&gt;platform specify which platform.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Sometimes we don&#39;t know the channel of the pckg, we can use &lt;code&gt;anaconda search pckg&lt;/code&gt; that will return all the channels that the pckg is at and their versions.&lt;/li&gt;
+&lt;li&gt;conda-forge is almost as good as the main channels which is led by the community. It has a lot more packages than the main channel.&lt;/li&gt;
+&lt;li&gt;There is no system that rates channels, so be carefel when installing packages from any channel.&lt;/li&gt;
+&lt;li&gt;We can list all packages in a channel such as &lt;code&gt;conda search -c conda-forge --override-channels&lt;/code&gt; that will list all packages for the conda-forge channel.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
+Environments&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Environments are a good practice of documenting data science/software development work.&lt;/li&gt;
+&lt;li&gt;Environments are nothing more than a directory that contains all the packages so that when trying to import them, it imports them from this directory only. we can use &lt;code&gt;conda env list&lt;/code&gt; to see all the available environments on our machine.&lt;/li&gt;
+&lt;li&gt;To get the packages from a specific environment by name, use &lt;code&gt;conda list -n env-name&lt;/code&gt;. Otherwise, we get the packages from the current environment.&lt;/li&gt;
+&lt;li&gt;To activate an environment, use &lt;code&gt;conda activate env-name&lt;/code&gt;. To deactivate, &lt;code&gt;conda deactivate&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Environments usually don&#39;t take a lot of space.&lt;/li&gt;
+&lt;li&gt;We can remove environments using &lt;code&gt;conda env remove -n env-name&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;To create an environment, use &lt;code&gt;conda create -n env-name&lt;/code&gt;. We can also add additional package names to install after creation such as &lt;code&gt;conda create -n env-name python=3.6* numpy&amp;gt;=1.1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;To export an environment, use &lt;code&gt;conda env export -n env-name&lt;/code&gt;. This will return the output to the terminal. We can also export to a file. For that use &lt;code&gt;conda env export -n env-name -f env-name.yml&lt;/code&gt;. The &#39;.yml&#39; extension is strongly enouraged. Doing this will assure that all the packages used can be installed by others exactly.&lt;/li&gt;
+&lt;li&gt;We can create also an environment from .yml file using &lt;code&gt;conda env create -f env-name.yml&lt;/code&gt;. Note also that if we only use &lt;code&gt;conda env create&lt;/code&gt;, it will look for a file that has .yml extension and has the same name as env-name in the current local directory. Moreover, we can create the .yml file with doing the export ourselves and only specify what is important in our environments.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

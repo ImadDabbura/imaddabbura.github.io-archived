@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Imad Dabbura">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="A/B testing can be defined as a randomized controlled experiment that allows us to test if there is a causal relationship between a change to a website/app and the user behavior. The change can be visible such as location of a button on the homepage or invisible such as the ranking/recommendation algorithms and backend infrastructure.
+Web/Mobile developers and business stakeholders always face the following dilemma: Should we try out all ideas and explore all options continuously?">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/epsilon-greedy-algorithm/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-127825273-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://imaddabbura.github.io/post/epsilon-greedy-algorithm/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@ImadPhd">
+  <meta property="twitter:creator" content="@ImadPhd">
+  
+  <meta property="og:site_name" content="Imad Dabbura">
+  <meta property="og:url" content="https://imaddabbura.github.io/post/epsilon-greedy-algorithm/">
+  <meta property="og:title" content="epsilon-Greedy Algorithm | Imad Dabbura">
+  <meta property="og:description" content="A/B testing can be defined as a randomized controlled experiment that allows us to test if there is a causal relationship between a change to a website/app and the user behavior. The change can be visible such as location of a button on the homepage or invisible such as the ranking/recommendation algorithms and backend infrastructure.
+Web/Mobile developers and business stakeholders always face the following dilemma: Should we try out all ideas and explore all options continuously?"><meta property="og:image" content="https://imaddabbura.github.io/post/epsilon-greedy-algorithm/featured.jpg">
+  <meta property="twitter:image" content="https://imaddabbura.github.io/post/epsilon-greedy-algorithm/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2018-03-31T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2018-03-31T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+
+  
+
+
+
+
+
+  <title>epsilon-Greedy Algorithm | Imad Dabbura</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Imad Dabbura</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1 itemprop="name">epsilon-Greedy Algorithm</h1>
+
+  
+
+  
+
+
+
+<meta content="2018-03-31 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2018-03-31 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Mar 31, 2018</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    12 min read
+  </span>
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/epsilon-greedy-algorithm/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/data-science/">Data Science</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://imaddabbura.github.io/post/epsilon-greedy-algorithm/&amp;text=epsilon-Greedy%20Algorithm" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://imaddabbura.github.io/post/epsilon-greedy-algorithm/&amp;t=epsilon-Greedy%20Algorithm" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=epsilon-Greedy%20Algorithm&amp;body=https://imaddabbura.github.io/post/epsilon-greedy-algorithm/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://imaddabbura.github.io/post/epsilon-greedy-algorithm/&amp;title=epsilon-Greedy%20Algorithm" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=epsilon-Greedy%20Algorithm%20https://imaddabbura.github.io/post/epsilon-greedy-algorithm/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://imaddabbura.github.io/post/epsilon-greedy-algorithm/&amp;title=epsilon-Greedy%20Algorithm" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header container-fluid featured-image-wrapper mt-4 mb-4" style="max-width: 1100px; max-height: 768px;">
+  <div style="position: relative">
+    <img src="/post/epsilon-greedy-algorithm/featured.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Image credit: <a href="https://www.google.com/search?q=k-armed+bandit&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=0ahUKEwiuoe_H5KPkAhUCCKwKHdd5CNkQ_AUIEigC&amp;biw=1745&amp;bih=990#imgrc=zLRn1xGdlZIubM:" target="_blank"><strong>Wikipedia</strong></a></span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      <p>A/B testing can be defined as a randomized controlled experiment that allows us to test if there is a causal relationship between a change to a website/app and the user behavior. The change can be visible such as location of a button on the homepage or invisible such as the ranking/recommendation algorithms and backend infrastructure.</p>
+
+<p>Web/Mobile developers and business stakeholders always face the following dilemma: Should we try out all ideas and explore all options continuously? Or should we exploit the best available option and stick to it?
+The answer is, as in most cases, will be a trade-off between the two extremes. If we explore all the time, we'll collect a lot of data and waste resources in testing inferior ideas and missing sales (e-commerce case). However, if we only exploit the available option and never try new ideas, we would be left behind and loose in the long-term with ever-changing markets.</p>
+
+<p>In this series, we'll explore solutions offered by <strong>Multi-armed Bandit Algorithms</strong> that have two main advantages over traditional A/B testing:</p>
+
+<ul>
+<li>Smoothly decrease exploration over time instead of sudden jumps.</li>
+<li>Focus resources on better options and not keep evaluating inferior options during the life of the experiment.</li>
+</ul>
+
+<p>What is <strong>Bandit Algorithms</strong>? Bandit Algorithms are algorithms that try to learn a rule of selecting a sequence of options that balance exploring available options and getting enough knowledge about each option and maximize profits by selecting the best option. Note that during the experiment, we only have knowledge about the options we tried. Therefore, every time we select an option that's not the best one, we incur an opportunity cost of not selecting the best option; however, we also gain a new knowledge (feedback) about the selected option. In other words, we need to have enough feedback about each option to learn the best option. As a result, the best strategy would be to explore more at the beginning of the experiment until we know the best option and then start exploiting that option.</p>
+
+<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+epsilon-Greedy Algorithm</h2><br>
+In this notebook, we'll cover <strong>epsilon-Greedy Algorithm</strong>. Greedy Algorithm can be defined as the algorithm that picks the best currently available option without taking into consideration the long-term effect of that decision, which may happen to be a suboptimal decision. Given that, we can define epsilon-Greedy Algorithm as a Greedy Algorithm that adds some randomness when deciding between options: Instead of picking always the best available option, randomly explore other options with a probability = 𝜖 or pick the best option with a probability = 1 - 𝜖. Therefore, we can add randomness to the algorithm by increasing 𝜖, which will make the algorithm explores other options more frequently. Additionally, 𝜖 is a hyper-parameter that needs to be tuned based on the experiment, i.e. there is no value that works best on all experiments.
+Let's explore how the algorithm works assuming we have two options: A and B (we can think of them as Control and Treatment groups). For each new user:</p>
+
+<ul>
+<li>Assume we have a coin that has a probability of coming heads = 𝜖 and a probability of coming tails = 1 - 𝜖. Therefore,
+
+<ul>
+<li>If it comes heads, explore randomly the available options (exploration).</li>
+<li>The probability of selecting any option is 1/2.</li>
+<li>If it comes tails, select the best option (exploitation).</li>
+</ul></li>
+</ul>
+
+<p>As a result, the probability of selecting any option randomly if we have N options is 𝜖 1/N; however, the probability of selecting the best option is 1 - 𝜖 (see figure 1).</p>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/bandit-algorithms/epsilon_greedy.PNG" >
+
+<img src="/img/bandit-algorithms/epsilon_greedy.PNG" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>epsilon-Greedy Algorithm.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Let's import the needed packages and implement the algorithm.</p>
+
+<pre><code class="language-python"># Import packages
+import os
+import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
+# Add module path to system path
+sys.path.append(os.path.abspath(&quot;../&quot;))
+from utils import plot_algorithm, compare_algorithms
+
+%matplotlib inline
+plt.style.use(&quot;fivethirtyeight&quot;)
+sns.set_context(&quot;notebook&quot;)
+</code></pre>
+
+<pre><code class="language-python">class EpsilonGreedy:
+    def __init__(self, epsilon, counts=None, values=None):
+        self.epsilon = epsilon
+        self.counts = counts
+        self.values = values
+
+    def initialize(self, n_arms):
+        self.counts = np.zeros(n_arms, dtype=int)
+        self.values = np.zeros(n_arms, dtype=float)
+
+    def select_arm(self):
+        z = np.random.random()
+        if z &gt; self.epsilon:
+            # Pick the best arm
+            return np.argmax(self.values)
+        # Randomly pick any arm with prob 1 / len(self.counts)
+        return np.random.randint(0, len(self.values))
+
+    def update(self, chosen_arm, reward):
+        # Increment chosen arm's count by one
+        self.counts[chosen_arm] += 1
+        n = self.counts[chosen_arm]
+
+        # Recompute the estimated value of chosen arm using new reward
+        value = self.values[chosen_arm]
+        new_value = value * ((n - 1) / n) + reward / n
+        self.values[chosen_arm] = new_value
+</code></pre>
+
+<p>Few things to note from the above implementation:</p>
+
+<ul>
+<li>Initialization of values (rewards) affect the long term performance of the algorithm.</li>
+<li>The larger the sample size (N), the less influential the rewards from the recent options since we are using the average of each option in the values array.</li>
+<li>Values array will store the estimated values (average) of each option.</li>
+<li>Counts is just an internal counter that keeps track of the number of times we selected each option.</li>
+</ul>
+
+<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+Monte Carlo Simulations</h2><br>
+In order to evaluate the algorithm, we will use Monte Carlo simulations. We'll use 5000 simulations to overcome the randomness generated from the random number generator. Also, we'll use Bernoulli distribution to get the reward from each option on each run. For each simulation:</p>
+
+<ul>
+<li>Initialize the algorithm with no prior knowledge.</li>
+<li>Loop over the time horizon:
+
+<ul>
+<li>Select the option.</li>
+<li>Draw the reward for the selected option using Bernoulli distribution and the probability defined.</li>
+<li>Update the counts and estimated values of selected arm.</li>
+</ul></li>
+</ul>
+
+<p>We'll define the % of reward (probability) of each option and test the performance of the algorithm using three different metrics:</p>
+
+<ul>
+<li>Probability of selecting the best option.</li>
+<li>Average rewards. This metric is a better approximation if the options are similar.</li>
+<li>Cumulative rewards. The previous two metrics are not fair metrics for algorithms with large epsilon where they sacrifice by exploring more options; however, cumulative rewards is what we should care about.</li>
+</ul>
+
+<p>Moreover, we'll evaluate the algorithm using 5 different values of 𝜖: 0.1, 0.2, 0.3, 0.4, 0.5. Since in the literature they use <em>arm</em> instead of <em>option</em> for historical reasons, we'll be using <em>arm</em> and <em>option</em> interchangeably.</p>
+
+<pre><code class="language-python">class BernoulliArm:
+    def __init__(self, p):
+        self.p = p
+
+    def draw(self):
+        z = np.random.random()
+        if z &gt; self.p:
+            return 0.0
+        return 1.0
+
+
+def test_algorithm(algo, arms, num_simulations, horizon):
+    # Initialize rewards and chosen_arms with zero 2d arrays
+    chosen_arms = np.zeros((num_simulations, horizon))
+    rewards = np.zeros((num_simulations, horizon))
+
+    # Loop over all simulations
+    for sim in range(num_simulations):
+        # Re-initialize algorithm's counts and values arrays
+        algo.initialize(len(arms))
+
+        # Loop over all time horizon
+        for t in range(horizon):
+            # Select arm
+            chosen_arm = algo.select_arm()
+            chosen_arms[sim, t] = chosen_arm
+
+            # Draw from Bernoulli distribution to get rewards
+            reward = arms[chosen_arm].draw()
+            rewards[sim, t] = reward
+
+            # Update the algorithms' count and estimated values
+            algo.update(chosen_arm, reward)
+
+    # Average rewards across all sims and compute cumulative rewards
+    average_rewards = np.mean(rewards, axis=0)
+    cumulative_rewards = np.cumsum(average_rewards)
+
+    return chosen_arms, average_rewards, cumulative_rewards
+</code></pre>
+
+<pre><code class="language-python">np.random.seed(1)
+# Average reward by arm
+means = [0.1, 0.1, 0.1, 0.1, 0.9]
+n_arms = len(means)
+# Shuffle the arms
+np.random.shuffle(means)
+# Each arm will follow and Bernoulli distribution
+arms = list(map(lambda mu: BernoulliArm(mu), means))
+# Get the index of the best arm to test if algorithm will be able to learn that
+best_arm_index = np.argmax(means)
+# Define epsilon value to check the performance of the algorithm using each one
+epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
+
+# Plot the epsilon-Greedy algorithm
+plot_algorithm(alg_name=&quot;epsilon-Greedy&quot;, arms=arms, best_arm_index=best_arm_index,
+               hyper_params=epsilon, num_simulations=5000, horizon=500, label=&quot;eps&quot;)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/bandit-algorithms/epsilon_greedy_v1.png" >
+
+<img src="/img/bandit-algorithms/epsilon_greedy_v1.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>epsilon-Greedy Algorithm: Vey Different Options.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Few thing to note from the above graphs:</p>
+
+<ul>
+<li>Regardless of the epsilon values, all algorithms learned the best option.</li>
+<li>The algorithm picks options randomly; therefore, it's not guaranteed to always pick the best option even if it found that option. That's the main reason why none of the algorithms achieved a probability = 1 of selecting the best option or average rewards = % rewards of the best option even after they learned the best option.</li>
+<li>As 𝜖 increases --&gt; increase the exploration --&gt; increases the chance of picking options randomly instead of the best option.</li>
+<li>Algorithms with higher epsilon learn quicker but don't use that knowledge in exploiting the best option.</li>
+<li>Using accuracy in picking the best option and average rewards metrics, the algorithm 𝜖 = 0.1 outperforms the rest; however, cumulative rewards metric shows that it takes that algorithm long time to outperform the algorithm with 𝜖 = 0.2.</li>
+<li>Depends on time planned to run the experiment, different values of epsilons may be more optimal. For example, 𝜖 = 0.2 is the best value for almost anything at or below 400.</li>
+</ul>
+
+<p>Let's run the experiment again to see how would the algorithm behave under the following settings:</p>
+
+<ul>
+<li>Only two options.</li>
+<li>50 options.</li>
+<li>5 option that are very similar.</li>
+</ul>
+
+<pre><code class="language-python">np.random.seed(1)
+# Average reward by arm
+means = [0.1, 0.9]
+n_arms = len(means)
+# Shuffle the arms
+np.random.shuffle(means)
+# Each arm will follow and Bernoulli distribution
+arms = list(map(lambda mu: BernoulliArm(mu), means))
+# Get the index of the best arm to test if algorithm will be able to learn that
+best_arm_index = np.argmax(means)
+# Define epsilon value to check the performance of the algorithm using each one
+epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
+
+# Plot the epsilon-Greedy algorithm
+plot_algorithm(alg_name=&quot;epsilon-Greedy&quot;, arms=arms, best_arm_index=best_arm_index,
+               hyper_params=epsilon, num_simulations=5000, horizon=500, label=&quot;eps&quot;)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/bandit-algorithms/epsilon_greedy_v2.png" >
+
+<img src="/img/bandit-algorithms/epsilon_greedy_v2.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>epsilon-Greedy Algorithm: Two Options.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<pre><code class="language-python">np.random.seed(1)
+# Average reward by arm
+means = [i for i in np.random.random(50)]
+n_arms = len(means)
+# Shuffle the arms
+np.random.shuffle(means)
+# Each arm will follow and Bernoulli distribution
+arms = list(map(lambda mu: BernoulliArm(mu), means))
+# Get the index of the best arm to test if algorithm will be able to learn that
+best_arm_index = np.argmax(means)
+# Define epsilon value to check the performance of the algorithm using each one
+epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
+
+# Plot the epsilon-Greedy algorithm
+plot_algorithm(alg_name=&quot;epsilon-Greedy&quot;, arms=arms, best_arm_index=best_arm_index,
+               hyper_params=epsilon, num_simulations=5000, horizon=250, label=&quot;eps&quot;)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/bandit-algorithms/epsilon_greedy_v3.png" >
+
+<img src="/img/bandit-algorithms/epsilon_greedy_v3.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>epsilon-Greedy Algorithm: Large Number of Options.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<pre><code class="language-python">np.random.seed(1)
+# Average reward by arm
+means = [0.2, 0.18, 0.22, 0.19, 0.21]
+n_arms = len(means)
+# Shuffle the arms
+np.random.shuffle(means)
+# Each arm will follow and Bernoulli distribution
+arms = list(map(lambda mu: BernoulliArm(mu), means))
+# Get the index of the best arm to test if algorithm will be able to learn that
+best_arm_index = np.argmax(means)
+# Define epsilon value to check the performance of the algorithm using each one
+epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
+
+# Plot the epsilon-Greedy algorithm
+plot_algorithm(alg_name=&quot;epsilon-Greedy&quot;, arms=arms, best_arm_index=best_arm_index,
+               hyper_params=epsilon, num_simulations=5000, horizon=500, label=&quot;eps&quot;)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/bandit-algorithms/epsilon_greedy_v4.png" >
+
+<img src="/img/bandit-algorithms/epsilon_greedy_v4.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>epsilon-Greedy Algorithm: Very Similar Options.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<ul>
+<li>When we had lower number of options, all algorithms were faster at learning the best option which can be seen by the steepness of all curves of the first two graphs when time &lt; 100. As a result, all algorithms had higher cumulative rewards than when we had 5 options.</li>
+<li>Having large number of options made it hard on all algorithms to learn the best option and may need a lot more time to figure it out.</li>
+<li>Lastly, when options are very similar (in terms of rewards), the probability of selecting the best option by all algorithms decreases over time. Let's take the algorithm with 𝜖 = 0.1 and see why is this the case. After some investigation, the algorithm was struggling in differentiating between the best option and the second best option since the difference between the % rewards is 1%. Therefore, the probability of selecting the best arm was around 50%.</li>
+</ul>
+
+<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
+Annealing epsilon-Greedy Algorithm</h2><br>
+Epsilon value plays a major role in the performance of epsilon-Greedy algorithm and has to be tuned to the best of our knowledge in terms of the expectations of the estimated rewards of each option. Nonetheless, this estimation suffers from high uncertainty since most of the times either we have no clue what might work or the results would be against our intuition as user experience research has shown in multiple studies. Therefore, isn't it nice if we can avoid setting up the epsilon values and make the algorithm parameter-free? That's what <strong>Annealing epsilon-Greedy Algorithm</strong> does. We specify the rule of decaying epsilon with time and let the algorithm runs with no hyper-parameter configurations. The rule of we will use here is: 𝜖 = 1/<em>log(time + 0.0000001)</em>. As we can see, at the beginning of the experiment, 𝜖 would be close to Inf and that means a lot of exploration; however, as time goes, 𝜖 start approaching zero and the algorithm would exploit more and more by selecting the best option.</p>
+
+<p>We will evaluate the Annealed version using the same settings as before and compare it to standard version.</p>
+
+<pre><code class="language-python">class AnnealingEpsilonGreedy(EpsilonGreedy):
+    def __init__(self, counts=None, values=None):
+        self.counts = counts
+        self.values = values
+
+    def select_arm(self):
+        # Epsilon decay schedule
+        t = np.sum(self.counts) + 1
+        epsilon = 1 / np.log(t + 0.0000001)
+
+        z = np.random.random()
+        if z &gt; epsilon:
+            # Pick the best arm
+            return np.argmax(self.values)
+        # Randomly pick any arm with prob 1 / len(self.counts)
+        return np.random.randint(0, len(self.values))
+</code></pre>
+
+<pre><code class="language-python">np.random.seed(1)
+# Average reward by arm
+means = [0.1, 0.1, 0.1, 0.1, 0.9]
+n_arms = len(means)
+# Shuffle the arms
+np.random.shuffle(means)
+# Each arm will follow and Bernoulli distribution
+arms = list(map(lambda mu: BernoulliArm(mu), means))
+# Get the index of the best arm to test if algorithm will be able to learn that
+best_arm_index = np.argmax(means)
+
+# Plot the epsilon-Greedy algorithm
+plot_algorithm(alg_name=&quot;Annealing epsilon-Greedy&quot;, arms=arms, best_arm_index=best_arm_index,
+               num_simulations=5000, horizon=500)
+</code></pre>
+
+
+
+
+  
+
+
+
+
+<figure>
+
+  <a data-fancybox="" href="/img/bandit-algorithms/annealing_epsilon_greedy.png" >
+
+<img src="/img/bandit-algorithms/annealing_epsilon_greedy.png" >
+</a>
+
+
+<figcaption data-pre="Figure " data-post=":" class="numbered">
+  <h4>Annealing epsilon-Greedy Algorithm.</h4>
+  
+</figcaption>
+
+</figure>
+
+
+<p>Even though the accuracy of selecting the best option and the average rewards of the annealing epsilon-Greedy Algorithm is lower than the standard version, it has higher cumulative rewards. Also, since the real world is uncertain and we may not have any clue about the designed options, it may be preferred to use the annealing version under some scenarios.</p>
+
+<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold\">
+Conclusion</h2><br>
+epsilon-Greedy Algorithm works by going back and forth between exploration with probability = 𝜖 and exploitation with probability 1 - 𝜖. Below are some takeaways:</p>
+
+<ul>
+<li>Setting the value of epsilon:
+
+<ul>
+<li>If we set 𝜖 = 1, we would only explore the available options with a probability = 1/N of selecting any option. This will enable us to explore a lot of ideas at the expense of wasting resources by evaluating inferior options.</li>
+<li>If we set 𝜖 = 0, we would exploit the best option and never explore any new idea. This strategy would leave up behind our competitors given that the markets are so volatile.</li>
+</ul></li>
+<li>Exploration should be high at the beginning of the experiment to gain the knowledge about all the available options. It should decrease as a function of time where at some point after having enough data about all options, the algorithm should focus on exploiting the best option.</li>
+<li>All algorithms with different epsilon values learned the best option; however, they differ by the level of randomness of each algorithm in keep randomly exploring available options.</li>
+<li>To get the best results of any Bandit algorithm, we should have a lot of data, which means to run the experiment longer in most cases.</li>
+<li>For experiments that run for short period of time, traditional A/B testing may be better.</li>
+<li>Initialization of estimated rewards can affect the long-term performance of the algorithm. As a result, we may need to use previous experience and intuition to guide our initial values.</li>
+</ul>
+
+<p><strong>Note</strong>: Source code that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/epsilon-Greedy-Algorithm.ipynb">here</a>.
+The repo that hosts all Bandit Algorithms' implementations and testing frameworks can be found <a href="https://github.com/ImadDabbura/bandit-algorithms">here</a>.
+The post is inspired by <a href="http://shop.oreilly.com/product/0636920027393.do">Bandit Algorithms for Website Optimization</a> book.</p>
+
+    </div>
+
+    
+
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/website-optimization/">Website Optimization</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu057a6ce318cedc9fff5e5d4bcb0cb87d_16356_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="https://imaddabbura.github.io">Imad Dabbura</a></h5>
+      <h6 class="card-subtitle">Data Scientist</h6>
+      <p class="card-text" itemprop="description">My interests include data science, machine learning and artificial intelligence.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/imadphd" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//www.linkedin.com/in/imaddabbura" >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/imaddabbura" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="//medium.com/@ImadPhd" >
+              <i class="fab fa-medium"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+    <div class="article-widget">
+      
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/post/coding-nn-fwd-bckwd-prop/" rel="next">Coding Neural Network - Forward Propagation and Backpropagtion</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/post/pred-loan-repayment/" rel="prev">Predicting Loan Repayment</a>
+  </div>
+  
+</div>
+
+    </div>
+    
+
+    
+<section id="comments">
+  
+    
+<div id="disqus_thread"></div>
+<script>
+  let disqus_config = function () {
+    
+    
+    
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "ImadDabbura" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
+</section>
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://ImadDabbura.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    &copy; Imad Dabbura 2018 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
