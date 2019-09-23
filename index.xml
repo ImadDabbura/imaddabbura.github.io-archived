@@ -243,11 +243,11 @@ Clustering
 
 &lt;p&gt;&lt;strong&gt;Clustering&lt;/strong&gt; is one of the most common exploratory data analysis technique used to get an intuition about the structure of the data. It can be defined as the task of identifying subgroups in the data such that data points in the same subgroup (cluster) are very similar while data points in different clusters are very different. In other words, we try to find homogeneous subgroups within the data such that data points in each cluster are as similar as possible according to a similarity measure such as euclidean-based distance or correlation-based distance. The decision of which similarity measure to use is application-specific.&lt;/p&gt;
 
-&lt;p&gt;Clustering analysis can be done on the basis of features where we try to find subgroups of samples based on features or on the basis of samples where we try to find subgroups of features based on samples. We&#39;ll cover here clustering based on features. Clustering is used in market segmentation; where we try to fined customers that are similar to each other whether in terms of behaviors or attributes, image segmentation/compression; where we try to group similar regions together, document clustering based on topics, etc.&lt;/p&gt;
+&lt;p&gt;Clustering analysis can be done on the basis of features where we try to find subgroups of samples based on features or on the basis of samples where we try to find subgroups of features based on samples. We&#39;ll cover here clustering based on features. Clustering is used in market segmentation; where we try to fin  d customers that are similar to each other whether in terms of behaviors or attributes, image segmentation/compression; where we try to group similar regions together, document clustering based on topics, etc.&lt;/p&gt;
 
 &lt;p&gt;Unlike supervised learning, clustering is considered an unsupervised learning method since we don&#39;t have the ground truth to compare the output of the clustering algorithm to the true labels to evaluate its performance. We only want to try to investigate the structure of the data by grouping the data points into distinct subgroups.&lt;/p&gt;
 
-&lt;p&gt;In this post, we will cover only &lt;strong&gt;Kmeans&lt;/strong&gt; which is considered as one of the most used clustering algorithms due to its simplicity.&lt;/p&gt;
+&lt;p&gt;In this post, we will cover only &lt;strong&gt;Kmeans&lt;/strong&gt; which is considered as one of the most commonly used clustering algorithms due to its simplicity.&lt;/p&gt;
 
 &lt;p&gt;&lt;a id=&#39;kmeans&#39;&gt;&lt;/a&gt;
 &lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
@@ -267,7 +267,7 @@ the clusters as different (far) as possible. It assigns data points to a cluster
 &lt;ul&gt;
 &lt;li&gt;Compute the sum of the squared distance between data points and all centroids.&lt;/li&gt;
 &lt;li&gt;Assign each data point to the closest cluster (centroid).&lt;/li&gt;
-&lt;li&gt;Compute the centroids for the clusters by taking the average of the all data points that belong to each cluster.&lt;/li&gt;
+&lt;li&gt;Compute the centroids for the clusters by taking the average of all data points that belong to each cluster.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -275,21 +275,21 @@ the clusters as different (far) as possible. It assigns data points to a cluster
 
 &lt;p&gt;The objective function is:&lt;/p&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[J = \sum\_{i = 1}^{m}\sum\_{k = 1}^{K}w\_{ik}\|x^i - \mu\_k\|^2\tag{1}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[J = \sum_{i = 1}^{m}\sum_{k = 1}^{K}w_{ik}\|x^i - \mu_k\|^2\tag{1}\]&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;where $w_{ik} = 1$ for data point $x^i$ if it belongs to cluster &lt;em&gt;k&lt;/em&gt;; otherwise, $w_{ik} = 0$. Also, $\mu_k$ is the centroid of $x^i$&#39;s cluster.&lt;/p&gt;
 
-&lt;p&gt;It&#39;s a minimization problem of two parts. We first minimize J w.r.t. $w_{ik}$ and treat $\mu_k$ fixed. Then we minimize J w.r.t. $\mu_k$ and treat $w_{ik}$ fixed. Technically speaking, we differentiate J w.r.t. $w_{ik}$ first and update cluster assignments  (&lt;em&gt;E-step&lt;/em&gt;). Then we differentiate J w.r.t. $\mu_{k}$ and recompute the centroids after the cluster assignments from previous step  (&lt;em&gt;M-step&lt;/em&gt;). Therefore, E-step is:&lt;/p&gt;
+&lt;p&gt;It&#39;s a minimization problem of two parts. We first minimize J w.r.t. $w_{ik}$ and treat $\mu_k$ fixed. Then we minimize J w.r.t. $\mu&lt;em&gt;k$ and treat $w&lt;/em&gt;{ik}$ fixed. Technically speaking, we differentiate J w.r.t. $w_{ik}$ first and update cluster assignments  (&lt;em&gt;E-step&lt;/em&gt;). Then we differentiate J w.r.t. $\mu_{k}$ and recompute the centroids after the cluster assignments from previous step  (&lt;em&gt;M-step&lt;/em&gt;). Therefore, E-step is:&lt;/p&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial J}{\partial w\_{ik}} = \sum\_{i = 1}^{m}\sum\_{k = 1}^{K}\|x^i - \mu\_k\|^2\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\Rightarrow \begin{equation} w_{ik} = \begin{cases} 1 &amp; \text{if $k = arg min\_j\ \|x^i - \mu\_j\|^2$} \\\\\\
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial J}{\partial w_{ik}} = \sum_{i = 1}^{m}\sum_{k = 1}^{K}\|x^i - \mu_k\|^2\)&lt;/span&gt;
+&lt;span  class=&#34;math&#34;&gt;\(\Rightarrow \begin{equation} w_{ik} = \begin{cases} 1 &amp; \text{if $k = arg min_j\ \|x^i - \mu_j\|^2$} \\\\\\
 0 &amp; \text{otherwise}. \end{cases} \end{equation}\tag{2}\)&lt;/span&gt;
 In other words, assign the data point $x^i$ to the closest cluster judged by its sum of squared distance from cluster&#39;s centroid.&lt;/p&gt;
 
 &lt;p&gt;And M-step is:&lt;/p&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\ \frac{\partial J}{\partial \mu\_k} = 2\sum\_{i = 1}^{m}w\_{ik}(x^i - \mu\_k) = 0\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\Rightarrow \mu\_k = \frac{\sum\_{i = 1}^{m}w\_{ik}x^i}{\sum\_{i = 1}^{m}w\_{ik}}\tag{3}\)&lt;/span&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\ \frac{\partial J}{\partial \mu_k} = 2\sum_{i = 1}^{m}w_{ik}(x^i - \mu_k) = 0\)&lt;/span&gt;
+&lt;span  class=&#34;math&#34;&gt;\(\Rightarrow \mu_k = \frac{\sum_{i = 1}^{m}w_{ik}x^i}{\sum_{i = 1}^{m}w_{ik}}\tag{3}\)&lt;/span&gt;
 Which translates to recomputing the centroid of each cluster to reflect the new assignments.&lt;/p&gt;
 
 &lt;p&gt;Few things to note here:&lt;/p&gt;
@@ -300,7 +300,7 @@ Which translates to recomputing the centroid of each cluster to reflect the new 
 &lt;li&gt;Assignment of examples isn&#39;t changing is the same thing as no change in within-cluster variation:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[\frac{1}{m\_k}\sum\_{i = 1}^{m\_k}\|x^i - \mu\_{c^k}\|^2\tag{4}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[\frac{1}{m_k}\sum_{i = 1}^{m_k}\|x^i - \mu_{c^k}\|^2\tag{4}\]&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a id=&#39;implementation&#39;&gt;&lt;/a&gt;
 &lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
