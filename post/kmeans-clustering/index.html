@@ -651,7 +651,7 @@ the clusters as different (far) as possible. It assigns data points to a cluster
 
 <p>where $w_{ik} = 1$ for data point $x^i$ if it belongs to cluster <em>k</em>; otherwise, $w_{ik} = 0$. Also, $\mu_k$ is the centroid of $x^i$'s cluster.</p>
 
-<p>It's a minimization problem of two parts. We first minimize J w.r.t. $w_{ik}$ and treat $\mu<em>k$ fixed. Technically speaking, we differentiate J w.r.t. $w</em>{ik}$ first and update cluster assignments  (<em>E-step</em>). Then we differentiate J w.r.t. $\mu_{k}$ and recompute the centroids after the cluster assignments from previous step  (<em>M-step</em>). Therefore, E-step is:</p>
+<p>It's a minimization problem of two parts. We first minimize J w.r.t. $w_{ik}$ and treat $\mu_k$ fixed. Then we minimize J w.r.t. $\mu<em>k$ and treat $w</em>{ik}$ fixed. Technically speaking, we differentiate J w.r.t. $w_{ik}$ first and update cluster assignments  (<em>E-step</em>). Then we differentiate J w.r.t. $\mu_{k}$ and recompute the centroids after the cluster assignments from previous step  (<em>M-step</em>). Therefore, E-step is:</p>
 
 <p><span  class="math">\(\frac{\partial J}{\partial w_{ik}} = \sum_{i = 1}^{m}\sum_{k = 1}^{K}\|x^i - \mu_k\|^2\)</span>
 <span  class="math">\(\Rightarrow \begin{equation} w_{ik} = \begin{cases} 1 & \text{if $k = arg min_j\ \|x^i - \mu_j\|^2$} \\\\\\

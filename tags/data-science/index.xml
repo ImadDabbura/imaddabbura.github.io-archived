@@ -168,7 +168,7 @@ the clusters as different (far) as possible. It assigns data points to a cluster
 
 &lt;p&gt;where $w_{ik} = 1$ for data point $x^i$ if it belongs to cluster &lt;em&gt;k&lt;/em&gt;; otherwise, $w_{ik} = 0$. Also, $\mu_k$ is the centroid of $x^i$&#39;s cluster.&lt;/p&gt;
 
-&lt;p&gt;It&#39;s a minimization problem of two parts. We first minimize J w.r.t. $w_{ik}$ and treat $\mu&lt;em&gt;k$ fixed. Technically speaking, we differentiate J w.r.t. $w&lt;/em&gt;{ik}$ first and update cluster assignments  (&lt;em&gt;E-step&lt;/em&gt;). Then we differentiate J w.r.t. $\mu_{k}$ and recompute the centroids after the cluster assignments from previous step  (&lt;em&gt;M-step&lt;/em&gt;). Therefore, E-step is:&lt;/p&gt;
+&lt;p&gt;It&#39;s a minimization problem of two parts. We first minimize J w.r.t. $w_{ik}$ and treat $\mu_k$ fixed. Then we minimize J w.r.t. $\mu&lt;em&gt;k$ and treat $w&lt;/em&gt;{ik}$ fixed. Technically speaking, we differentiate J w.r.t. $w_{ik}$ first and update cluster assignments  (&lt;em&gt;E-step&lt;/em&gt;). Then we differentiate J w.r.t. $\mu_{k}$ and recompute the centroids after the cluster assignments from previous step  (&lt;em&gt;M-step&lt;/em&gt;). Therefore, E-step is:&lt;/p&gt;
 
 &lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial J}{\partial w_{ik}} = \sum_{i = 1}^{m}\sum_{k = 1}^{K}\|x^i - \mu_k\|^2\)&lt;/span&gt;
 &lt;span  class=&#34;math&#34;&gt;\(\Rightarrow \begin{equation} w_{ik} = \begin{cases} 1 &amp; \text{if $k = arg min_j\ \|x^i - \mu_j\|^2$} \\\\\\
