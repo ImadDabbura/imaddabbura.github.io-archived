@@ -1675,10 +1675,10 @@ Forward Propagation
 &lt;p&gt;Next, we&#39;ll write down the dimensions of a multi-layer neural network in the general form to help us in matrix multiplication because one of the major challenges in implementing a neural network is getting the dimensions right.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;$W&lt;sup&gt;l, dW&lt;/sup&gt;l$: Number of units (nodes) in $l^{th}$ layer x Number of units (nodes) in $l - 1$ layer&lt;/li&gt;
-&lt;li&gt;$b&lt;sup&gt;l, db&lt;/sup&gt;l$: Number of units (nodes) in $l^{th}$ layer x 1&lt;/li&gt;
-&lt;li&gt;$Z&lt;sup&gt;l, dZ&lt;/sup&gt;l$: Number of units (nodes) in $l^{th}$ layer x number of examples&lt;/li&gt;
-&lt;li&gt;$A&lt;sup&gt;l, dA&lt;/sup&gt;l$: Number of units (nodes) in $l^{th}$ layer x number of examples&lt;/li&gt;
+&lt;li&gt;$W^l$, $dW^l$: Number of units (nodes) in $l^{th}$ layer x Number of units (nodes) in $l - 1$ layer&lt;/li&gt;
+&lt;li&gt;$b^l$, $db^l$: Number of units (nodes) in $l^{th}$ layer x 1&lt;/li&gt;
+&lt;li&gt;$Z^l$, $dZ^l$: Number of units (nodes) in $l^{th}$ layer x number of examples&lt;/li&gt;
+&lt;li&gt;$A^l$, $dA^l$: Number of units (nodes) in $l^{th}$ layer x number of examples&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;The two equations we need to implement forward propagations are:&lt;/p&gt;
