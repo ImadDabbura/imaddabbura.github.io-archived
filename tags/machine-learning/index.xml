@@ -2104,12 +2104,13 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
 &lt;li&gt;&lt;p&gt;On each iteration, take the partial derivative of the cost function &lt;em&gt;J(w)&lt;/em&gt; w.r.t each parameter (gradient):&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\)&lt;/span&gt;;&lt;/p&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\]&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\]&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;The update equations are:
-&lt;span  class=&#34;math&#34;&gt;\(w = w - \alpha \nabla_w J\)&lt;/span&gt;;&lt;/p&gt;
+&lt;p&gt;The update equations are:&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[w = w - \alpha \nabla_w J\]&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[b = b - \alpha \nabla_b J\]&lt;/span&gt;&lt;/p&gt;
 
