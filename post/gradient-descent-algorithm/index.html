@@ -602,7 +602,7 @@
 <li>IF α is large, it may fail to converge and overshoot the minimum.</li>
 </ul>
 
-<p>Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn't converge so that we would have a very fast learning algorithm that converges (see figure 2).
+<p>Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn't converge so that we would have a very fast learning algorithm that converges (see figure 1).
    
 
 
@@ -636,7 +636,7 @@
 <li>The most commonly used rates are : <em>0.001, 0.003, 0.01, 0.03, 0.1, 0.3</em>.</li>
 </ul></li>
 
-<li><p>Make sure to scale the data if it's on very different scales. If we don't scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 3).
+<li><p>Make sure to scale the data if it's on very different scales. If we don't scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 2).
 
 
 
@@ -667,17 +667,17 @@
 <li><p>On each iteration, take the partial derivative of the cost function <em>J(w)</em> w.r.t each parameter (gradient):</p></li>
 </ol>
 
-<p><span  class="math">\(\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\)</span>
-<span  class="math">\(\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\)</span></p>
+<p><span  class="math">\(\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\)</span>;</p>
 
-<p>The update equations are:</p>
+<p><span  class="math">\[\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\]</span></p>
 
-<pre><code>$$w = w - \alpha \nabla_w J$$
-$$b = b - \alpha \nabla_b J$$
-</code></pre>
+<p>The update equations are:
+<span  class="math">\(w = w - \alpha \nabla_w J\)</span>;</p>
+
+<p><span  class="math">\[b = b - \alpha \nabla_b J\]</span></p>
 
 <ul>
-<li>For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of <em>w &gt; 0</em>, this means that we are to the right of optimal <em>w</em>*. Therefore, the update will be negative, and will start getting close to the optimal values of <em>w</em>*. However, if it’s negative, the update will be positive and will increase the current values of <em>w</em> to converge to the optimal values of <em>w</em>*(see figure 4):
+<li>For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of <em>w &gt; 0</em>, this means that we are to the right of optimal <em>w</em>*. Therefore, the update will be negative, and will start getting close to the optimal values of <em>w</em>*. However, if it’s negative, the update will be positive and will increase the current values of <em>w</em> to converge to the optimal values of <em>w</em>*(see figure 3):
 
 
 
@@ -771,7 +771,7 @@ Mini-Batch Gradient Descent
 
 <ul>
 <li>It won't converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.</li>
-<li>Due to the noise, the learning steps have more oscillations (see figure 5) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
+<li>Due to the noise, the learning steps have more oscillations (see figure 4) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
 
 
 
@@ -802,7 +802,7 @@ With large training datasets, we don't usually need more than 2-10 passes over a
 Stochastic Gradient Descent
 </h3>
 
-<p>Instead of going through all examples, Stochastic Gradient Descent (SGD) performs the parameters update on each example <em>(x^i, y^i)</em>. Therefore, learning happens on every example:
+<p>Instead of going through all examples, Stochastic Gradient Descent (SGD) performs the parameters update on each example $(x^i, y^i)$. Therefore, learning happens on every example:
 <span  class="math">\(w = w - \alpha \nabla_w J(x^i, y^i; w, b)\)</span></p>
 
 <ul>
@@ -824,9 +824,8 @@ Stochastic Gradient Descent
 <li>We can't utilize vectorization over 1 example and becomes very slow. Also, the variance becomes large since we only use 1 example for each learning step.</li>
 </ul>
 
-<p>Below is a graph that shows the gradient descent's variants and their direction towards the minimum:</p>
+<p>Below is a graph that shows the gradient descent's variants and their direction towards the minimum:
 
-<pre><code>
 
 
   
@@ -849,9 +848,7 @@ Stochastic Gradient Descent
 
 </figure>
 
-</code></pre>
-
-<p>As the figure above shows, SGD direction is very noisy compared to mini-batch.</p>
+As the figure above shows, SGD direction is very noisy compared to mini-batch.</p>
 
 <h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
 Challenges
@@ -870,7 +867,7 @@ Challenges
 
 <p>As a result, the direction that looks promising to the gradient may not be so and may lead to slow the learning process or even diverge.</p></li>
 
-<li><p>If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 7).
+<li><p>If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 6).
 
 
 
@@ -895,7 +892,7 @@ Challenges
 </figure>
 </p></li>
 
-<li><p>The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients' norm is increasing, we're able to achieve a very low error rates  (see figure 8).
+<li><p>The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients' norm is increasing, we're able to achieve a very low error rates  (see figure 7).
 
 
 
@@ -925,7 +922,7 @@ Challenges
 </figure>
 </p></li>
 
-<li><p>In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 9). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
+<li><p>In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 8). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
 
 
 

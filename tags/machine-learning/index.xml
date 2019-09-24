@@ -2039,7 +2039,7 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
 &lt;li&gt;IF α is large, it may fail to converge and overshoot the minimum.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn&#39;t converge so that we would have a very fast learning algorithm that converges (see figure 2).
+&lt;p&gt;Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn&#39;t converge so that we would have a very fast learning algorithm that converges (see figure 1).
    
 
 
@@ -2073,7 +2073,7 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
 &lt;li&gt;The most commonly used rates are : &lt;em&gt;0.001, 0.003, 0.01, 0.03, 0.1, 0.3&lt;/em&gt;.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Make sure to scale the data if it&#39;s on very different scales. If we don&#39;t scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 3).
+&lt;li&gt;&lt;p&gt;Make sure to scale the data if it&#39;s on very different scales. If we don&#39;t scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 2).
 
 
 
@@ -2104,17 +2104,17 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
 &lt;li&gt;&lt;p&gt;On each iteration, take the partial derivative of the cost function &lt;em&gt;J(w)&lt;/em&gt; w.r.t each parameter (gradient):&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\)&lt;/span&gt;;&lt;/p&gt;
 
-&lt;p&gt;The update equations are:&lt;/p&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\]&lt;/span&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$$w = w - \alpha \nabla_w J$$
-$$b = b - \alpha \nabla_b J$$
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The update equations are:
+&lt;span  class=&#34;math&#34;&gt;\(w = w - \alpha \nabla_w J\)&lt;/span&gt;;&lt;/p&gt;
+
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[b = b - \alpha \nabla_b J\]&lt;/span&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of &lt;em&gt;w &amp;gt; 0&lt;/em&gt;, this means that we are to the right of optimal &lt;em&gt;w&lt;/em&gt;*. Therefore, the update will be negative, and will start getting close to the optimal values of &lt;em&gt;w&lt;/em&gt;*. However, if it’s negative, the update will be positive and will increase the current values of &lt;em&gt;w&lt;/em&gt; to converge to the optimal values of &lt;em&gt;w&lt;/em&gt;*(see figure 4):
+&lt;li&gt;For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of &lt;em&gt;w &amp;gt; 0&lt;/em&gt;, this means that we are to the right of optimal &lt;em&gt;w&lt;/em&gt;*. Therefore, the update will be negative, and will start getting close to the optimal values of &lt;em&gt;w&lt;/em&gt;*. However, if it’s negative, the update will be positive and will increase the current values of &lt;em&gt;w&lt;/em&gt; to converge to the optimal values of &lt;em&gt;w&lt;/em&gt;*(see figure 3):
 
 
 
@@ -2208,7 +2208,7 @@ Mini-Batch Gradient Descent
 
 &lt;ul&gt;
 &lt;li&gt;It won&#39;t converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.&lt;/li&gt;
-&lt;li&gt;Due to the noise, the learning steps have more oscillations (see figure 5) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
+&lt;li&gt;Due to the noise, the learning steps have more oscillations (see figure 4) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
 
 
 
@@ -2239,7 +2239,7 @@ With large training datasets, we don&#39;t usually need more than 2-10 passes ov
 Stochastic Gradient Descent
 &lt;/h3&gt;
 
-&lt;p&gt;Instead of going through all examples, Stochastic Gradient Descent (SGD) performs the parameters update on each example &lt;em&gt;(x^i, y^i)&lt;/em&gt;. Therefore, learning happens on every example:
+&lt;p&gt;Instead of going through all examples, Stochastic Gradient Descent (SGD) performs the parameters update on each example $(x^i, y^i)$. Therefore, learning happens on every example:
 &lt;span  class=&#34;math&#34;&gt;\(w = w - \alpha \nabla_w J(x^i, y^i; w, b)\)&lt;/span&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -2261,9 +2261,8 @@ Stochastic Gradient Descent
 &lt;li&gt;We can&#39;t utilize vectorization over 1 example and becomes very slow. Also, the variance becomes large since we only use 1 example for each learning step.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Below is a graph that shows the gradient descent&#39;s variants and their direction towards the minimum:&lt;/p&gt;
+&lt;p&gt;Below is a graph that shows the gradient descent&#39;s variants and their direction towards the minimum:
 
-&lt;pre&gt;&lt;code&gt;
 
 
   
@@ -2286,9 +2285,7 @@ Stochastic Gradient Descent
 
 &lt;/figure&gt;
 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As the figure above shows, SGD direction is very noisy compared to mini-batch.&lt;/p&gt;
+As the figure above shows, SGD direction is very noisy compared to mini-batch.&lt;/p&gt;
 
 &lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
 Challenges
@@ -2307,7 +2304,7 @@ Challenges
 
 &lt;p&gt;As a result, the direction that looks promising to the gradient may not be so and may lead to slow the learning process or even diverge.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 7).
+&lt;li&gt;&lt;p&gt;If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 6).
 
 
 
@@ -2332,7 +2329,7 @@ Challenges
 &lt;/figure&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients&#39; norm is increasing, we&#39;re able to achieve a very low error rates  (see figure 8).
+&lt;li&gt;&lt;p&gt;The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients&#39; norm is increasing, we&#39;re able to achieve a very low error rates  (see figure 7).
 
 
 
@@ -2362,7 +2359,7 @@ Challenges
 &lt;/figure&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 9). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
+&lt;li&gt;&lt;p&gt;In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 8). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
 
 
 
