@@ -818,15 +818,15 @@ Backpropagation</h3></p>
 
 <p>In addition, since RNNs are known to have steep cliffs (sudden steep decrease in $\mathcal{L}$), gradients may overshoot the minimum and undo a lot of the work that was done even if we are using adaptive learning methods such as RMSProp. The reason is because gradient is a linear approximation of the loss function and may not capture information further than the point it was evaluated on such as the curvature of loss curve. Therefore, it's a common practice to clip the gradients to be in the interval . For this exercise, we'll clip the gradients to be in the interval . That means if the gradient is &gt; 5 or &lt; -5, it would be clipped to 5 and -5 respectively. Below are all the formulas needed to compute the gradients w.r.t. all parameters at all time steps.</p>
 
-<p><span  class="math">\(\nabla_{o^t}\mathcal{L} = \widehat{y^t} - y^t\tag{6}\{}\)</span>
-<span  class="math">\(\nabla_{W_{hy}}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} . {h^t}^T\tag{7}\{}\)</span>
-<span  class="math">\(\nabla_{c}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} \tag{8}\{}\)</span>
-<span  class="math">\(\nabla_{h^t}\mathcal{L} = W_{hy}^T . \nabla_{o^t}\mathcal{L} + \underbrace { W_{hh}^T . \nabla_{h^{t + 1}}\mathcal{L} * (1 - tanh(W_{hh}h^{t} + W_{xh}x^{t + 1} + b) ^ 2)}_{dh_{next}} \tag{9}\{}\)</span>
-<span  class="math">\(\nabla_{h^{t - 1}}\mathcal{L} = W_{hh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2)\tag{10}\{}\)</span>
-<span  class="math">\(\nabla_{x^t}\mathcal{L} = W_{xh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2)\tag{11}\{}\)</span>
-<span  class="math">\(\nabla_{W_{hh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {h^{t - 1}}^T\tag{12}\{}\)</span>
-<span  class="math">\(\nabla_{W_{xh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {x^t}^T\tag{13}\{}\)</span>
-<span  class="math">\(\nabla_{b}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2) \tag{14}\{}\)</span></p>
+<p><span  class="math">\(\nabla_{o^t}\mathcal{L} = \widehat{y^t} - y^t\tag{6}\)</span>
+<span  class="math">\(\nabla_{W_{hy}}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} . {h^t}^T\tag{7}\)</span>
+<span  class="math">\(\nabla_{c}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} \tag{8}\)</span>
+<span  class="math">\(\nabla_{h^t}\mathcal{L} = W_{hy}^T . \nabla_{o^t}\mathcal{L} + \underbrace { W_{hh}^T . \nabla_{h^{t + 1}}\mathcal{L} * (1 - tanh(W_{hh}h^{t} + W_{xh}x^{t + 1} + b) ^ 2)}_{dh_{next}} \tag{9}\)</span>
+<span  class="math">\(\nabla_{h^{t - 1}}\mathcal{L} = W_{hh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2)\tag{10}\)</span>
+<span  class="math">\(\nabla_{x^t}\mathcal{L} = W_{xh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2)\tag{11}\)</span>
+<span  class="math">\(\nabla_{W_{hh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {h^{t - 1}}^T\tag{12}\)</span>
+<span  class="math">\(\nabla_{W_{xh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {x^t}^T\tag{13}\)</span>
+<span  class="math">\(\nabla_{b}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2) \tag{14}\)</span></p>
 
 <p>Note that at last time step $T$, we'll initialize $dh_{next}$  to zeros since we can't get values from future. To stabilize the update at each time step since SGD may have so many oscillations, we'll be using one of the adaptive learning method optimizers. More specifically, we'll use <a href="https://nbviewer.jupyter.org/github/ImadDabbura/Deep-Learning/blob/master/notebooks/Optimization-Algorithms.ipynb">Root Mean Squared Propagation (RMSProp)</a> which tends to have acceptable performance.</p>
 
