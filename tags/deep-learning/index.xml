@@ -2356,7 +2356,7 @@ It can stuck in a local optimum.&lt;/li&gt;
 
 &lt;p&gt;In this post, we&#39;ll cover the &lt;strong&gt;Character-Level Language Model&lt;/strong&gt; where almost all the concepts hold for any other language models such as word-language models. The main task of the character-level language model is to predict the next character given all previous characters in a sequence of data, i.e. generates text character by character. More formally, given a training sequence $(x^1, ... , x^T)$, the RNN uses the sequence of its output vectors $(o^1, ... , o^T)$ to obtain a sequence of predictive distributions $P(x&lt;sup&gt;t/x&lt;/sup&gt;{t-1}) = softmax(o^t)$.&lt;/p&gt;
 
-&lt;p&gt;Let&#39;s illustrate how the character-level language model works using my first name (&amp;quot;imad&amp;quot;) as an example (see figure 2 for all the details of this example).&lt;/p&gt;
+&lt;p&gt;Let&#39;s illustrate how the character-level language model works using my first name (&amp;quot;imad&amp;quot;) as an example (see figure 1 for all the details of this example).&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;We first build a vocabulary dictionary using all the unique letters of the names in the corpus as keys and the index of each letter starting from zero (since Python is a zero-indexed language) in an ascending order. For our example, the vocabulary dictionary would be: {&amp;quot;a&amp;quot;: 0, &amp;quot;d&amp;quot;: 1, &amp;quot;i&amp;quot;: 2, &amp;quot;m&amp;quot;: 3}. Therefore, &amp;quot;imad&amp;quot; would become a list of the following integers: [2, 3, 0, 1].&lt;/li&gt;
@@ -2403,7 +2403,7 @@ It can stuck in a local optimum.&lt;/li&gt;
 &lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
 Training&lt;/h2&gt;
 
-&lt;p&gt;The &lt;a href=&#34;http://deron.meranda.us/data/census-derived-all-first.txt&#34;&gt;dataset&lt;/a&gt; we&#39;ll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we&#39;ll be using to train the character-level language model is called &lt;strong&gt;many to many&lt;/strong&gt; where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 3).&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;http://deron.meranda.us/data/census-derived-all-first.txt&#34;&gt;dataset&lt;/a&gt; we&#39;ll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we&#39;ll be using to train the character-level language model is called &lt;strong&gt;many to many&lt;/strong&gt; where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 2).&lt;/p&gt;
 
 
 
@@ -2469,7 +2469,7 @@ Forward Propagation&lt;/h3&gt;&lt;/p&gt;
 &lt;li&gt;&lt;p&gt;Compute the hidden state using the following formula:&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(h^t = tanh(W\_{hh}h^{t - 1} + W\_{xh}x^t + b)\tag{1}\)&lt;/span&gt;
+&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(h^t = tanh(W_{hh}h^{t - 1} + W_{xh}x^t + b)\tag{1}\)&lt;/span&gt;
 Notice that we use hyperbolic tangent $(\frac{e^x - e&lt;sup&gt;{-x}}{e&lt;/sup&gt;x + e^{-x}})$ as the non-linear function. One of the main advantages of the hyperbolic tangent function is that it resembles the identity function.&lt;/p&gt;
 
 &lt;ul&gt;

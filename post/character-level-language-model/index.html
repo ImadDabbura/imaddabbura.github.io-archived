@@ -595,7 +595,7 @@
 
 <p>In this post, we'll cover the <strong>Character-Level Language Model</strong> where almost all the concepts hold for any other language models such as word-language models. The main task of the character-level language model is to predict the next character given all previous characters in a sequence of data, i.e. generates text character by character. More formally, given a training sequence $(x^1, ... , x^T)$, the RNN uses the sequence of its output vectors $(o^1, ... , o^T)$ to obtain a sequence of predictive distributions $P(x<sup>t/x</sup>{t-1}) = softmax(o^t)$.</p>
 
-<p>Let's illustrate how the character-level language model works using my first name (&quot;imad&quot;) as an example (see figure 2 for all the details of this example).</p>
+<p>Let's illustrate how the character-level language model works using my first name (&quot;imad&quot;) as an example (see figure 1 for all the details of this example).</p>
 
 <ol>
 <li>We first build a vocabulary dictionary using all the unique letters of the names in the corpus as keys and the index of each letter starting from zero (since Python is a zero-indexed language) in an ascending order. For our example, the vocabulary dictionary would be: {&quot;a&quot;: 0, &quot;d&quot;: 1, &quot;i&quot;: 2, &quot;m&quot;: 3}. Therefore, &quot;imad&quot; would become a list of the following integers: [2, 3, 0, 1].</li>
@@ -642,7 +642,7 @@
 <h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
 Training</h2>
 
-<p>The <a href="http://deron.meranda.us/data/census-derived-all-first.txt">dataset</a> we'll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we'll be using to train the character-level language model is called <strong>many to many</strong> where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 3).</p>
+<p>The <a href="http://deron.meranda.us/data/census-derived-all-first.txt">dataset</a> we'll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we'll be using to train the character-level language model is called <strong>many to many</strong> where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 2).</p>
 
 
 
@@ -708,7 +708,7 @@ Forward Propagation</h3></p>
 <li><p>Compute the hidden state using the following formula:</p></li>
 </ul>
 
-<p><span  class="math">\(h^t = tanh(W\_{hh}h^{t - 1} + W\_{xh}x^t + b)\tag{1}\)</span>
+<p><span  class="math">\(h^t = tanh(W_{hh}h^{t - 1} + W_{xh}x^t + b)\tag{1}\)</span>
 Notice that we use hyperbolic tangent $(\frac{e^x - e<sup>{-x}}{e</sup>x + e^{-x}})$ as the non-linear function. One of the main advantages of the hyperbolic tangent function is that it resembles the identity function.</p>
 
 <ul>
