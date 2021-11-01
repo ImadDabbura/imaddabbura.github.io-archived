@@ -177,7 +177,7 @@ class Kmeans:
         self.error = self.compute_sse(X, self.labels, self.centroids)
     
     def predict(self, X):
-        distance = self.compute_distance(X, old_centroids)
+        distance = self.compute_distance(X, self.centroids)
         return self.find_closest_cluster(distance)
 &lt;/code&gt;&lt;/pre&gt;
 
