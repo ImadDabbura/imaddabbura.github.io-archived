@@ -7,7 +7,7 @@
     <description>Website Optimization</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Imad Dabbura 2018</copyright><lastBuildDate>Sat, 31 Mar 2018 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://imaddabbura.github.io/img/icon-192.png</url>
+      <url>https://imaddabbura.github.io/img/icon.png</url>
       <title>Website Optimization</title>
       <link>https://imaddabbura.github.io/tags/website-optimization/</link>
     </image>
@@ -18,36 +18,28 @@
       <pubDate>Sat, 31 Mar 2018 00:00:00 +0000</pubDate>
       <guid>https://imaddabbura.github.io/post/epsilon-greedy-algorithm/</guid>
       <description>&lt;p&gt;A/B testing can be defined as a randomized controlled experiment that allows us to test if there is a causal relationship between a change to a website/app and the user behavior. The change can be visible such as location of a button on the homepage or invisible such as the ranking/recommendation algorithms and backend infrastructure.&lt;/p&gt;
-
 &lt;p&gt;Web/Mobile developers and business stakeholders always face the following dilemma: Should we try out all ideas and explore all options continuously? Or should we exploit the best available option and stick to it?
-The answer is, as in most cases, will be a trade-off between the two extremes. If we explore all the time, we&#39;ll collect a lot of data and waste resources in testing inferior ideas and missing sales (e-commerce case). However, if we only exploit the available option and never try new ideas, we would be left behind and loose in the long-term with ever-changing markets.&lt;/p&gt;
-
-&lt;p&gt;In this series, we&#39;ll explore solutions offered by &lt;strong&gt;Multi-armed Bandit Algorithms&lt;/strong&gt; that have two main advantages over traditional A/B testing:&lt;/p&gt;
-
+The answer is, as in most cases, will be a trade-off between the two extremes. If we explore all the time, we&amp;rsquo;ll collect a lot of data and waste resources in testing inferior ideas and missing sales (e-commerce case). However, if we only exploit the available option and never try new ideas, we would be left behind and loose in the long-term with ever-changing markets.&lt;/p&gt;
+&lt;p&gt;In this series, we&amp;rsquo;ll explore solutions offered by &lt;strong&gt;Multi-armed Bandit Algorithms&lt;/strong&gt; that have two main advantages over traditional A/B testing:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Smoothly decrease exploration over time instead of sudden jumps.&lt;/li&gt;
 &lt;li&gt;Focus resources on better options and not keep evaluating inferior options during the life of the experiment.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;What is &lt;strong&gt;Bandit Algorithms&lt;/strong&gt;? Bandit Algorithms are algorithms that try to learn a rule of selecting a sequence of options that balance exploring available options and getting enough knowledge about each option and maximize profits by selecting the best option. Note that during the experiment, we only have knowledge about the options we tried. Therefore, every time we select an option that&#39;s not the best one, we incur an opportunity cost of not selecting the best option; however, we also gain a new knowledge (feedback) about the selected option. In other words, we need to have enough feedback about each option to learn the best option. As a result, the best strategy would be to explore more at the beginning of the experiment until we know the best option and then start exploiting that option.&lt;/p&gt;
-
-&lt;p&gt;&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
-epsilon-Greedy Algorithm&lt;/h2&gt;&lt;br&gt;
-In this notebook, we&#39;ll cover &lt;strong&gt;epsilon-Greedy Algorithm&lt;/strong&gt;. Greedy Algorithm can be defined as the algorithm that picks the best currently available option without taking into consideration the long-term effect of that decision, which may happen to be a suboptimal decision. Given that, we can define epsilon-Greedy Algorithm as a Greedy Algorithm that adds some randomness when deciding between options: Instead of picking always the best available option, randomly explore other options with a probability = 𝜖 or pick the best option with a probability = 1 - 𝜖. Therefore, we can add randomness to the algorithm by increasing 𝜖, which will make the algorithm explores other options more frequently. Additionally, 𝜖 is a hyper-parameter that needs to be tuned based on the experiment, i.e. there is no value that works best on all experiments.
-Let&#39;s explore how the algorithm works assuming we have two options: A and B (we can think of them as Control and Treatment groups). For each new user:&lt;/p&gt;
-
+&lt;p&gt;What is &lt;strong&gt;Bandit Algorithms&lt;/strong&gt;? Bandit Algorithms are algorithms that try to learn a rule of selecting a sequence of options that balance exploring available options and getting enough knowledge about each option and maximize profits by selecting the best option. Note that during the experiment, we only have knowledge about the options we tried. Therefore, every time we select an option that&amp;rsquo;s not the best one, we incur an opportunity cost of not selecting the best option; however, we also gain a new knowledge (feedback) about the selected option. In other words, we need to have enough feedback about each option to learn the best option. As a result, the best strategy would be to explore more at the beginning of the experiment until we know the best option and then start exploiting that option.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;Assume we have a coin that has a probability of coming heads = 𝜖 and a probability of coming tails = 1 - 𝜖. Therefore,
-
 &lt;ul&gt;
-&lt;li&gt;If it comes heads, explore randomly the available options (exploration).&lt;/li&gt;
+&lt;li&gt;If it comes heads, explore randomly the available options (exploration).
+&lt;ul&gt;
 &lt;li&gt;The probability of selecting any option is 1/2.&lt;/li&gt;
-&lt;li&gt;If it comes tails, select the best option (exploitation).&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
+&lt;/li&gt;
+&lt;li&gt;If it comes tails, select the best option (exploitation).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;As a result, the probability of selecting any option randomly if we have N options is 𝜖 1/N; however, the probability of selecting the best option is 1 - 𝜖 (see figure 1).&lt;/p&gt;
-
 
 
 
@@ -71,149 +63,130 @@ Let&#39;s explore how the algorithm works assuming we have two options: A and B 
 
 &lt;/figure&gt;
 
-
-&lt;p&gt;Let&#39;s import the needed packages and implement the algorithm.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Import packages
-import os
-import sys
-
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-
-# Add module path to system path
-sys.path.append(os.path.abspath(&amp;quot;../&amp;quot;))
-from utils import plot_algorithm, compare_algorithms
-
-%matplotlib inline
-plt.style.use(&amp;quot;fivethirtyeight&amp;quot;)
-sns.set_context(&amp;quot;notebook&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class EpsilonGreedy:
-    def __init__(self, epsilon, counts=None, values=None):
-        self.epsilon = epsilon
-        self.counts = counts
-        self.values = values
-
-    def initialize(self, n_arms):
-        self.counts = np.zeros(n_arms, dtype=int)
-        self.values = np.zeros(n_arms, dtype=float)
-
-    def select_arm(self):
-        z = np.random.random()
-        if z &amp;gt; self.epsilon:
-            # Pick the best arm
-            return np.argmax(self.values)
-        # Randomly pick any arm with prob 1 / len(self.counts)
-        return np.random.randint(0, len(self.values))
-
-    def update(self, chosen_arm, reward):
-        # Increment chosen arm&#39;s count by one
-        self.counts[chosen_arm] += 1
-        n = self.counts[chosen_arm]
-
-        # Recompute the estimated value of chosen arm using new reward
-        value = self.values[chosen_arm]
-        new_value = value * ((n - 1) / n) + reward / n
-        self.values[chosen_arm] = new_value
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Few things to note from the above implementation:&lt;/p&gt;
-
+&lt;p&gt;Let&amp;rsquo;s import the needed packages and implement the algorithm.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Import packages&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; seaborn &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; sns
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Add module path to system path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sys&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;append(os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;abspath(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;../&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; utils &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; plot_algorithm, compare_algorithms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;matplotlib inline
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;style&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;use(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fivethirtyeight&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sns&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_context(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;notebook&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;EpsilonGreedy&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __init__(self, epsilon, counts&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;, values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;epsilon &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; epsilon
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;counts &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; counts
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; values
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;initialize&lt;/span&gt;(self, n_arms):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;counts &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(n_arms, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;int)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(n_arms, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;float)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;select_arm&lt;/span&gt;(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;epsilon:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Pick the best arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Randomly pick any arm with prob 1 / len(self.counts)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, len(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;update&lt;/span&gt;(self, chosen_arm, reward):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Increment chosen arm&amp;#39;s count by one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;counts[chosen_arm] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;counts[chosen_arm]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Recompute the estimated value of chosen arm using new reward&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values[chosen_arm]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        new_value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; value &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; ((n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; n) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; reward &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; n
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values[chosen_arm] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; new_value
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Few things to note from the above implementation:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Initialization of values (rewards) affect the long term performance of the algorithm.&lt;/li&gt;
 &lt;li&gt;The larger the sample size (N), the less influential the rewards from the recent options since we are using the average of each option in the values array.&lt;/li&gt;
 &lt;li&gt;Values array will store the estimated values (average) of each option.&lt;/li&gt;
 &lt;li&gt;Counts is just an internal counter that keeps track of the number of times we selected each option.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
-Monte Carlo Simulations&lt;/h2&gt;&lt;br&gt;
-In order to evaluate the algorithm, we will use Monte Carlo simulations. We&#39;ll use 5000 simulations to overcome the randomness generated from the random number generator. Also, we&#39;ll use Bernoulli distribution to get the reward from each option on each run. For each simulation:&lt;/p&gt;
-
+&lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;Initialize the algorithm with no prior knowledge.&lt;/li&gt;
 &lt;li&gt;Loop over the time horizon:
-
 &lt;ul&gt;
 &lt;li&gt;Select the option.&lt;/li&gt;
 &lt;li&gt;Draw the reward for the selected option using Bernoulli distribution and the probability defined.&lt;/li&gt;
 &lt;li&gt;Update the counts and estimated values of selected arm.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;We&#39;ll define the % of reward (probability) of each option and test the performance of the algorithm using three different metrics:&lt;/p&gt;
-
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We&amp;rsquo;ll define the % of reward (probability) of each option and test the performance of the algorithm using three different metrics:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Probability of selecting the best option.&lt;/li&gt;
 &lt;li&gt;Average rewards. This metric is a better approximation if the options are similar.&lt;/li&gt;
 &lt;li&gt;Cumulative rewards. The previous two metrics are not fair metrics for algorithms with large epsilon where they sacrifice by exploring more options; however, cumulative rewards is what we should care about.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;Moreover, we&#39;ll evaluate the algorithm using 5 different values of 𝜖: 0.1, 0.2, 0.3, 0.4, 0.5. Since in the literature they use &lt;em&gt;arm&lt;/em&gt; instead of &lt;em&gt;option&lt;/em&gt; for historical reasons, we&#39;ll be using &lt;em&gt;arm&lt;/em&gt; and &lt;em&gt;option&lt;/em&gt; interchangeably.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class BernoulliArm:
-    def __init__(self, p):
-        self.p = p
-
-    def draw(self):
-        z = np.random.random()
-        if z &amp;gt; self.p:
-            return 0.0
-        return 1.0
-
-
-def test_algorithm(algo, arms, num_simulations, horizon):
-    # Initialize rewards and chosen_arms with zero 2d arrays
-    chosen_arms = np.zeros((num_simulations, horizon))
-    rewards = np.zeros((num_simulations, horizon))
-
-    # Loop over all simulations
-    for sim in range(num_simulations):
-        # Re-initialize algorithm&#39;s counts and values arrays
-        algo.initialize(len(arms))
-
-        # Loop over all time horizon
-        for t in range(horizon):
-            # Select arm
-            chosen_arm = algo.select_arm()
-            chosen_arms[sim, t] = chosen_arm
-
-            # Draw from Bernoulli distribution to get rewards
-            reward = arms[chosen_arm].draw()
-            rewards[sim, t] = reward
-
-            # Update the algorithms&#39; count and estimated values
-            algo.update(chosen_arm, reward)
-
-    # Average rewards across all sims and compute cumulative rewards
-    average_rewards = np.mean(rewards, axis=0)
-    cumulative_rewards = np.cumsum(average_rewards)
-
-    return chosen_arms, average_rewards, cumulative_rewards
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;np.random.seed(1)
-# Average reward by arm
-means = [0.1, 0.1, 0.1, 0.1, 0.9]
-n_arms = len(means)
-# Shuffle the arms
-np.random.shuffle(means)
-# Each arm will follow and Bernoulli distribution
-arms = list(map(lambda mu: BernoulliArm(mu), means))
-# Get the index of the best arm to test if algorithm will be able to learn that
-best_arm_index = np.argmax(means)
-# Define epsilon value to check the performance of the algorithm using each one
-epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
-
-# Plot the epsilon-Greedy algorithm
-plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_index=best_arm_index,
-               hyper_params=epsilon, num_simulations=5000, horizon=500, label=&amp;quot;eps&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-
+&lt;p&gt;Moreover, we&amp;rsquo;ll evaluate the algorithm using 5 different values of 𝜖: 0.1, 0.2, 0.3, 0.4, 0.5. Since in the literature they use &lt;em&gt;arm&lt;/em&gt; instead of &lt;em&gt;option&lt;/em&gt; for historical reasons, we&amp;rsquo;ll be using &lt;em&gt;arm&lt;/em&gt; and &lt;em&gt;option&lt;/em&gt; interchangeably.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;BernoulliArm&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __init__(self, p):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;p &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; p
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;draw&lt;/span&gt;(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;p:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;test_algorithm&lt;/span&gt;(algo, arms, num_simulations, horizon):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize rewards and chosen_arms with zero 2d arrays&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    chosen_arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((num_simulations, horizon))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    rewards &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((num_simulations, horizon))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Loop over all simulations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; sim &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(num_simulations):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Re-initialize algorithm&amp;#39;s counts and values arrays&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        algo&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;initialize(len(arms))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Loop over all time horizon&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(horizon):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Select arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            chosen_arm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; algo&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;select_arm()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            chosen_arms[sim, t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; chosen_arm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Draw from Bernoulli distribution to get rewards&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            reward &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; arms[chosen_arm]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;draw()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            rewards[sim, t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; reward
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Update the algorithms&amp;#39; count and estimated values&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            algo&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;update(chosen_arm, reward)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Average rewards across all sims and compute cumulative rewards&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    average_rewards &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(rewards, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cumulative_rewards &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;cumsum(average_rewards)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; chosen_arms, average_rewards, cumulative_rewards
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;seed(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Average reward by arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;means &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n_arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Shuffle the arms&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shuffle(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Each arm will follow and Bernoulli distribution&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; mu: BernoulliArm(mu), means))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Get the index of the best arm to test if algorithm will be able to learn that&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;best_arm_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Define epsilon value to check the performance of the algorithm using each one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;epsilon &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot the epsilon-Greedy algorithm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plot_algorithm(alg_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;epsilon-Greedy&amp;#34;&lt;/span&gt;, arms&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;arms, best_arm_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;best_arm_index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               hyper_params&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;epsilon, num_simulations&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;, horizon&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;, label&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eps&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
   
@@ -236,45 +209,38 @@ plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_
 
 &lt;/figure&gt;
 
-
 &lt;p&gt;Few thing to note from the above graphs:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Regardless of the epsilon values, all algorithms learned the best option.&lt;/li&gt;
-&lt;li&gt;The algorithm picks options randomly; therefore, it&#39;s not guaranteed to always pick the best option even if it found that option. That&#39;s the main reason why none of the algorithms achieved a probability = 1 of selecting the best option or average rewards = % rewards of the best option even after they learned the best option.&lt;/li&gt;
-&lt;li&gt;As 𝜖 increases --&amp;gt; increase the exploration --&amp;gt; increases the chance of picking options randomly instead of the best option.&lt;/li&gt;
-&lt;li&gt;Algorithms with higher epsilon learn quicker but don&#39;t use that knowledge in exploiting the best option.&lt;/li&gt;
+&lt;li&gt;The algorithm picks options randomly; therefore, it&amp;rsquo;s not guaranteed to always pick the best option even if it found that option. That&amp;rsquo;s the main reason why none of the algorithms achieved a probability = 1 of selecting the best option or average rewards = % rewards of the best option even after they learned the best option.&lt;/li&gt;
+&lt;li&gt;As 𝜖 increases &amp;ndash;&amp;gt; increase the exploration &amp;ndash;&amp;gt; increases the chance of picking options randomly instead of the best option.&lt;/li&gt;
+&lt;li&gt;Algorithms with higher epsilon learn quicker but don&amp;rsquo;t use that knowledge in exploiting the best option.&lt;/li&gt;
 &lt;li&gt;Using accuracy in picking the best option and average rewards metrics, the algorithm 𝜖 = 0.1 outperforms the rest; however, cumulative rewards metric shows that it takes that algorithm long time to outperform the algorithm with 𝜖 = 0.2.&lt;/li&gt;
 &lt;li&gt;Depends on time planned to run the experiment, different values of epsilons may be more optimal. For example, 𝜖 = 0.2 is the best value for almost anything at or below 400.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;Let&#39;s run the experiment again to see how would the algorithm behave under the following settings:&lt;/p&gt;
-
+&lt;p&gt;Let&amp;rsquo;s run the experiment again to see how would the algorithm behave under the following settings:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Only two options.&lt;/li&gt;
 &lt;li&gt;50 options.&lt;/li&gt;
 &lt;li&gt;5 option that are very similar.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;np.random.seed(1)
-# Average reward by arm
-means = [0.1, 0.9]
-n_arms = len(means)
-# Shuffle the arms
-np.random.shuffle(means)
-# Each arm will follow and Bernoulli distribution
-arms = list(map(lambda mu: BernoulliArm(mu), means))
-# Get the index of the best arm to test if algorithm will be able to learn that
-best_arm_index = np.argmax(means)
-# Define epsilon value to check the performance of the algorithm using each one
-epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
-
-# Plot the epsilon-Greedy algorithm
-plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_index=best_arm_index,
-               hyper_params=epsilon, num_simulations=5000, horizon=500, label=&amp;quot;eps&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;seed(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Average reward by arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;means &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n_arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Shuffle the arms&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shuffle(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Each arm will follow and Bernoulli distribution&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; mu: BernoulliArm(mu), means))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Get the index of the best arm to test if algorithm will be able to learn that&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;best_arm_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Define epsilon value to check the performance of the algorithm using each one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;epsilon &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot the epsilon-Greedy algorithm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plot_algorithm(alg_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;epsilon-Greedy&amp;#34;&lt;/span&gt;, arms&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;arms, best_arm_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;best_arm_index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               hyper_params&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;epsilon, num_simulations&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;, horizon&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;, label&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eps&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
   
@@ -297,26 +263,23 @@ plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_
 
 &lt;/figure&gt;
 
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;np.random.seed(1)
-# Average reward by arm
-means = [i for i in np.random.random(50)]
-n_arms = len(means)
-# Shuffle the arms
-np.random.shuffle(means)
-# Each arm will follow and Bernoulli distribution
-arms = list(map(lambda mu: BernoulliArm(mu), means))
-# Get the index of the best arm to test if algorithm will be able to learn that
-best_arm_index = np.argmax(means)
-# Define epsilon value to check the performance of the algorithm using each one
-epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
-
-# Plot the epsilon-Greedy algorithm
-plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_index=best_arm_index,
-               hyper_params=epsilon, num_simulations=5000, horizon=250, label=&amp;quot;eps&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;seed(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Average reward by arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;means &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [i &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random(&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;)]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n_arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Shuffle the arms&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shuffle(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Each arm will follow and Bernoulli distribution&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; mu: BernoulliArm(mu), means))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Get the index of the best arm to test if algorithm will be able to learn that&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;best_arm_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Define epsilon value to check the performance of the algorithm using each one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;epsilon &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot the epsilon-Greedy algorithm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plot_algorithm(alg_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;epsilon-Greedy&amp;#34;&lt;/span&gt;, arms&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;arms, best_arm_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;best_arm_index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               hyper_params&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;epsilon, num_simulations&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;, horizon&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;250&lt;/span&gt;, label&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eps&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
   
@@ -339,26 +302,23 @@ plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_
 
 &lt;/figure&gt;
 
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;np.random.seed(1)
-# Average reward by arm
-means = [0.2, 0.18, 0.22, 0.19, 0.21]
-n_arms = len(means)
-# Shuffle the arms
-np.random.shuffle(means)
-# Each arm will follow and Bernoulli distribution
-arms = list(map(lambda mu: BernoulliArm(mu), means))
-# Get the index of the best arm to test if algorithm will be able to learn that
-best_arm_index = np.argmax(means)
-# Define epsilon value to check the performance of the algorithm using each one
-epsilon = [0.1, 0.2, 0.3, 0.4, 0.5]
-
-# Plot the epsilon-Greedy algorithm
-plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_index=best_arm_index,
-               hyper_params=epsilon, num_simulations=5000, horizon=500, label=&amp;quot;eps&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;seed(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Average reward by arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;means &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.18&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.22&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.19&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.21&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n_arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Shuffle the arms&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shuffle(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Each arm will follow and Bernoulli distribution&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; mu: BernoulliArm(mu), means))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Get the index of the best arm to test if algorithm will be able to learn that&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;best_arm_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Define epsilon value to check the performance of the algorithm using each one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;epsilon &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.4&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot the epsilon-Greedy algorithm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plot_algorithm(alg_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;epsilon-Greedy&amp;#34;&lt;/span&gt;, arms&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;arms, best_arm_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;best_arm_index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               hyper_params&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;epsilon, num_simulations&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;, horizon&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;, label&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;eps&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
   
@@ -381,54 +341,44 @@ plot_algorithm(alg_name=&amp;quot;epsilon-Greedy&amp;quot;, arms=arms, best_arm_
 
 &lt;/figure&gt;
 
-
 &lt;ul&gt;
 &lt;li&gt;When we had lower number of options, all algorithms were faster at learning the best option which can be seen by the steepness of all curves of the first two graphs when time &amp;lt; 100. As a result, all algorithms had higher cumulative rewards than when we had 5 options.&lt;/li&gt;
 &lt;li&gt;Having large number of options made it hard on all algorithms to learn the best option and may need a lot more time to figure it out.&lt;/li&gt;
-&lt;li&gt;Lastly, when options are very similar (in terms of rewards), the probability of selecting the best option by all algorithms decreases over time. Let&#39;s take the algorithm with 𝜖 = 0.1 and see why is this the case. After some investigation, the algorithm was struggling in differentiating between the best option and the second best option since the difference between the % rewards is 1%. Therefore, the probability of selecting the best arm was around 50%.&lt;/li&gt;
+&lt;li&gt;Lastly, when options are very similar (in terms of rewards), the probability of selecting the best option by all algorithms decreases over time. Let&amp;rsquo;s take the algorithm with 𝜖 = 0.1 and see why is this the case. After some investigation, the algorithm was struggling in differentiating between the best option and the second best option since the difference between the % rewards is 1%. Therefore, the probability of selecting the best arm was around 50%.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
-Annealing epsilon-Greedy Algorithm&lt;/h2&gt;&lt;br&gt;
-Epsilon value plays a major role in the performance of epsilon-Greedy algorithm and has to be tuned to the best of our knowledge in terms of the expectations of the estimated rewards of each option. Nonetheless, this estimation suffers from high uncertainty since most of the times either we have no clue what might work or the results would be against our intuition as user experience research has shown in multiple studies. Therefore, isn&#39;t it nice if we can avoid setting up the epsilon values and make the algorithm parameter-free? That&#39;s what &lt;strong&gt;Annealing epsilon-Greedy Algorithm&lt;/strong&gt; does. We specify the rule of decaying epsilon with time and let the algorithm runs with no hyper-parameter configurations. The rule of we will use here is: 𝜖 = 1/&lt;em&gt;log(time + 0.0000001)&lt;/em&gt;. As we can see, at the beginning of the experiment, 𝜖 would be close to Inf and that means a lot of exploration; however, as time goes, 𝜖 start approaching zero and the algorithm would exploit more and more by selecting the best option.&lt;/p&gt;
-
+&lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;We will evaluate the Annealed version using the same settings as before and compare it to standard version.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class AnnealingEpsilonGreedy(EpsilonGreedy):
-    def __init__(self, counts=None, values=None):
-        self.counts = counts
-        self.values = values
-
-    def select_arm(self):
-        # Epsilon decay schedule
-        t = np.sum(self.counts) + 1
-        epsilon = 1 / np.log(t + 0.0000001)
-
-        z = np.random.random()
-        if z &amp;gt; epsilon:
-            # Pick the best arm
-            return np.argmax(self.values)
-        # Randomly pick any arm with prob 1 / len(self.counts)
-        return np.random.randint(0, len(self.values))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;np.random.seed(1)
-# Average reward by arm
-means = [0.1, 0.1, 0.1, 0.1, 0.9]
-n_arms = len(means)
-# Shuffle the arms
-np.random.shuffle(means)
-# Each arm will follow and Bernoulli distribution
-arms = list(map(lambda mu: BernoulliArm(mu), means))
-# Get the index of the best arm to test if algorithm will be able to learn that
-best_arm_index = np.argmax(means)
-
-# Plot the epsilon-Greedy algorithm
-plot_algorithm(alg_name=&amp;quot;Annealing epsilon-Greedy&amp;quot;, arms=arms, best_arm_index=best_arm_index,
-               num_simulations=5000, horizon=500)
-&lt;/code&gt;&lt;/pre&gt;
-
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AnnealingEpsilonGreedy&lt;/span&gt;(EpsilonGreedy):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __init__(self, counts&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;, values&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;counts &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; counts
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; values
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;select_arm&lt;/span&gt;(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Epsilon decay schedule&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;counts) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        epsilon &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log(t &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.0000001&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; epsilon:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Pick the best arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Randomly pick any arm with prob 1 / len(self.counts)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, len(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;values))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;seed(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Average reward by arm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;means &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n_arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Shuffle the arms&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shuffle(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Each arm will follow and Bernoulli distribution&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;arms &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; mu: BernoulliArm(mu), means))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Get the index of the best arm to test if algorithm will be able to learn that&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;best_arm_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;argmax(means)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot the epsilon-Greedy algorithm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plot_algorithm(alg_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Annealing epsilon-Greedy&amp;#34;&lt;/span&gt;, arms&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;arms, best_arm_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;best_arm_index,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               num_simulations&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5000&lt;/span&gt;, horizon&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
   
@@ -451,29 +401,23 @@ plot_algorithm(alg_name=&amp;quot;Annealing epsilon-Greedy&amp;quot;, arms=arms,
 
 &lt;/figure&gt;
 
-
 &lt;p&gt;Even though the accuracy of selecting the best option and the average rewards of the annealing epsilon-Greedy Algorithm is lower than the standard version, it has higher cumulative rewards. Also, since the real world is uncertain and we may not have any clue about the designed options, it may be preferred to use the annealing version under some scenarios.&lt;/p&gt;
-
-&lt;p&gt;&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold\&#34;&gt;
-Conclusion&lt;/h2&gt;&lt;br&gt;
-epsilon-Greedy Algorithm works by going back and forth between exploration with probability = 𝜖 and exploitation with probability 1 - 𝜖. Below are some takeaways:&lt;/p&gt;
-
+&lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;Setting the value of epsilon:
-
 &lt;ul&gt;
 &lt;li&gt;If we set 𝜖 = 1, we would only explore the available options with a probability = 1/N of selecting any option. This will enable us to explore a lot of ideas at the expense of wasting resources by evaluating inferior options.&lt;/li&gt;
 &lt;li&gt;If we set 𝜖 = 0, we would exploit the best option and never explore any new idea. This strategy would leave up behind our competitors given that the markets are so volatile.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Exploration should be high at the beginning of the experiment to gain the knowledge about all the available options. It should decrease as a function of time where at some point after having enough data about all options, the algorithm should focus on exploiting the best option.&lt;/li&gt;
 &lt;li&gt;All algorithms with different epsilon values learned the best option; however, they differ by the level of randomness of each algorithm in keep randomly exploring available options.&lt;/li&gt;
 &lt;li&gt;To get the best results of any Bandit algorithm, we should have a lot of data, which means to run the experiment longer in most cases.&lt;/li&gt;
 &lt;li&gt;For experiments that run for short period of time, traditional A/B testing may be better.&lt;/li&gt;
 &lt;li&gt;Initialization of estimated rewards can affect the long-term performance of the algorithm. As a result, we may need to use previous experience and intuition to guide our initial values.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Source code that created this post can be found &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/epsilon-Greedy-Algorithm.ipynb&#34;&gt;here&lt;/a&gt;.
-The repo that hosts all Bandit Algorithms&#39; implementations and testing frameworks can be found &lt;a href=&#34;https://github.com/ImadDabbura/bandit-algorithms&#34;&gt;here&lt;/a&gt;.
+The repo that hosts all Bandit Algorithms&amp;rsquo; implementations and testing frameworks can be found &lt;a href=&#34;https://github.com/ImadDabbura/bandit-algorithms&#34;&gt;here&lt;/a&gt;.
 The post is inspired by &lt;a href=&#34;http://shop.oreilly.com/product/0636920027393.do&#34;&gt;Bandit Algorithms for Website Optimization&lt;/a&gt; book.&lt;/p&gt;
 </description>
     </item>

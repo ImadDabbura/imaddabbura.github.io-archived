@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model&#39;s parameters to improve its performance. In other words, it&#39;s the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:
+  <meta name="description" content="Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model&rsquo;s parameters to improve its performance. In other words, it&rsquo;s the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:
  Optimization algorithm that is not iterative and simply solves for one point. Optimization algorithm that is iterative in nature and converges to acceptable solution regardless of the parameters initialization such as gradient descent applied to logistic regression.">
 
   
@@ -85,7 +85,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -130,7 +130,7 @@
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/post/coding-nn-params-init/">
   <meta property="og:title" content="Coding Neural Network - Parameters&#39; Initialization | Imad Dabbura">
-  <meta property="og:description" content="Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model&#39;s parameters to improve its performance. In other words, it&#39;s the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:
+  <meta property="og:description" content="Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model&rsquo;s parameters to improve its performance. In other words, it&rsquo;s the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:
  Optimization algorithm that is not iterative and simply solves for one point. Optimization algorithm that is iterative in nature and converges to acceptable solution regardless of the parameters initialization such as gradient descent applied to logistic regression."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-params-init/featured.png">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/coding-nn-params-init/featured.png"><meta property="og:locale" content="en-us">
   
@@ -287,6 +287,26 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
         </li>
 
         
@@ -561,7 +581,7 @@
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 502px;">
   <div style="position: relative">
-    <img src="/post/coding-nn-params-init/featured_huace3f62751a6af1d5e90df648d2f927b_676319_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    <img src="/post/coding-nn-params-init/featured_huace3f62751a6af1d5e90df648d2f927b_676319_720x0_resize_lanczos_3.png" alt="" class="featured-image">
     
   </div>
 </div>
@@ -571,70 +591,59 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p>Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model's parameters to improve its performance. In other words, it's the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:</p>
-
+      <p>Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model&rsquo;s parameters to improve its performance. In other words, it&rsquo;s the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:</p>
 <ul>
 <li>Optimization algorithm that is not iterative and simply solves for one point.</li>
 <li>Optimization algorithm that is iterative in nature and converges to acceptable solution regardless of the parameters initialization such as gradient descent applied to logistic regression.</li>
-<li>Optimization algorithm that is iterative in nature and applied to a set of problems that have non-convex loss functions such as neural networks. Therefore, parameters' initialization plays a critical role in speeding up convergence and achieving lower error rates.</li>
+<li>Optimization algorithm that is iterative in nature and applied to a set of problems that have non-convex loss functions such as neural networks. Therefore, parameters&rsquo; initialization plays a critical role in speeding up convergence and achieving lower error rates.</li>
 </ul>
-
-<p>In this post, we'll look at three different cases of parameters' initialization and see how this affects the error rate:</p>
-
+<p>In this post, we&rsquo;ll look at three different cases of parameters&rsquo; initialization and see how this affects the error rate:</p>
 <ul>
 <li>Initialize all parameters to zero.</li>
 <li>Initialize parameters to random values from standard normal distribution or uniform distribution and multiply it by a scalar such as 10.</li>
 <li>Initialize parameters based on:
-
 <ul>
 <li>Xavier recommendation.</li>
 <li>Kaiming He recommendation.</li>
-</ul></li>
 </ul>
-
-<p>We'll be using functions we wrote in <a href="https://imaddabbura.github.io/blog/machine%20learning/deep%20learning/2018/04/01/coding-neural-network-fwd-back-prop.html"><em>&quot;Coding Neural Network - Forward Propagation and Backpropagation&quot;</em></a> post to initialize parameters, compute forward propagation and back-propagation as well as the cross-entropy cost.</p>
-
-<p>To illustrate the above cases, we'll use the cats vs dogs dataset which consists of 50 images for cats and 50 images for dogs. Each image is 150 pixels x 150 pixels on RGB color scale. Therefore, we would have 67,500 features where each column in the input matrix would be one image which means our input data would have 67,500 x 100 dimension.</p>
-
-<p>Let's first load the data and show a sample of two images before we start the helper functions.</p>
-
-<pre><code class="language-python"># Loading packages
-import sys
-
-import h5py
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-
-sys.path.append(&quot;../scripts/&quot;)
-from coding_neural_network_from_scratch import (L_model_forward,
-                                                compute_cost,
-                                                L_model_backward,
-                                                update_parameters,
-                                                accuracy)
-from load_dataset import load_dataset_catvsdog
-
-%matplotlib inline
-sns.set_context(&quot;notebook&quot;)
-plt.style.use(&quot;fivethirtyeight&quot;)
-</code></pre>
-
-<pre><code class="language-python">X, Y = load_dataset_catvsdog(&quot;../data&quot;)
-
-# show a sample of of a cat and a dog image
-index_cat = np.argmax(Y); index_dog = np.argmin(Y)
-plt.subplot(1, 2, 1)
-plt.imshow(X[:, index_cat].reshape(150, 150, 3))
-plt.axis(&quot;off&quot;)
-plt.subplot(1, 2, 2)
-plt.imshow(X[:, index_dog].reshape(150, 150, 3))
-plt.axis(&quot;off&quot;);
-
-# standarize the data
-X = X / 255
-</code></pre>
-
-
+</li>
+</ul>
+<p>We&rsquo;ll be using functions we wrote in <a href="https://imaddabbura.github.io/blog/machine%20learning/deep%20learning/2018/04/01/coding-neural-network-fwd-back-prop.html"><em>&ldquo;Coding Neural Network - Forward Propagation and Backpropagation&rdquo;</em></a> post to initialize parameters, compute forward propagation and back-propagation as well as the cross-entropy cost.</p>
+<p>To illustrate the above cases, we&rsquo;ll use the cats vs dogs dataset which consists of 50 images for cats and 50 images for dogs. Each image is 150 pixels x 150 pixels on RGB color scale. Therefore, we would have 67,500 features where each column in the input matrix would be one image which means our input data would have 67,500 x 100 dimension.</p>
+<p>Let&rsquo;s first load the data and show a sample of two images before we start the helper functions.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Loading packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> h5py
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;../scripts/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> coding_neural_network_from_scratch <span style="color:#f92672">import</span> (L_model_forward,
+</span></span><span style="display:flex;"><span>                                                compute_cost,
+</span></span><span style="display:flex;"><span>                                                L_model_backward,
+</span></span><span style="display:flex;"><span>                                                update_parameters,
+</span></span><span style="display:flex;"><span>                                                accuracy)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> load_dataset <span style="color:#f92672">import</span> load_dataset_catvsdog
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
+</span></span><span style="display:flex;"><span>sns<span style="color:#f92672">.</span>set_context(<span style="color:#e6db74">&#34;notebook&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>use(<span style="color:#e6db74">&#34;fivethirtyeight&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>X, Y <span style="color:#f92672">=</span> load_dataset_catvsdog(<span style="color:#e6db74">&#34;../data&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># show a sample of of a cat and a dog image</span>
+</span></span><span style="display:flex;"><span>index_cat <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax(Y); index_dog <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(Y)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(X[:, index_cat]<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">3</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#34;off&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(X[:, index_dog]<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">3</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#34;off&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># standarize the data</span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">=</span> X <span style="color:#f92672">/</span> <span style="color:#ae81ff">255</span>
+</span></span></code></pre></div>
 
 
   
@@ -657,124 +666,110 @@ X = X / 255
 
 </figure>
 
-
-<p>We'll write now all the helper functions that will help us initialize parameters based on different methods as well as writing L-layer model that we'll be using to train our neural network.</p>
-
-<pre><code class="language-python">def initialize_parameters_zeros(layers_dims):
-    np.random.seed(1)               
-    parameters = {}                 
-    L = len(layers_dims)            
-
-    for l in range(1, L):
-        parameters[&quot;W&quot; + str(l)] = np.zeros(
-            (layers_dims[l], layers_dims[l - 1]))
-        parameters[&quot;b&quot; + str(l)] = np.zeros((layers_dims[l], 1))
-
-    return parameters
-
-
-def initialize_parameters_random(layers_dims):
-    np.random.seed(1)               
-    parameters = {}                 
-    L = len(layers_dims)            
-
-    for l in range(1, L):
-        parameters[&quot;W&quot; + str(l)] = np.random.randn(
-            layers_dims[l], layers_dims[l - 1]) * 10
-        parameters[&quot;b&quot; + str(l)] = np.zeros((layers_dims[l], 1))
-
-    return parameters
-
-
-def initialize_parameters_he_xavier(layers_dims, initialization_method=&quot;he&quot;):
-    np.random.seed(1)               
-    parameters = {}                 
-    L = len(layers_dims)            
-
-    if initialization_method == &quot;he&quot;:
-        for l in range(1, L):
-            parameters[&quot;W&quot; + str(l)] = np.random.randn(
-                layers_dims[l],
-                layers_dims[l - 1]) * np.sqrt(2 / layers_dims[l - 1])
-            parameters[&quot;b&quot; + str(l)] = np.zeros((layers_dims[l], 1))
-    elif initialization_method == &quot;xavier&quot;:
-        for l in range(1, L):
-            parameters[&quot;W&quot; + str(l)] = np.random.randn(
-                layers_dims[l],
-                layers_dims[l - 1]) * np.sqrt(1 / layers_dims[l - 1])
-            parameters[&quot;b&quot; + str(l)] = np.zeros((layers_dims[l], 1))
-
-    return parameters
-
-</code></pre>
-
-<pre><code class="language-python">def model(X, Y, layers_dims, learning_rate=0.01, num_iterations=1000,
-          print_cost=True, hidden_layers_activation_fn=&quot;relu&quot;,
-          initialization_method=&quot;he&quot;):
-    np.random.seed(1)
-
-    # initialize cost list
-    cost_list = []
-
-    # initialize parameters
-    if initialization_method == &quot;zeros&quot;:
-        parameters = initialize_parameters_zeros(layers_dims)
-    elif initialization_method == &quot;random&quot;:
-        parameters = initialize_parameters_random(layers_dims)
-    else:
-        parameters = initialize_parameters_he_xavier(
-            layers_dims, initialization_method)
-
-    # iterate over num_iterations
-    for i in range(num_iterations):
-        # iterate over L-layers to get the final output and the cache
-        AL, caches = L_model_forward(
-            X, parameters, hidden_layers_activation_fn)
-
-        # compute cost to plot it
-        cost = compute_cost(AL, Y)
-
-        # iterate over L-layers backward to get gradients
-        grads = L_model_backward(AL, Y, caches, hidden_layers_activation_fn)
-
-        # update parameters
-        parameters = update_parameters(parameters, grads, learning_rate)
-
-        # append each 100th cost to the cost list
-        if (i + 1) % 100 == 0 and print_cost:
-            print(&quot;The cost after {} iterations is: {}&quot;.format(i + 1, cost))
-
-        if i % 100 == 0:
-            cost_list.append(cost)
-
-    # plot the cost curve
-    plt.figure(figsize=(12, 8))
-    plt.plot(cost_list)
-    plt.xlabel(&quot;Iterations (per hundreds)&quot;, fontsize=14)
-    plt.ylabel(&quot;Cost&quot;, fontsize=14)
-    plt.title(
-        &quot;Cost curve: learning rate = {} and {} initialization method&quot;.format(
-            learning_rate, initialization_method), y=1.05, fontsize=16)
-
-    return parameters
-
-</code></pre>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Initializing all parameters to zero
-</h2>
-
-<p>Here, we'll initialize all weight matrices and biases to zeros and see how this would affect the error rate as well as the learning parameters.</p>
-
-<pre><code class="language-python"># train NN with zeros initialization parameters
-layers_dims = [X.shape[0], 5, 5, 1]
-parameters = model(X, Y, layers_dims, hidden_layers_activation_fn=&quot;tanh&quot;,
-                   initialization_method=&quot;zeros&quot;)
-
-accuracy(X, parameters, Y,&quot;tanh&quot;)
-</code></pre>
-
-<pre><code>The cost after 100 iterations is: 0.6931471805599453
+<p>We&rsquo;ll write now all the helper functions that will help us initialize parameters based on different methods as well as writing L-layer model that we&rsquo;ll be using to train our neural network.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_parameters_zeros</span>(layers_dims):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)               
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> {}                 
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(layers_dims)            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(
+</span></span><span style="display:flex;"><span>            (layers_dims[l], layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((layers_dims[l], <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_parameters_random</span>(layers_dims):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)               
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> {}                 
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(layers_dims)            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(
+</span></span><span style="display:flex;"><span>            layers_dims[l], layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((layers_dims[l], <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_parameters_he_xavier</span>(layers_dims, initialization_method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;he&#34;</span>):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)               
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> {}                 
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(layers_dims)            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> initialization_method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;he&#34;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>            parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(
+</span></span><span style="display:flex;"><span>                layers_dims[l],
+</span></span><span style="display:flex;"><span>                layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">2</span> <span style="color:#f92672">/</span> layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>            parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((layers_dims[l], <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> initialization_method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;xavier&#34;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>            parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(
+</span></span><span style="display:flex;"><span>                layers_dims[l],
+</span></span><span style="display:flex;"><span>                layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>            parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((layers_dims[l], <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">model</span>(X, Y, layers_dims, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>,
+</span></span><span style="display:flex;"><span>          print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>,
+</span></span><span style="display:flex;"><span>          initialization_method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;he&#34;</span>):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># initialize cost list</span>
+</span></span><span style="display:flex;"><span>    cost_list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># initialize parameters</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> initialization_method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;zeros&#34;</span>:
+</span></span><span style="display:flex;"><span>        parameters <span style="color:#f92672">=</span> initialize_parameters_zeros(layers_dims)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> initialization_method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;random&#34;</span>:
+</span></span><span style="display:flex;"><span>        parameters <span style="color:#f92672">=</span> initialize_parameters_random(layers_dims)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        parameters <span style="color:#f92672">=</span> initialize_parameters_he_xavier(
+</span></span><span style="display:flex;"><span>            layers_dims, initialization_method)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># iterate over num_iterations</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_iterations):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># iterate over L-layers to get the final output and the cache</span>
+</span></span><span style="display:flex;"><span>        AL, caches <span style="color:#f92672">=</span> L_model_forward(
+</span></span><span style="display:flex;"><span>            X, parameters, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># compute cost to plot it</span>
+</span></span><span style="display:flex;"><span>        cost <span style="color:#f92672">=</span> compute_cost(AL, Y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># iterate over L-layers backward to get gradients</span>
+</span></span><span style="display:flex;"><span>        grads <span style="color:#f92672">=</span> L_model_backward(AL, Y, caches, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># update parameters</span>
+</span></span><span style="display:flex;"><span>        parameters <span style="color:#f92672">=</span> update_parameters(parameters, grads, learning_rate)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># append each 100th cost to the cost list</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> print_cost:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;The cost after </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> iterations is: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, cost))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            cost_list<span style="color:#f92672">.</span>append(cost)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># plot the cost curve</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(cost_list)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Iterations (per hundreds)&#34;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Cost&#34;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Cost curve: learning rate = </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> and </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> initialization method&#34;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>            learning_rate, initialization_method), y<span style="color:#f92672">=</span><span style="color:#ae81ff">1.05</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<p>Here, we&rsquo;ll initialize all weight matrices and biases to zeros and see how this would affect the error rate as well as the learning parameters.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># train NN with zeros initialization parameters</span>
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> model(X, Y, layers_dims, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>,
+</span></span><span style="display:flex;"><span>                   initialization_method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;zeros&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>accuracy(X, parameters, Y,<span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span></code></pre></div><pre><code>The cost after 100 iterations is: 0.6931471805599453
 The cost after 200 iterations is: 0.6931471805599453
 The cost after 300 iterations is: 0.6931471805599453
 The cost after 400 iterations is: 0.6931471805599453
@@ -787,7 +782,6 @@ The cost after 1000 iterations is: 0.6931471805599453
 
 'The accuracy rate is: 50.00%.'
 </code></pre>
-
 
 
 
@@ -811,25 +805,17 @@ The cost after 1000 iterations is: 0.6931471805599453
 
 </figure>
 
-
-<p>As the cost curve shows, the neural network didn't learn anything! That is because of symmetry between all neurons which leads to all neurons have the same update on every iteration. Therefore, regardless of how many iterations we run the optimization algorithms, all the neurons would still get the same update and no learning would happen. As a result, we must <strong>break symmetry</strong> when initializing parameters so that the model would start learning on each update of the gradient descent.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Initializing parameters with big random values
-</h2>
-
-<p>There is no big difference if the random values are initialized from standard normal distribution or uniform distribution so we'll use standard normal distribution in our examples. Also, we'll multiply the random values by a big number such as 10 to show that initializing parameters to big values may cause our optimization to have higher error rates (and even diverge in some cases). Let's now train our neural network where all weight matrices have been intitialized using the following formula:
+<p>As the cost curve shows, the neural network didn&rsquo;t learn anything! That is because of symmetry between all neurons which leads to all neurons have the same update on every iteration. Therefore, regardless of how many iterations we run the optimization algorithms, all the neurons would still get the same update and no learning would happen. As a result, we must <strong>break symmetry</strong> when initializing parameters so that the model would start learning on each update of the gradient descent.</p>
+<!-- raw HTML omitted -->
+<p>There is no big difference if the random values are initialized from standard normal distribution or uniform distribution so we&rsquo;ll use standard normal distribution in our examples. Also, we&rsquo;ll multiply the random values by a big number such as 10 to show that initializing parameters to big values may cause our optimization to have higher error rates (and even diverge in some cases). Let&rsquo;s now train our neural network where all weight matrices have been intitialized using the following formula:
 <code>np.random.randn() * 10</code></p>
-
-<pre><code class="language-python"># train NN with random initialization parameters
-layers_dims = [X.shape[0], 5, 5, 1]
-parameters = model(X, Y, layers_dims, hidden_layers_activation_fn=&quot;tanh&quot;,
-                   initialization_method=&quot;random&quot;)
-
-accuracy(X, parameters, Y,&quot;tanh&quot;)
-</code></pre>
-
-<pre><code>The cost after 100 iterations is: 1.2413142077549013
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># train NN with random initialization parameters</span>
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> model(X, Y, layers_dims, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>,
+</span></span><span style="display:flex;"><span>                   initialization_method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;random&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>accuracy(X, parameters, Y,<span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span></code></pre></div><pre><code>The cost after 100 iterations is: 1.2413142077549013
 The cost after 200 iterations is: 1.1258751902393416
 The cost after 300 iterations is: 1.0989052435267657
 The cost after 400 iterations is: 1.0840966471282327
@@ -842,7 +828,6 @@ The cost after 1000 iterations is: 1.004767088515343
 
 'The accuracy rate is: 55.00%.'
 </code></pre>
-
 
 
 
@@ -866,40 +851,27 @@ The cost after 1000 iterations is: 1.004767088515343
 
 </figure>
 
-
 <p>Random initialization here is helping but still the loss function has high value and may take long time to converge and achieve a significantly low value.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Initializing parameters based on He and Xavier recommendations
-</h2>
-
-<p>We'll explore two initialization methods:</p>
-
+<!-- raw HTML omitted -->
+<p>We&rsquo;ll explore two initialization methods:</p>
 <ul>
 <li>Kaiming He method is best applied when activation function applied on hidden layers is Rectified Linear Unit (ReLU). so that the weight on each hidden layer would have the following variance:</li>
 </ul>
-
-<p><span  class="math">\(var(W^l) = \frac{2}{n^{l - 1}}\)</span>
+<p>$$var(W^l) = \frac{2}{n^{l - 1}}$$
 We can achieve this by multiplying the random values from standard normal distribution by $\sqrt{\frac{2}{number\ of\ units\ in \ previous\ layer}}$</p>
-
 <ul>
 <li>Xavier method is best applied when activation function applied on hidden layers is Hyperbolic Tangent so that the weight on each hidden layer would have the following variance:</li>
 </ul>
-
-<p><span  class="math">\(var(W^l) = \frac{1}{n^{l - 1}}\)</span>
+<p>$$var(W^l) = \frac{1}{n^{l - 1}}$$
 We can achieve this by multiplying the random values from standard normal distribution by $\sqrt{\frac{1}{number\ of\ units\ in \ previous\ layer}}$</p>
-
-<p>We'll train the network using both methods and look at the results.</p>
-
-<pre><code class="language-python"># train NN where all parameters were initialized based on He recommendation
-layers_dims = [X.shape[0], 5, 5, 1]
-parameters = model(X, Y, layers_dims, hidden_layers_activation_fn=&quot;tanh&quot;,
-                   initialization_method=&quot;he&quot;)
-
-accuracy(X, parameters, Y, &quot;tanh&quot;)
-</code></pre>
-
-<pre><code>The cost after 100 iterations is: 0.6300611704834093
+<p>We&rsquo;ll train the network using both methods and look at the results.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># train NN where all parameters were initialized based on He recommendation</span>
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> model(X, Y, layers_dims, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>,
+</span></span><span style="display:flex;"><span>                   initialization_method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;he&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>accuracy(X, parameters, Y, <span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span></code></pre></div><pre><code>The cost after 100 iterations is: 0.6300611704834093
 The cost after 200 iterations is: 0.49092836452522753
 The cost after 300 iterations is: 0.46579423512433943
 The cost after 400 iterations is: 0.6516254192289226
@@ -912,7 +884,6 @@ The cost after 1000 iterations is: 0.19934509244449203
 
 'The accuracy rate is: 99.00%.'
 </code></pre>
-
 
 
 
@@ -936,16 +907,13 @@ The cost after 1000 iterations is: 0.19934509244449203
 
 </figure>
 
-
-<pre><code class="language-python"># train NN where all parameters were initialized based on Xavier recommendation
-layers_dims = [X.shape[0], 5, 5, 1]
-parameters = model(X, Y, layers_dims, hidden_layers_activation_fn=&quot;tanh&quot;,
-                   initialization_method=&quot;xavier&quot;)
-
-accuracy(X, parameters, Y, &quot;tanh&quot;)
-</code></pre>
-
-<pre><code>The cost after 100 iterations is: 0.6351961521800779
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># train NN where all parameters were initialized based on Xavier recommendation</span>
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> model(X, Y, layers_dims, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>,
+</span></span><span style="display:flex;"><span>                   initialization_method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;xavier&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>accuracy(X, parameters, Y, <span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span></code></pre></div><pre><code>The cost after 100 iterations is: 0.6351961521800779
 The cost after 200 iterations is: 0.548973489787121
 The cost after 300 iterations is: 0.47982386652748565
 The cost after 400 iterations is: 0.32811768889968684
@@ -958,7 +926,6 @@ The cost after 1000 iterations is: 0.06204402572328295
 
 'The accuracy rate is: 99.00%.'
 </code></pre>
-
 
 
 
@@ -982,29 +949,22 @@ The cost after 1000 iterations is: 0.06204402572328295
 
 </figure>
 
-
-<p>As shown from applying the four methods, parameters' initial values play a huge role in achieving low cost values as well as converging and achieve lower training error rates. The same would apply to test error rate if we had test data.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Conclusion
-</h2>
-
-<p>Deep Learning frameworks make it easier to choose between different initialization methods without worrying about implementing it ourselves. Nonetheless, it's important to understand the critical role initial values of the parameters in the overall performance of the network. Below are some key takeaways:</p>
-
+<p>As shown from applying the four methods, parameters&rsquo; initial values play a huge role in achieving low cost values as well as converging and achieve lower training error rates. The same would apply to test error rate if we had test data.</p>
+<!-- raw HTML omitted -->
+<p>Deep Learning frameworks make it easier to choose between different initialization methods without worrying about implementing it ourselves. Nonetheless, it&rsquo;s important to understand the critical role initial values of the parameters in the overall performance of the network. Below are some key takeaways:</p>
 <ul>
 <li>Well chosen initialization values of parameters leads to:
-
 <ul>
 <li>Speed up convergence of gradient descent.</li>
 <li>Increase the likelihood of gradient descent to find lower training and generalization error rates.</li>
-</ul></li>
-<li>Because we're dealing with iterative optimization algorithms with non-convex loss function, different initializations lead to different results.</li>
+</ul>
+</li>
+<li>Because we&rsquo;re dealing with iterative optimization algorithms with non-convex loss function, different initializations lead to different results.</li>
 <li>Random initialization is used to break symmetry and make sure different hidden units can learn different things.</li>
-<li>Don't initialize to values that are too large.</li>
+<li>Don&rsquo;t initialize to values that are too large.</li>
 <li>Kaiming He (He) initialization works well for neural networks with ReLU activation function.</li>
 <li>Xavier initialization works well for neural networks with Hyperbolic Tangent activation function.</li>
 </ul>
-
 <p>The source code that created this post can be found <a href="https://github.com/ImadDabbura/blog-posts/blob/master/notebooks/Coding-Neural-Network-Parameters-Initialization.ipynb">here</a>.</p>
 
     </div>
@@ -1251,8 +1211,6 @@ Conclusion
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -1337,7 +1295,7 @@ Conclusion
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1352,7 +1310,7 @@ Conclusion
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

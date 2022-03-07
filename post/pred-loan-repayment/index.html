@@ -28,8 +28,8 @@
   
     
   
-  <meta name="description" content="Introduction
-The two most critical questions in the lending industry are: 1) How risky is the borrower? 2) Given the borrower&#39;s risk, should we lend him/her? The answer to the first question determines the interest rate the borrower would have. Interest rate measures among other things (such as time value of money) the riskness of the borrower, i.e. the riskier the borrower, the higher the interest rate. With interest rate in mind, we can then determine if the borrower is eligible for the loan.">
+  <meta name="description" content="Investors (lenders) provide loans to borrowers in exchange for the promise of repayment with interest. That means the lender only makes profit (interest) if the borrower pays off the loan. However, if he/she doesn&rsquo;t repay the loan, then the lender loses money.
+We&rsquo;ll be using publicly available data from LendingClub.com. The data covers the 9,578 loans funded by the platform between May 2007 and February 2010. The interest rate is provided to us for each borrower.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/pred-loan-repayment/">
@@ -85,7 +85,7 @@ The two most critical questions in the lending industry are: 1) How risky is the
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -130,8 +130,8 @@ The two most critical questions in the lending industry are: 1) How risky is the
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/post/pred-loan-repayment/">
   <meta property="og:title" content="Predicting Loan Repayment | Imad Dabbura">
-  <meta property="og:description" content="Introduction
-The two most critical questions in the lending industry are: 1) How risky is the borrower? 2) Given the borrower&#39;s risk, should we lend him/her? The answer to the first question determines the interest rate the borrower would have. Interest rate measures among other things (such as time value of money) the riskness of the borrower, i.e. the riskier the borrower, the higher the interest rate. With interest rate in mind, we can then determine if the borrower is eligible for the loan."><meta property="og:image" content="https://imaddabbura.github.io/post/pred-loan-repayment/featured.jpg">
+  <meta property="og:description" content="Investors (lenders) provide loans to borrowers in exchange for the promise of repayment with interest. That means the lender only makes profit (interest) if the borrower pays off the loan. However, if he/she doesn&rsquo;t repay the loan, then the lender loses money.
+We&rsquo;ll be using publicly available data from LendingClub.com. The data covers the 9,578 loans funded by the platform between May 2007 and February 2010. The interest rate is provided to us for each borrower."><meta property="og:image" content="https://imaddabbura.github.io/post/pred-loan-repayment/featured.jpg">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/pred-loan-repayment/featured.jpg"><meta property="og:locale" content="en-us">
   
     
@@ -297,6 +297,26 @@ The two most critical questions in the lending industry are: 1) How risky is the
         
         
         
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
           
         
 
@@ -432,7 +452,7 @@ The two most critical questions in the lending industry are: 1) How risky is the
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    23 min read
+    19 min read
   </span>
   
 
@@ -571,96 +591,81 @@ The two most critical questions in the lending industry are: 1) How risky is the
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Introduction</h2><br>
-The two most critical questions in the lending industry are: 1) How risky is the borrower? 2) Given the borrower's risk, should we lend him/her? The answer to the first question determines the interest rate the borrower would have. Interest rate measures among other things (such as time value of money) the riskness of the borrower, i.e. the riskier the borrower, the higher the interest rate. With interest rate in mind, we can then determine if the borrower is eligible for the loan.</p>
-
-<p>Investors (lenders) provide loans to borrowers in exchange for the promise of repayment with interest. That means the lender only makes profit (interest) if the borrower pays off the loan. However, if he/she doesn't repay the loan, then the lender loses money.</p>
-
-<p>We'll be using publicly available data from <a href="https://www.lendingclub.com/info/download-data.action">LendingClub.com</a>. The data covers the 9,578 loans funded by the platform between May 2007 and February 2010. The interest rate is provided to us for each borrower. Therefore, so we'll address the second question indirectly by trying to predict if the borrower will repay the loan by its mature date or not. Through this excerise we'll illustrate three modeling concepts:</p>
-
+      <!-- raw HTML omitted -->
+<p>Investors (lenders) provide loans to borrowers in exchange for the promise of repayment with interest. That means the lender only makes profit (interest) if the borrower pays off the loan. However, if he/she doesn&rsquo;t repay the loan, then the lender loses money.</p>
+<p>We&rsquo;ll be using publicly available data from <a href="https://www.lendingclub.com/info/download-data.action">LendingClub.com</a>. The data covers the 9,578 loans funded by the platform between May 2007 and February 2010. The interest rate is provided to us for each borrower. Therefore, so we&rsquo;ll address the second question indirectly by trying to predict if the borrower will repay the loan by its mature date or not. Through this excerise we&rsquo;ll illustrate three modeling concepts:</p>
 <ul>
 <li>What to do with missing values.</li>
 <li>Techniques used with imbalanced classification problems.</li>
 <li>Illustrate how to build an ensemble model using two methods: blending and stacking, which most likely gives us a boost in performance.</li>
 </ul>
-
 <p>Below is a short description of each feature in the data set:</p>
-
 <ul>
 <li><strong>credit_policy</strong>: 1 if the customer meets the credit underwriting criteria of LendingClub.com, and 0 otherwise.</li>
 <li><strong>purpose</strong>: The purpose of the loan such as: credit_card, debt_consolidation, etc.</li>
 <li><strong>int_rate</strong>: The interest rate of the loan (proportion).</li>
-<li><strong>installment</strong>: The monthly installments (\$) owed by the borrower if the loan is funded.</li>
+<li><strong>installment</strong>: The monthly installments ($) owed by the borrower if the loan is funded.</li>
 <li><strong>log_annual_inc</strong>: The natural log of the annual income of the borrower.</li>
 <li><strong>dti</strong>: The debt-to-income ratio of the borrower.</li>
 <li><strong>fico</strong>: The FICO credit score of the borrower.</li>
 <li><strong>days_with_cr_line</strong>: The number of days the borrower has had a credit line.</li>
-<li><strong>revol_bal</strong>: The borrower's revolving balance.</li>
-<li><strong>revol_util</strong>: The borrower's revolving line utilization rate.</li>
-<li><strong>inq_last_6mths</strong>: The borrower's number of inquiries by creditors in the last 6 months.</li>
+<li><strong>revol_bal</strong>: The borrower&rsquo;s revolving balance.</li>
+<li><strong>revol_util</strong>: The borrower&rsquo;s revolving line utilization rate.</li>
+<li><strong>inq_last_6mths</strong>: The borrower&rsquo;s number of inquiries by creditors in the last 6 months.</li>
 <li><strong>delinq_2yrs</strong>: The number of times the borrower had been 30+ days past due on a payment in the past 2 years.</li>
-<li><strong>pub_rec</strong>: The borrower's number of derogatory public records.</li>
+<li><strong>pub_rec</strong>: The borrower&rsquo;s number of derogatory public records.</li>
 <li><strong>not_fully_paid</strong>: indicates whether the loan was not paid back in full (the borrower either defaulted or the borrower was deemed unlikely to pay it back).</li>
 </ul>
-
-<p>Let's load the data and check:</p>
-
+<p>Let&rsquo;s load the data and check:</p>
 <ul>
 <li>Data types of each feature</li>
 <li>If we have missing values</li>
 <li>If we have imbalanced data</li>
 </ul>
-
 <p>Source code that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Predicting-Loan-Repayment.ipynb">here</a>.</p>
-
-<pre><code class="language-python">import os
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import fancyimpute
-from imblearn.pipeline import make_pipeline as imb_make_pipeline
-from imblearn.over_sampling import RandomOverSampler, SMOTE
-from imblearn.under_sampling import RandomUnderSampler
-from imblearn.ensemble import BalancedBaggingClassifier, EasyEnsemble
-from mlens.visualization import corrmat
-from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
-from sklearn.preprocessing import Imputer, RobustScaler, FunctionTransformer
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier, GradientBoostingClassifier
-from sklearn.ensemble.partial_dependence import plot_partial_dependence
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC, LinearSVC
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import (roc_auc_score, confusion_matrix,
-                             accuracy_score, roc_curve,
-                             precision_recall_curve, f1_score)
-from sklearn.pipeline import make_pipeline
-import xgboost as xgb
-from keras import models, layers, optimizers
-
-os.chdir(&quot;../&quot;)
-from scripts.plot_roc import plot_roc_and_pr_curves
-os.chdir(&quot;notebooks/&quot;)
-
-%matplotlib inline
-plt.style.use(&quot;fivethirtyeight&quot;)
-sns.set_context(&quot;notebook&quot;)
-</code></pre>
-
-<pre><code class="language-python"># Load the data
-df = pd.read_csv(&quot;../data/loans.csv&quot;)
-
-# Check both the datatypes and if there is missing values
-print(f&quot;Data types:\n{11 * '-'}&quot;)
-print(f&quot;{df.dtypes}\n&quot;)
-print(f&quot;Sum of null values in each feature:\n{35 * '-'}&quot;)
-print(f&quot;{df.isnull().sum()}&quot;)
-df.head()
-</code></pre>
-
-<pre><code>Data types:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> fancyimpute
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imblearn.pipeline <span style="color:#f92672">import</span> make_pipeline <span style="color:#66d9ef">as</span> imb_make_pipeline
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imblearn.over_sampling <span style="color:#f92672">import</span> RandomOverSampler, SMOTE
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imblearn.under_sampling <span style="color:#f92672">import</span> RandomUnderSampler
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> imblearn.ensemble <span style="color:#f92672">import</span> BalancedBaggingClassifier, EasyEnsemble
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> mlens.visualization <span style="color:#f92672">import</span> corrmat
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split, cross_val_score, cross_val_predict
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.preprocessing <span style="color:#f92672">import</span> Imputer, RobustScaler, FunctionTransformer
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestClassifier, VotingClassifier, GradientBoostingClassifier
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.ensemble.partial_dependence <span style="color:#f92672">import</span> plot_partial_dependence
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegression
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.svm <span style="color:#f92672">import</span> SVC, LinearSVC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.neighbors <span style="color:#f92672">import</span> KNeighborsClassifier
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> (roc_auc_score, confusion_matrix,
+</span></span><span style="display:flex;"><span>                             accuracy_score, roc_curve,
+</span></span><span style="display:flex;"><span>                             precision_recall_curve, f1_score)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.pipeline <span style="color:#f92672">import</span> make_pipeline
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> xgboost <span style="color:#66d9ef">as</span> xgb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> keras <span style="color:#f92672">import</span> models, layers, optimizers
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(<span style="color:#e6db74">&#34;../&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scripts.plot_roc <span style="color:#f92672">import</span> plot_roc_and_pr_curves
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(<span style="color:#e6db74">&#34;notebooks/&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>use(<span style="color:#e6db74">&#34;fivethirtyeight&#34;</span>)
+</span></span><span style="display:flex;"><span>sns<span style="color:#f92672">.</span>set_context(<span style="color:#e6db74">&#34;notebook&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load the data</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../data/loans.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check both the datatypes and if there is missing values</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Data types:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span><span style="color:#ae81ff">11</span> <span style="color:#f92672">*</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>df<span style="color:#f92672">.</span>dtypes<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Sum of null values in each feature:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span><span style="color:#ae81ff">35</span> <span style="color:#f92672">*</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>df<span style="color:#f92672">.</span>isnull()<span style="color:#f92672">.</span>sum()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><pre><code>Data types:
 -----------
 [30mcredit_policy          int64
 purpose               object
@@ -696,150 +701,33 @@ pub_rec              29
 not_fully_paid        0
 dtype: int64
 </code></pre>
+<!-- raw HTML omitted -->
+<pre><code>.dataframe thead th {
+    text-align: left;
+}
 
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>credit_policy</th>
-      <th>purpose</th>
-      <th>int_rate</th>
-      <th>installment</th>
-      <th>log_annual_inc</th>
-      <th>dti</th>
-      <th>fico</th>
-      <th>days_with_cr_line</th>
-      <th>revol_bal</th>
-      <th>revol_util</th>
-      <th>inq_last_6mths</th>
-      <th>delinq_2yrs</th>
-      <th>pub_rec</th>
-      <th>not_fully_paid</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>debt_consolidation</td>
-      <td>0.1189</td>
-      <td>829.10</td>
-      <td>11.350407</td>
-      <td>19.48</td>
-      <td>737</td>
-      <td>5639.958333</td>
-      <td>28854</td>
-      <td>52.1</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>credit_card</td>
-      <td>0.1071</td>
-      <td>228.22</td>
-      <td>11.082143</td>
-      <td>14.29</td>
-      <td>707</td>
-      <td>2760.000000</td>
-      <td>33623</td>
-      <td>76.7</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>debt_consolidation</td>
-      <td>0.1357</td>
-      <td>366.86</td>
-      <td>10.373491</td>
-      <td>11.63</td>
-      <td>682</td>
-      <td>4710.000000</td>
-      <td>3511</td>
-      <td>25.6</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>debt_consolidation</td>
-      <td>0.1008</td>
-      <td>162.34</td>
-      <td>11.350407</td>
-      <td>8.10</td>
-      <td>712</td>
-      <td>2699.958333</td>
-      <td>33667</td>
-      <td>73.2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>credit_card</td>
-      <td>0.1426</td>
-      <td>102.92</td>
-      <td>11.299732</td>
-      <td>14.97</td>
-      <td>667</td>
-      <td>4066.000000</td>
-      <td>4740</td>
-      <td>39.5</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<pre><code class="language-python"># Get number of positve and negative examples
-pos = df[df[&quot;not_fully_paid&quot;] == 1].shape[0]
-neg = df[df[&quot;not_fully_paid&quot;] == 0].shape[0]
-print(f&quot;Positive examples = {pos}&quot;)
-print(f&quot;Negative examples = {neg}&quot;)
-print(f&quot;Proportion of positive to negative examples = {(pos / neg) * 100:.2f}%&quot;)
-plt.figure(figsize=(8, 6))
-sns.countplot(df[&quot;not_fully_paid&quot;])
-plt.xticks((0, 1), [&quot;Paid fully&quot;, &quot;Not paid fully&quot;])
-plt.xlabel(&quot;&quot;)
-plt.ylabel(&quot;Count&quot;)
-plt.title(&quot;Class counts&quot;, y=1, fontdict={&quot;fontsize&quot;: 20});
+.dataframe tbody tr th {
+    vertical-align: top;
+}
 </code></pre>
-
-<pre><code>Positive examples = 1533
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Get number of positve and negative examples</span>
+</span></span><span style="display:flex;"><span>pos <span style="color:#f92672">=</span> df[df[<span style="color:#e6db74">&#34;not_fully_paid&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>neg <span style="color:#f92672">=</span> df[df[<span style="color:#e6db74">&#34;not_fully_paid&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Positive examples = </span><span style="color:#e6db74">{</span>pos<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Negative examples = </span><span style="color:#e6db74">{</span>neg<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Proportion of positive to negative examples = </span><span style="color:#e6db74">{</span>(pos <span style="color:#f92672">/</span> neg) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span><span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>sns<span style="color:#f92672">.</span>countplot(df[<span style="color:#e6db74">&#34;not_fully_paid&#34;</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks((<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>), [<span style="color:#e6db74">&#34;Paid fully&#34;</span>, <span style="color:#e6db74">&#34;Not paid fully&#34;</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Count&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Class counts&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, fontdict<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;fontsize&#34;</span>: <span style="color:#ae81ff">20</span>});
+</span></span></code></pre></div><pre><code>Positive examples = 1533
 Negative examples = 8045
 Proportion of positive to negative examples = 19.06%
 </code></pre>
-
 
 
 
@@ -863,482 +751,156 @@ Proportion of positive to negative examples = 19.06%
 
 </figure>
 
-
-<p>It looks like we have only one categorical feature (&quot;purpose&quot;). Also, six features have missing values (no missing values in labels). Moreover, the data set is pretty imbalanced as expected where positive examples (&quot;not paid fully&quot;) are only 19%. We'll explain in the next section how to handle all of them after giving an overview of ensemble methods.</p>
-
-<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Modeling</h2><br>
-<strong>Ensemble methods</strong> can be defined as combining several different models (base learners) into final model (meta learner) to reduce the generalization error. It relies on the assumption that each model would look at a different aspect of the data which yield to capturing part of the truth. Combining good performing models the were trained independently will capture more of the truth than a single model. Therefore, this would result in more accurate predictions and lower generalization errors.</p>
-
+<p>It looks like we have only one categorical feature (&ldquo;purpose&rdquo;). Also, six features have missing values (no missing values in labels). Moreover, the data set is pretty imbalanced as expected where positive examples (&ldquo;not paid fully&rdquo;) are only 19%. We&rsquo;ll explain in the next section how to handle all of them after giving an overview of ensemble methods.</p>
+<!-- raw HTML omitted -->
 <ul>
 <li>Almost always ensemble model performance gets improved as we add more models.</li>
 <li>Try to combine models that are as much different as possible. This will reduce the correlation between the models that will improve the performance of the ensemble model that will lead to significantly outperform the best model. In the worst case where all models are perfectly correlated, the ensemble would have the same performance as the best model and sometimes even lower if some models are very bad. As a result, pick models that are as good as possible.</li>
 </ul>
-
 <p>Diﬀerent ensemble methods construct the ensemble of models in diﬀerent ways. Below are the most common methods:</p>
-
 <ul>
 <li>Blending: Averaging the predictions of all models.</li>
-<li>Bagging: Build different models on different datasets and then take the majority vote from all the models. Given the original dataset, we sample with replacement to get the same size of the original dataset. Therefore, each dataset will include, on average, 2/3 of the original data and the rest 1/3 will be duplicates. Since each model will be built on a different dataset, it can be seen as a different model. <em>Random Forest</em> improves on default bagging trees by reducing the likelihood of strong features to picked on every split. In other words, it reduces the number of features available at each split from $n$ features to, for example, $n/2$ or $log(n)$ features. This will reduce correlation --&gt; reduce variance.</li>
+<li>Bagging: Build different models on different datasets and then take the majority vote from all the models. Given the original dataset, we sample with replacement to get the same size of the original dataset. Therefore, each dataset will include, on average, 2/3 of the original data and the rest 1/3 will be duplicates. Since each model will be built on a different dataset, it can be seen as a different model. <em>Random Forest</em> improves on default bagging trees by reducing the likelihood of strong features to picked on every split. In other words, it reduces the number of features available at each split from $n$ features to, for example, $n/2$ or $log(n)$ features. This will reduce correlation &ndash;&gt; reduce variance.</li>
 <li>Boosting: Build models sequentially. That means each model learns from the residuals of the previous model. The output will be all output of each single model weighted by the learning rate ($\lambda$). It reduces the bias resulted from bagging by learning sequentially from residuals of previous trees (models).</li>
 <li>Stacking: Build k models called base learners. Then fit a model to the output of the base learners to predict the final output.</li>
 </ul>
-
-<p>Since we'll be using Random Fores (bagging) and Gradient Boosting (boosting) classifiers as base learners in the ensemble model, we'll illustrate only averaging and stacking ensemble methods. Therefore, modeling parts would be consisted of three parts:</p>
-
+<p>Since we&rsquo;ll be using Random Fores (bagging) and Gradient Boosting (boosting) classifiers as base learners in the ensemble model, we&rsquo;ll illustrate only averaging and stacking ensemble methods. Therefore, modeling parts would be consisted of three parts:</p>
 <ul>
 <li>Strategies to deal with missing values.</li>
 <li>Strategies to deal with imbalanced datasets.</li>
 <li>Build ensemble models.</li>
 </ul>
-
 <p>Before going further, the following data preprocessing steps will be applicable to all models:</p>
-
 <ol>
-<li>Create dummy variables from the feature &quot;purpose&quot; since its nominal (not ordinal) categorical variable. It's also a good practice to drop the first one to avoid linear dependency between the resulted features since some algorithms may struggle with this issue.</li>
-<li>Split the data into training set (70%), and test set (30%). Training set will be used to fit the model, and test set will be to evaluate the best model to get an estimation of generalization error. Instead of having validation set to tune hyperparameters and evaluate different models, we'll use 10-folds cross validation because it's more reliable estimate of generalization error.</li>
-<li>Standardize the data. We'll be using <code>RobustScaler</code> so that the standarization will be less influenced by the outliers, i.e. more robust. It centers the data around the median and scale it using <em>interquartile range (IQR)</em>. This step will be included in the pipelines for each model as a transformer so we will not do it separately.</li>
+<li>Create dummy variables from the feature &ldquo;purpose&rdquo; since its nominal (not ordinal) categorical variable. It&rsquo;s also a good practice to drop the first one to avoid linear dependency between the resulted features since some algorithms may struggle with this issue.</li>
+<li>Split the data into training set (70%), and test set (30%). Training set will be used to fit the model, and test set will be to evaluate the best model to get an estimation of generalization error. Instead of having validation set to tune hyperparameters and evaluate different models, we&rsquo;ll use 10-folds cross validation because it&rsquo;s more reliable estimate of generalization error.</li>
+<li>Standardize the data. We&rsquo;ll be using <code>RobustScaler</code> so that the standarization will be less influenced by the outliers, i.e. more robust. It centers the data around the median and scale it using <em>interquartile range (IQR)</em>. This step will be included in the pipelines for each model as a transformer so we will not do it separately.</li>
 </ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create dummy variables from the feature purpose</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>get_dummies(df, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;purpose&#34;</span>], drop_first<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<pre><code>.dataframe thead th {
+    text-align: left;
+}
 
-<pre><code class="language-python"># Create dummy variables from the feature purpose
-df = pd.get_dummies(df, columns=[&quot;purpose&quot;], drop_first=True)
-df.head()
+.dataframe tbody tr th {
+    vertical-align: top;
+}
 </code></pre>
-
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>credit_policy</th>
-      <th>int_rate</th>
-      <th>installment</th>
-      <th>log_annual_inc</th>
-      <th>dti</th>
-      <th>fico</th>
-      <th>days_with_cr_line</th>
-      <th>revol_bal</th>
-      <th>revol_util</th>
-      <th>inq_last_6mths</th>
-      <th>delinq_2yrs</th>
-      <th>pub_rec</th>
-      <th>not_fully_paid</th>
-      <th>purpose_credit_card</th>
-      <th>purpose_debt_consolidation</th>
-      <th>purpose_educational</th>
-      <th>purpose_home_improvement</th>
-      <th>purpose_major_purchase</th>
-      <th>purpose_small_business</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>0.1189</td>
-      <td>829.10</td>
-      <td>11.350407</td>
-      <td>19.48</td>
-      <td>737</td>
-      <td>5639.958333</td>
-      <td>28854</td>
-      <td>52.1</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>0.1071</td>
-      <td>228.22</td>
-      <td>11.082143</td>
-      <td>14.29</td>
-      <td>707</td>
-      <td>2760.000000</td>
-      <td>33623</td>
-      <td>76.7</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>0.1357</td>
-      <td>366.86</td>
-      <td>10.373491</td>
-      <td>11.63</td>
-      <td>682</td>
-      <td>4710.000000</td>
-      <td>3511</td>
-      <td>25.6</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>0.1008</td>
-      <td>162.34</td>
-      <td>11.350407</td>
-      <td>8.10</td>
-      <td>712</td>
-      <td>2699.958333</td>
-      <td>33667</td>
-      <td>73.2</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>0.1426</td>
-      <td>102.92</td>
-      <td>11.299732</td>
-      <td>14.97</td>
-      <td>667</td>
-      <td>4066.000000</td>
-      <td>4740</td>
-      <td>39.5</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p><h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Strategies to deal with missing values</h3><br>
-Almost always real world data sets have missing values. This can be due, for example, users didn't fill some part of the forms or some transformations happened while collecting and cleaning the data before they send it to you. Sometimes missing values are informative and weren't generated randomly. Therefore, it's a good practice to add binary features to check if there is missing values in each row for each feature that has missing values. In our case, six features have missing values so we would add six binary features one for each feature. For example, &quot;log_annual_inc&quot; feature has missing values, so we would add a feature &quot;is_log_annual_inc_missing&quot; that takes the values $\in {0, 1}$. Good thing is that the missing values are in the predictors only and not the labels. Below are some of the most common strategies for dealing with missing values:</p>
-
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <ul>
 <li>Simply delete all examples that have any missing values. This is usually done if the missing values are very small compared to the size of the data set and the missing values were random. In other words, the added binary features did not improve the model. One disadvantage for this strategy is that the model will throw an error when test data has missing values at prediction.</li>
 <li>Impute the missing values using the mean of each feature separately.</li>
 <li>Impute the missing values using the median of each feature separately.</li>
-<li>Use <em>Multivariate Imputation by Chained Equations (MICE)</em>. The main disadvantage of MICE is that we can't use it as a transformer in sklearn pipelines and it requires to use the full data set when imputing the missing values. This means that there will be a risk of data leakage since we're using both training and test sets to impute the missing values. The following steps explain how MICE works:
-
+<li>Use <em>Multivariate Imputation by Chained Equations (MICE)</em>. The main disadvantage of MICE is that we can&rsquo;t use it as a transformer in sklearn pipelines and it requires to use the full data set when imputing the missing values. This means that there will be a risk of data leakage since we&rsquo;re using both training and test sets to impute the missing values. The following steps explain how MICE works:
 <ul>
 <li>First step: Impute the missing values using the mean of each feature separately.</li>
-<li>Second step: For each feature that has missing values, we take all other features as predictors (including the ones that had missing values) and try to predict the values for this feature using linear regression for example. The predicted values will replace the old values for that feature. We do this for all features that have missing values, i.e. each feature will be used once as a target variable to predict its values and the rest of the time as a predictor to predict other features' values. Therefore, one complete cycle (iteration) will be done once we run the model $k$ times to predict the $k$ features that have missing values. For our data set, each iteration will run the linear regression 6 times to predict the 6 features.</li>
+<li>Second step: For each feature that has missing values, we take all other features as predictors (including the ones that had missing values) and try to predict the values for this feature using linear regression for example. The predicted values will replace the old values for that feature. We do this for all features that have missing values, i.e. each feature will be used once as a target variable to predict its values and the rest of the time as a predictor to predict other features&rsquo; values. Therefore, one complete cycle (iteration) will be done once we run the model $k$ times to predict the $k$ features that have missing values. For our data set, each iteration will run the linear regression 6 times to predict the 6 features.
+<ul>
 <li>Third step: Repeat step 2 until there is not much of change between predictions.</li>
-</ul></li>
-<li>Impute the missing values using K-Nearest Neighbors. We compute distance between all examples (excluding missing values) in the data set and take the average of k-nearest neighbors of each missing value. There's no implementation for it yet in sklearn and it's pretty inefficient to compute it since we'll have to go through all examples to calculate distances. Therefore, we'll skip this strategy in this post.</li>
 </ul>
+</li>
+</ul>
+</li>
+<li>Impute the missing values using K-Nearest Neighbors. We compute distance between all examples (excluding missing values) in the data set and take the average of k-nearest neighbors of each missing value. There&rsquo;s no implementation for it yet in sklearn and it&rsquo;s pretty inefficient to compute it since we&rsquo;ll have to go through all examples to calculate distances. Therefore, we&rsquo;ll skip this strategy in this post.</li>
+</ul>
+<p>To evaluate each strategy, we&rsquo;ll use <em>Random Forest</em> classifier with hyperparameters&rsquo; values guided by <a href="https://arxiv.org/pdf/1708.05070.pdf">Data-driven Advice for Applying Machine Learning to Bioinformatics Problems</a> as a starting point.</p>
+<p>Let&rsquo;s first create binary features for missing values and then prepare the data for each strategy discussed above. Next, we&rsquo;ll compute the 10-folds cross validation <em>AUC</em> score for all the models using training data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create binary features to check if the example is has missing values for all features that have missing values</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> feature <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>columns:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>any(np<span style="color:#f92672">.</span>isnan(df[feature])):
+</span></span><span style="display:flex;"><span>        df[<span style="color:#e6db74">&#34;is_&#34;</span> <span style="color:#f92672">+</span> feature <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;_missing&#34;</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>isnan(df[feature]) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<pre><code>.dataframe thead th {
+    text-align: left;
+}
 
-<p>To evaluate each strategy, we'll use <em>Random Forest</em> classifier with hyperparameters' values guided by <a href="https://arxiv.org/pdf/1708.05070.pdf">Data-driven Advice for Applying Machine Learning to Bioinformatics Problems</a> as a starting point.</p>
-
-<p>Let's first create binary features for missing values and then prepare the data for each strategy discussed above. Next, we'll compute the 10-folds cross validation <em>AUC</em> score for all the models using training data.</p>
-
-<pre><code class="language-python"># Create binary features to check if the example is has missing values for all features that have missing values
-for feature in df.columns:
-    if np.any(np.isnan(df[feature])):
-        df[&quot;is_&quot; + feature + &quot;_missing&quot;] = np.isnan(df[feature]) * 1
-
-df.head()
+.dataframe tbody tr th {
+    vertical-align: top;
+}
 </code></pre>
-
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>credit_policy</th>
-      <th>int_rate</th>
-      <th>installment</th>
-      <th>log_annual_inc</th>
-      <th>dti</th>
-      <th>fico</th>
-      <th>days_with_cr_line</th>
-      <th>revol_bal</th>
-      <th>revol_util</th>
-      <th>inq_last_6mths</th>
-      <th>...</th>
-      <th>purpose_educational</th>
-      <th>purpose_home_improvement</th>
-      <th>purpose_major_purchase</th>
-      <th>purpose_small_business</th>
-      <th>is_log_annual_inc_missing</th>
-      <th>is_days_with_cr_line_missing</th>
-      <th>is_revol_util_missing</th>
-      <th>is_inq_last_6mths_missing</th>
-      <th>is_delinq_2yrs_missing</th>
-      <th>is_pub_rec_missing</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>0.1189</td>
-      <td>829.10</td>
-      <td>11.350407</td>
-      <td>19.48</td>
-      <td>737</td>
-      <td>5639.958333</td>
-      <td>28854</td>
-      <td>52.1</td>
-      <td>0.0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>0.1071</td>
-      <td>228.22</td>
-      <td>11.082143</td>
-      <td>14.29</td>
-      <td>707</td>
-      <td>2760.000000</td>
-      <td>33623</td>
-      <td>76.7</td>
-      <td>0.0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>0.1357</td>
-      <td>366.86</td>
-      <td>10.373491</td>
-      <td>11.63</td>
-      <td>682</td>
-      <td>4710.000000</td>
-      <td>3511</td>
-      <td>25.6</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>0.1008</td>
-      <td>162.34</td>
-      <td>11.350407</td>
-      <td>8.10</td>
-      <td>712</td>
-      <td>2699.958333</td>
-      <td>33667</td>
-      <td>73.2</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>0.1426</td>
-      <td>102.92</td>
-      <td>11.299732</td>
-      <td>14.97</td>
-      <td>667</td>
-      <td>4066.000000</td>
-      <td>4740</td>
-      <td>39.5</td>
-      <td>0.0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<pre><code class="language-python"># Original Data
-X = df.loc[:, df.columns != &quot;not_fully_paid&quot;].values
-y = df.loc[:, df.columns == &quot;not_fully_paid&quot;].values.flatten()
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, shuffle=True, random_state=123, stratify=y)
-print(f&quot;Original data shapes: {X_train.shape, X_test.shape}&quot;)
-
-# Drop NA and remove binary columns
-train_indices_na = np.max(np.isnan(X_train), axis=1)
-test_indices_na = np.max(np.isnan(X_test), axis=1)
-X_train_dropna, y_train_dropna = X_train[~train_indices_na, :][:, :-6], y_train[~train_indices_na]
-X_test_dropna, y_test_dropna = X_test[~test_indices_na, :][:, :-6], y_test[~test_indices_na]
-print(f&quot;After dropping NAs: {X_train_dropna.shape, X_test_dropna.shape}&quot;)
-
-# MICE data
-mice = fancyimpute.MICE(verbose=0)
-X_mice = mice.complete(X)
-X_train_mice, X_test_mice, y_train_mice, y_test_mice = train_test_split(
-    X_mice, y, test_size=0.2, shuffle=True, random_state=123, stratify=y)
-print(f&quot;MICE data shapes: {X_train_mice.shape, X_test_mice.shape}&quot;)
-</code></pre>
-
-<pre><code>Original data shapes: ((7662, 24), (1916, 24))
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Original Data</span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>loc[:, df<span style="color:#f92672">.</span>columns <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;not_fully_paid&#34;</span>]<span style="color:#f92672">.</span>values
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>loc[:, df<span style="color:#f92672">.</span>columns <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;not_fully_paid&#34;</span>]<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>flatten()
+</span></span><span style="display:flex;"><span>X_train, X_test, y_train, y_test <span style="color:#f92672">=</span> train_test_split(
+</span></span><span style="display:flex;"><span>    X, y, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">123</span>, stratify<span style="color:#f92672">=</span>y)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Original data shapes: </span><span style="color:#e6db74">{</span>X_train<span style="color:#f92672">.</span>shape, X_test<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Drop NA and remove binary columns</span>
+</span></span><span style="display:flex;"><span>train_indices_na <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(np<span style="color:#f92672">.</span>isnan(X_train), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>test_indices_na <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(np<span style="color:#f92672">.</span>isnan(X_test), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>X_train_dropna, y_train_dropna <span style="color:#f92672">=</span> X_train[<span style="color:#f92672">~</span>train_indices_na, :][:, :<span style="color:#f92672">-</span><span style="color:#ae81ff">6</span>], y_train[<span style="color:#f92672">~</span>train_indices_na]
+</span></span><span style="display:flex;"><span>X_test_dropna, y_test_dropna <span style="color:#f92672">=</span> X_test[<span style="color:#f92672">~</span>test_indices_na, :][:, :<span style="color:#f92672">-</span><span style="color:#ae81ff">6</span>], y_test[<span style="color:#f92672">~</span>test_indices_na]
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;After dropping NAs: </span><span style="color:#e6db74">{</span>X_train_dropna<span style="color:#f92672">.</span>shape, X_test_dropna<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># MICE data</span>
+</span></span><span style="display:flex;"><span>mice <span style="color:#f92672">=</span> fancyimpute<span style="color:#f92672">.</span>MICE(verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>X_mice <span style="color:#f92672">=</span> mice<span style="color:#f92672">.</span>complete(X)
+</span></span><span style="display:flex;"><span>X_train_mice, X_test_mice, y_train_mice, y_test_mice <span style="color:#f92672">=</span> train_test_split(
+</span></span><span style="display:flex;"><span>    X_mice, y, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">123</span>, stratify<span style="color:#f92672">=</span>y)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;MICE data shapes: </span><span style="color:#e6db74">{</span>X_train_mice<span style="color:#f92672">.</span>shape, X_test_mice<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><pre><code>Original data shapes: ((7662, 24), (1916, 24))
 After dropping NAs: ((7611, 18), (1905, 18))
 MICE data shapes: ((7662, 24), (1916, 24))
 </code></pre>
-
-<pre><code class="language-python"># Build random forest classifier
-rf_clf = RandomForestClassifier(n_estimators=500,
-                                max_features=0.25,
-                                criterion=&quot;entropy&quot;,
-                                class_weight=&quot;balanced&quot;)
-# Build base line model -- Drop NA's
-pip_baseline = make_pipeline(RobustScaler(), rf_clf)
-scores = cross_val_score(pip_baseline,
-                         X_train_dropna, y_train_dropna,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;Baseline model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model with mean imputation
-pip_impute_mean = make_pipeline(Imputer(strategy=&quot;mean&quot;),
-                                RobustScaler(), rf_clf)
-scores = cross_val_score(pip_impute_mean,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;Mean imputation model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model with median imputation
-pip_impute_median = make_pipeline(Imputer(strategy=&quot;median&quot;),
-                                  RobustScaler(), rf_clf)
-scores = cross_val_score(pip_impute_median,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;Median imputation model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model using MICE imputation
-pip_impute_mice = make_pipeline(RobustScaler(), rf_clf)
-scores = cross_val_score(pip_impute_mice,
-                         X_train_mice, y_train_mice,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;MICE imputation model's average AUC: {scores.mean():.3f}&quot;)
-</code></pre>
-
-<pre><code>Baseline model's average AUC: 0.651
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Build random forest classifier</span>
+</span></span><span style="display:flex;"><span>rf_clf <span style="color:#f92672">=</span> RandomForestClassifier(n_estimators<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>                                max_features<span style="color:#f92672">=</span><span style="color:#ae81ff">0.25</span>,
+</span></span><span style="display:flex;"><span>                                criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;entropy&#34;</span>,
+</span></span><span style="display:flex;"><span>                                class_weight<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;balanced&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build base line model -- Drop NA&#39;s</span>
+</span></span><span style="display:flex;"><span>pip_baseline <span style="color:#f92672">=</span> make_pipeline(RobustScaler(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_baseline,
+</span></span><span style="display:flex;"><span>                         X_train_dropna, y_train_dropna,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Baseline model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with mean imputation</span>
+</span></span><span style="display:flex;"><span>pip_impute_mean <span style="color:#f92672">=</span> make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>),
+</span></span><span style="display:flex;"><span>                                RobustScaler(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_impute_mean,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Mean imputation model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with median imputation</span>
+</span></span><span style="display:flex;"><span>pip_impute_median <span style="color:#f92672">=</span> make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;median&#34;</span>),
+</span></span><span style="display:flex;"><span>                                  RobustScaler(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_impute_median,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Median imputation model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model using MICE imputation</span>
+</span></span><span style="display:flex;"><span>pip_impute_mice <span style="color:#f92672">=</span> make_pipeline(RobustScaler(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_impute_mice,
+</span></span><span style="display:flex;"><span>                         X_train_mice, y_train_mice,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;MICE imputation model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><pre><code>Baseline model's average AUC: 0.651
 Mean imputation model's average AUC: 0.651
 Median imputation model's average AUC: 0.651
 MICE imputation model's average AUC: 0.656
 </code></pre>
-
-<p>Let's plot the feature importances to check if the added binary features added anything to the model.</p>
-
-<pre><code class="language-python"># fit RF to plot feature importances
-rf_clf.fit(RobustScaler().fit_transform(Imputer(strategy=&quot;median&quot;).fit_transform(X_train)), y_train)
-
-# Plot features importance
-importances = rf_clf.feature_importances_
-indices = np.argsort(rf_clf.feature_importances_)[::-1]
-plt.figure(figsize=(12, 6))
-plt.bar(range(1, 25), importances[indices], align=&quot;center&quot;)
-plt.xticks(range(1, 25), df.columns[df.columns != &quot;not_fully_paid&quot;][indices], rotation=90)
-plt.title(&quot;Feature Importance&quot;, {&quot;fontsize&quot;: 16});
-</code></pre>
-
-
+<p>Let&rsquo;s plot the feature importances to check if the added binary features added anything to the model.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># fit RF to plot feature importances</span>
+</span></span><span style="display:flex;"><span>rf_clf<span style="color:#f92672">.</span>fit(RobustScaler()<span style="color:#f92672">.</span>fit_transform(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;median&#34;</span>)<span style="color:#f92672">.</span>fit_transform(X_train)), y_train)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot features importance</span>
+</span></span><span style="display:flex;"><span>importances <span style="color:#f92672">=</span> rf_clf<span style="color:#f92672">.</span>feature_importances_
+</span></span><span style="display:flex;"><span>indices <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argsort(rf_clf<span style="color:#f92672">.</span>feature_importances_)[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>bar(range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">25</span>), importances[indices], align<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;center&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks(range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">25</span>), df<span style="color:#f92672">.</span>columns[df<span style="color:#f92672">.</span>columns <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;not_fully_paid&#34;</span>][indices], rotation<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Feature Importance&#34;</span>, {<span style="color:#e6db74">&#34;fontsize&#34;</span>: <span style="color:#ae81ff">16</span>});
+</span></span></code></pre></div>
 
 
   
@@ -1361,240 +923,216 @@ plt.title(&quot;Feature Importance&quot;, {&quot;fontsize&quot;: 16});
 
 </figure>
 
-
-<p>Guided by the 10-fold cross validation <em>AUC</em> scores, it looks like all strategies have comparable results and missing values were generated randomly. Also, the added six binary features showed no importance when plotting feature importances from <em>Random Forest</em> classifier. Therefore, it's safe to drop those features and use <em>Median Imputation</em> method as a transformer later on in the pipeline.</p>
-
-<pre><code class="language-python"># Drop generated binary features
-X_train = X_train[:, :-6]
-X_test = X_test[:, :-6]
-</code></pre>
-
-<p><h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Strategies to deal with imbalanced datasets</h3><br>
-Classification problems in most real world applications have imbalanced data sets. In other words, the positive examples (minority class) are a lot less than negative examples (majority class). We can see that in spam detection, ads click, loan approvals, etc. In our example, the positive examples (people who haven't fully paid) were only 19% from the total examples. Therefore, accuracy is no longer a good measure of performance for different models because if we simply predict all examples to belong to the negative class, we achieve 81% accuracy. Better metrics for imbalanced data sets are <em>AUC</em> (area under the ROC curve) and f1-score. However, that's not enough because class imbalance influences a learning algorithm during training by making the decision rule biased towards the majority class by implicitly learns a model that optimizes the predictions based on the majority class in the dataset. As a result, we'll explore different methods to overcome class imbalance problem.</p>
-
+<p>Guided by the 10-fold cross validation <em>AUC</em> scores, it looks like all strategies have comparable results and missing values were generated randomly. Also, the added six binary features showed no importance when plotting feature importances from <em>Random Forest</em> classifier. Therefore, it&rsquo;s safe to drop those features and use <em>Median Imputation</em> method as a transformer later on in the pipeline.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Drop generated binary features</span>
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> X_train[:, :<span style="color:#f92672">-</span><span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> X_test[:, :<span style="color:#f92672">-</span><span style="color:#ae81ff">6</span>]
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <ul>
-<li>Under-Sample: Under-sample the majority class with or w/o replacement by making the number of positive and negative examples equal. One of the drawbacks of under-sampling is that it ignores a good portion of training data that has valuable information. In our example, it would loose around 6500 examples. However, it's very fast to train.</li>
-<li>Over-Sample: Over-sample the minority class with or w/o replacement by making the number of positive and negative examples equal. We'll add around 6500 samples from the training data set with this strategy. It's a lot more computationally expensive than under-sampling. Also, it's more prune to overfitting due to repeated examples.</li>
+<li>Under-Sample: Under-sample the majority class with or w/o replacement by making the number of positive and negative examples equal. One of the drawbacks of under-sampling is that it ignores a good portion of training data that has valuable information. In our example, it would loose around 6500 examples. However, it&rsquo;s very fast to train.</li>
+<li>Over-Sample: Over-sample the minority class with or w/o replacement by making the number of positive and negative examples equal. We&rsquo;ll add around 6500 samples from the training data set with this strategy. It&rsquo;s a lot more computationally expensive than under-sampling. Also, it&rsquo;s more prune to overfitting due to repeated examples.</li>
 <li>EasyEnsemble: Sample several subsets from the majority class, build a classifier on top of each sampled data, and combine the output of all classifiers. More details can be found <a href="http://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/tsmcb09.pdf">here</a>.</li>
 <li>Synthetic Minority Oversampling Technique (SMOTE): It over-samples the minority class but using synthesized examples. It operates on feature space not the data space. Here how it works:
-
 <ul>
 <li>Compute the k-nearest neighbors for all minority samples.</li>
 <li>Randomly choose number between 1-k.</li>
 <li>For each feature:
-
+- Compute the difference between minority sample and its randomly chosen neighbor (from previous step).
+- Multiply the difference by random number between 0 and 1.
+- Add the obtained feature to the synthesized sample attributes.
 <ul>
-<li>Compute the difference between minority sample and its randomly chosen neighbor (from previous step).</li>
-<li>Multiply the difference by random number between 0 and 1.</li>
-<li>Add the obtained feature to the synthesized sample attributes.</li>
-</ul></li>
 <li>Repeat the above until we get the number of synthesized samples needed. More information can be found <a href="https://www.jair.org/media/953/live-953-2037-jair.pdf">here</a>.</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <p>There are other methods such as <code>EditedNearestNeighbors</code> and <code>CondensedNearestNeighbors</code> that we will not cover in this post and are rarely used in practice.</p>
-
 <p>In most applications, misclassifying the minority class (false negative) is a lot more expensive than misclassifying the majority class (false positive). In the context of lending, loosing money by lending to a risky borrower who is more likely to not fully pay the loan back is a lot more costly than missing the opportunity of lending to trust-worthy borrower (less risky). As a result, we can use <code>class_weight</code> that changes the weight of misclassifying positive example in the loss function. Also, we can use different cut-offs assign examples to classes. By default, 0.5 is the cut-off; however, we see more often in applications such as lending that the cut-off is less than 0.5. Note that changing the cut-off from the default 0.5 reduce the overall accuracy but may improve the accuracy of predicting positive/negative examples.</p>
-
-<p>We'll evaluate all the above methods plus the original model without resampling as a baseline model using the same <em>Random Forest</em> classifier we used in the missing values section.</p>
-
-<pre><code class="language-python"># Build random forest classifier (same config)
-rf_clf = RandomForestClassifier(n_estimators=500,
-                                max_features=0.25,
-                                criterion=&quot;entropy&quot;,
-                                class_weight=&quot;balanced&quot;)
-
-# Build model with no sampling
-pip_orig = make_pipeline(Imputer(strategy=&quot;mean&quot;),
-                         RobustScaler(),
-                         rf_clf)
-scores = cross_val_score(pip_orig,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;Original model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model with undersampling
-pip_undersample = imb_make_pipeline(Imputer(strategy=&quot;mean&quot;),
-                                    RobustScaler(),
-                                    RandomUnderSampler(), rf_clf)
-scores = cross_val_score(pip_undersample,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;Under-sampled model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model with oversampling
-pip_oversample = imb_make_pipeline(Imputer(strategy=&quot;mean&quot;),
-                                    RobustScaler(),
-                                    RandomOverSampler(), rf_clf)
-scores = cross_val_score(pip_oversample,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;Over-sampled model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model with EasyEnsemble
-resampled_rf = BalancedBaggingClassifier(base_estimator=rf_clf,
-                                         n_estimators=10, random_state=123)
-pip_resampled = make_pipeline(Imputer(strategy=&quot;mean&quot;),
-                              RobustScaler(), resampled_rf)
-                             
-scores = cross_val_score(pip_resampled,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;EasyEnsemble model's average AUC: {scores.mean():.3f}&quot;)
-
-# Build model with SMOTE
-pip_smote = imb_make_pipeline(Imputer(strategy=&quot;mean&quot;),
-                              RobustScaler(),
-                              SMOTE(), rf_clf)
-scores = cross_val_score(pip_smote,
-                         X_train, y_train,
-                         scoring=&quot;roc_auc&quot;, cv=10)
-print(f&quot;SMOTE model's average AUC: {scores.mean():.3f}&quot;)
-</code></pre>
-
-<pre><code>Original model's average AUC: 0.652
+<p>We&rsquo;ll evaluate all the above methods plus the original model without resampling as a baseline model using the same <em>Random Forest</em> classifier we used in the missing values section.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Build random forest classifier (same config)</span>
+</span></span><span style="display:flex;"><span>rf_clf <span style="color:#f92672">=</span> RandomForestClassifier(n_estimators<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>                                max_features<span style="color:#f92672">=</span><span style="color:#ae81ff">0.25</span>,
+</span></span><span style="display:flex;"><span>                                criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;entropy&#34;</span>,
+</span></span><span style="display:flex;"><span>                                class_weight<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;balanced&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with no sampling</span>
+</span></span><span style="display:flex;"><span>pip_orig <span style="color:#f92672">=</span> make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>),
+</span></span><span style="display:flex;"><span>                         RobustScaler(),
+</span></span><span style="display:flex;"><span>                         rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_orig,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Original model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with undersampling</span>
+</span></span><span style="display:flex;"><span>pip_undersample <span style="color:#f92672">=</span> imb_make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>),
+</span></span><span style="display:flex;"><span>                                    RobustScaler(),
+</span></span><span style="display:flex;"><span>                                    RandomUnderSampler(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_undersample,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Under-sampled model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with oversampling</span>
+</span></span><span style="display:flex;"><span>pip_oversample <span style="color:#f92672">=</span> imb_make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>),
+</span></span><span style="display:flex;"><span>                                    RobustScaler(),
+</span></span><span style="display:flex;"><span>                                    RandomOverSampler(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_oversample,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Over-sampled model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with EasyEnsemble</span>
+</span></span><span style="display:flex;"><span>resampled_rf <span style="color:#f92672">=</span> BalancedBaggingClassifier(base_estimator<span style="color:#f92672">=</span>rf_clf,
+</span></span><span style="display:flex;"><span>                                         n_estimators<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">123</span>)
+</span></span><span style="display:flex;"><span>pip_resampled <span style="color:#f92672">=</span> make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>),
+</span></span><span style="display:flex;"><span>                              RobustScaler(), resampled_rf)
+</span></span><span style="display:flex;"><span>                             
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_resampled,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;EasyEnsemble model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build model with SMOTE</span>
+</span></span><span style="display:flex;"><span>pip_smote <span style="color:#f92672">=</span> imb_make_pipeline(Imputer(strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>),
+</span></span><span style="display:flex;"><span>                              RobustScaler(),
+</span></span><span style="display:flex;"><span>                              SMOTE(), rf_clf)
+</span></span><span style="display:flex;"><span>scores <span style="color:#f92672">=</span> cross_val_score(pip_smote,
+</span></span><span style="display:flex;"><span>                         X_train, y_train,
+</span></span><span style="display:flex;"><span>                         scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;roc_auc&#34;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;SMOTE model&#39;s average AUC: </span><span style="color:#e6db74">{</span>scores<span style="color:#f92672">.</span>mean()<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><pre><code>Original model's average AUC: 0.652
 Under-sampled model's average AUC: 0.656
 Over-sampled model's average AUC: 0.651
 EasyEnsemble model's average AUC: 0.665
 SMOTE model's average AUC: 0.641
 </code></pre>
-
 <p>EasyEnsemble method has the highest 10-folds CV with average AUC = 0.665.</p>
-
-<p><h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Build Ensemble models</h3><br>
-We'll build ensemble models using three different models as base learners:</p>
-
+<!-- raw HTML omitted -->
 <ul>
 <li>Gradient Boosting</li>
 <li>Support Vector Classifier</li>
 <li>Random Forest</li>
 </ul>
-
 <p>The ensemble models will be built using two different methods:</p>
-
 <ul>
 <li>Blending (average) ensemble model. Fits the base learners to the training data and then, at test time, average the predictions generated by all the base learners.
-
 <ul>
-<li>Use VotingClassifier from sklearn that:</li>
+<li>Use VotingClassifier from sklearn that:
+<ul>
 <li>Fits all the base learners on the training data</li>
 <li>At test time, use all base learners to predict test data and then take the average of all predictions.</li>
-</ul></li>
-<li>Stacked ensemble model: Fits the base learners to the training data. Next, use those trained base learners to generate predictions (meta-features) used by the meta-learner (assuming we have only one layer of base learners). There are few different ways of training stacked ensemble model:
-
-<ul>
-<li>Fitting the base learners to all training data and then generate predictions using the same training data it was used to fit those learners. This method is more prune to overfitting because the meta learner will give more weights to the base learner who memorized the training data better, i.e. meta-learner won't generate well and would overfit.</li>
-<li>Split the training data into 2 to 3 different parts that will be used for training, validation, and generate predictions. It's a suboptimal method because held out sets usually have higher variance and different splits give different results as well as learning algorithms would have fewer data to train.</li>
-<li>Use k-folds cross validation where we split the data into k-folds. We fit the base learners to the (k - 1) folds and use the fitted models to generate predictions of the held out fold. We repeat the process until we generate the predictions for all the k-folds. When done, refit the base learners to the full training data. This method is more reliable and will give models that memorize the data less weight. Therefore, it generalizes better on future data.</li>
-</ul></li>
 </ul>
-
-<p>We'll use logistic regression as the meta-learner for the stacked model. Note that we can use k-folds cross validation to validate and tune the hyperparameters of the meta learner. We will not tune the hyperparameters of any of the base learners or the meta-learner; however, we will use some of the values recommended by the <a href="https://arxiv.org/pdf/1708.05070.pdf">Pennsylvania Benchmarking Paper</a>. Additionally, we won't use EasyEnsemble in training because, after some experimentation, it didn't improve the AUC of the ensemble model more than 2% on average and it was computationally very expensive. In practice, we sometimes are willing to give up small improvements if the model would become a lot more complex computationally. Therefore, we will use <code>RandomUnderSampler</code>. Also, we'll impute the missing values and standardize the data beforehand so that it would shorten the code of the ensemble models and allows use to avoid using <code>Pipeline</code>. Additionally, we will plot ROC and PR curves using test data and evaluate the performance of all models.</p>
-
-<pre><code class="language-python"># Impute the missing data using features means
-imp = Imputer()
-imp.fit(X_train)
-X_train = imp.transform(X_train)
-X_test = imp.transform(X_test)
-
-# Standardize the data
-std = RobustScaler()
-std.fit(X_train)
-X_train = std.transform(X_train)
-X_test = std.transform(X_test)
-
-# Implement RandomUnderSampler
-random_undersampler = RandomUnderSampler()
-X_res, y_res = random_undersampler.fit_sample(X_train, y_train)
-# Shuffle the data
-perms = np.random.permutation(X_res.shape[0])
-X_res = X_res[perms]
-y_res = y_res[perms]
-X_res.shape, y_res.shape
+</li>
+</ul>
+</li>
+<li>Stacked ensemble model: Fits the base learners to the training data. Next, use those trained base learners to generate predictions (meta-features) used by the meta-learner (assuming we have only one layer of base learners). There are few different ways of training stacked ensemble model:
+<ul>
+<li>Fitting the base learners to all training data and then generate predictions using the same training data it was used to fit those learners. This method is more prune to overfitting because the meta learner will give more weights to the base learner who memorized the training data better, i.e. meta-learner won&rsquo;t generate well and would overfit.</li>
+<li>Split the training data into 2 to 3 different parts that will be used for training, validation, and generate predictions. It&rsquo;s a suboptimal method because held out sets usually have higher variance and different splits give different results as well as learning algorithms would have fewer data to train.</li>
+<li>Use k-folds cross validation where we split the data into k-folds. We fit the base learners to the (k - 1) folds and use the fitted models to generate predictions of the held out fold. We repeat the process until we generate the predictions for all the k-folds. When done, refit the base learners to the full training data. This method is more reliable and will give models that memorize the data less weight. Therefore, it generalizes better on future data.</li>
+</ul>
+</li>
+</ul>
+<p>We&rsquo;ll use logistic regression as the meta-learner for the stacked model. Note that we can use k-folds cross validation to validate and tune the hyperparameters of the meta learner. We will not tune the hyperparameters of any of the base learners or the meta-learner; however, we will use some of the values recommended by the <a href="https://arxiv.org/pdf/1708.05070.pdf">Pennsylvania Benchmarking Paper</a>. Additionally, we won&rsquo;t use EasyEnsemble in training because, after some experimentation, it didn&rsquo;t improve the AUC of the ensemble model more than 2% on average and it was computationally very expensive. In practice, we sometimes are willing to give up small improvements if the model would become a lot more complex computationally. Therefore, we will use <code>RandomUnderSampler</code>. Also, we&rsquo;ll impute the missing values and standardize the data beforehand so that it would shorten the code of the ensemble models and allows use to avoid using <code>Pipeline</code>. Additionally, we will plot ROC and PR curves using test data and evaluate the performance of all models.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Impute the missing data using features means</span>
+</span></span><span style="display:flex;"><span>imp <span style="color:#f92672">=</span> Imputer()
+</span></span><span style="display:flex;"><span>imp<span style="color:#f92672">.</span>fit(X_train)
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> imp<span style="color:#f92672">.</span>transform(X_train)
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> imp<span style="color:#f92672">.</span>transform(X_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Standardize the data</span>
+</span></span><span style="display:flex;"><span>std <span style="color:#f92672">=</span> RobustScaler()
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">.</span>fit(X_train)
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> std<span style="color:#f92672">.</span>transform(X_train)
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> std<span style="color:#f92672">.</span>transform(X_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Implement RandomUnderSampler</span>
+</span></span><span style="display:flex;"><span>random_undersampler <span style="color:#f92672">=</span> RandomUnderSampler()
+</span></span><span style="display:flex;"><span>X_res, y_res <span style="color:#f92672">=</span> random_undersampler<span style="color:#f92672">.</span>fit_sample(X_train, y_train)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Shuffle the data</span>
+</span></span><span style="display:flex;"><span>perms <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(X_res<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>X_res <span style="color:#f92672">=</span> X_res[perms]
+</span></span><span style="display:flex;"><span>y_res <span style="color:#f92672">=</span> y_res[perms]
+</span></span><span style="display:flex;"><span>X_res<span style="color:#f92672">.</span>shape, y_res<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><pre><code>((2452, 18), (2452,))
 </code></pre>
-
-<pre><code>((2452, 18), (2452,))
-</code></pre>
-
-<pre><code class="language-python"># Define base learners
-xgb_clf = xgb.XGBClassifier(objective=&quot;binary:logistic&quot;,
-                            learning_rate=0.03,
-                            n_estimators=500,
-                            max_depth=1,
-                            subsample=0.4,
-                            random_state=123)
-
-svm_clf = SVC(gamma=0.1,
-                C=0.01,
-                kernel=&quot;poly&quot;,
-                degree=3,
-                coef0=10.0,
-                probability=True)
-
-rf_clf = RandomForestClassifier(n_estimators=300,
-                                max_features=&quot;sqrt&quot;,
-                                criterion=&quot;gini&quot;,
-                                min_samples_leaf=5,
-                                class_weight=&quot;balanced&quot;)
-
-# Define meta-learner
-logreg_clf = LogisticRegression(penalty=&quot;l2&quot;,
-                                C=100,
-                                fit_intercept=True)
-
-# Fitting voting clf --&gt; average ensemble
-voting_clf = VotingClassifier([(&quot;xgb&quot;, xgb_clf),
-                               (&quot;svm&quot;, svm_clf),
-                               (&quot;rf&quot;, rf_clf)],
-                              voting=&quot;soft&quot;,
-                              flatten_transform=True)
-voting_clf.fit(X_res, y_res)
-xgb_model, svm_model, rf_model = voting_clf.estimators_
-models = {&quot;xgb&quot;: xgb_model, &quot;svm&quot;: svm_model,
-          &quot;rf&quot;: rf_model, &quot;avg_ensemble&quot;: voting_clf}
-
-# Build first stack of base learners
-first_stack = make_pipeline(voting_clf,
-                            FunctionTransformer(lambda X: X[:, 1::2]))
-# Use CV to generate meta-features
-meta_features = cross_val_predict(first_stack,
-                                  X_res, y_res,
-                                  cv=10,
-                                  method=&quot;transform&quot;)
-# Refit the first stack on the full training set
-first_stack.fit(X_res, y_res)
-# Fit the meta learner
-second_stack = logreg_clf.fit(meta_features, y_res)
-
-# Plot ROC and PR curves using all models and test data
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-for name, model in models.items():
-            model_probs = model.predict_proba(X_test)[:, 1:]
-            model_auc_score = roc_auc_score(y_test, model_probs)
-            fpr, tpr, _ = roc_curve(y_test, model_probs)
-            precision, recall, _ = precision_recall_curve(y_test, model_probs)
-            axes[0].plot(fpr, tpr, label=f&quot;{name}, auc = {model_auc_score:.3f}&quot;)
-            axes[1].plot(recall, precision, label=f&quot;{name}&quot;)
-stacked_probs = second_stack.predict_proba(first_stack.transform(X_test))[:, 1:]
-stacked_auc_score = roc_auc_score(y_test, stacked_probs)
-fpr, tpr, _ = roc_curve(y_test, stacked_probs)
-precision, recall, _ = precision_recall_curve(y_test, stacked_probs)
-axes[0].plot(fpr, tpr, label=f&quot;stacked_ensemble, auc = {stacked_auc_score:.3f}&quot;)
-axes[1].plot(recall, precision, label=&quot;stacked_ensembe&quot;)
-axes[0].legend(loc=&quot;lower right&quot;)
-axes[0].set_xlabel(&quot;FPR&quot;)
-axes[0].set_ylabel(&quot;TPR&quot;)
-axes[0].set_title(&quot;ROC curve&quot;)
-axes[1].legend()
-axes[1].set_xlabel(&quot;recall&quot;)
-axes[1].set_ylabel(&quot;precision&quot;)
-axes[1].set_title(&quot;PR curve&quot;)
-plt.tight_layout()
-</code></pre>
-
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define base learners</span>
+</span></span><span style="display:flex;"><span>xgb_clf <span style="color:#f92672">=</span> xgb<span style="color:#f92672">.</span>XGBClassifier(objective<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;binary:logistic&#34;</span>,
+</span></span><span style="display:flex;"><span>                            learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.03</span>,
+</span></span><span style="display:flex;"><span>                            n_estimators<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>                            max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                            subsample<span style="color:#f92672">=</span><span style="color:#ae81ff">0.4</span>,
+</span></span><span style="display:flex;"><span>                            random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">123</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>svm_clf <span style="color:#f92672">=</span> SVC(gamma<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>,
+</span></span><span style="display:flex;"><span>                C<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>,
+</span></span><span style="display:flex;"><span>                kernel<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;poly&#34;</span>,
+</span></span><span style="display:flex;"><span>                degree<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>                coef0<span style="color:#f92672">=</span><span style="color:#ae81ff">10.0</span>,
+</span></span><span style="display:flex;"><span>                probability<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rf_clf <span style="color:#f92672">=</span> RandomForestClassifier(n_estimators<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>,
+</span></span><span style="display:flex;"><span>                                max_features<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sqrt&#34;</span>,
+</span></span><span style="display:flex;"><span>                                criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gini&#34;</span>,
+</span></span><span style="display:flex;"><span>                                min_samples_leaf<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>                                class_weight<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;balanced&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Define meta-learner</span>
+</span></span><span style="display:flex;"><span>logreg_clf <span style="color:#f92672">=</span> LogisticRegression(penalty<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;l2&#34;</span>,
+</span></span><span style="display:flex;"><span>                                C<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>,
+</span></span><span style="display:flex;"><span>                                fit_intercept<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fitting voting clf --&gt; average ensemble</span>
+</span></span><span style="display:flex;"><span>voting_clf <span style="color:#f92672">=</span> VotingClassifier([(<span style="color:#e6db74">&#34;xgb&#34;</span>, xgb_clf),
+</span></span><span style="display:flex;"><span>                               (<span style="color:#e6db74">&#34;svm&#34;</span>, svm_clf),
+</span></span><span style="display:flex;"><span>                               (<span style="color:#e6db74">&#34;rf&#34;</span>, rf_clf)],
+</span></span><span style="display:flex;"><span>                              voting<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;soft&#34;</span>,
+</span></span><span style="display:flex;"><span>                              flatten_transform<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>voting_clf<span style="color:#f92672">.</span>fit(X_res, y_res)
+</span></span><span style="display:flex;"><span>xgb_model, svm_model, rf_model <span style="color:#f92672">=</span> voting_clf<span style="color:#f92672">.</span>estimators_
+</span></span><span style="display:flex;"><span>models <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;xgb&#34;</span>: xgb_model, <span style="color:#e6db74">&#34;svm&#34;</span>: svm_model,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;rf&#34;</span>: rf_model, <span style="color:#e6db74">&#34;avg_ensemble&#34;</span>: voting_clf}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build first stack of base learners</span>
+</span></span><span style="display:flex;"><span>first_stack <span style="color:#f92672">=</span> make_pipeline(voting_clf,
+</span></span><span style="display:flex;"><span>                            FunctionTransformer(<span style="color:#66d9ef">lambda</span> X: X[:, <span style="color:#ae81ff">1</span>::<span style="color:#ae81ff">2</span>]))
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use CV to generate meta-features</span>
+</span></span><span style="display:flex;"><span>meta_features <span style="color:#f92672">=</span> cross_val_predict(first_stack,
+</span></span><span style="display:flex;"><span>                                  X_res, y_res,
+</span></span><span style="display:flex;"><span>                                  cv<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>                                  method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transform&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Refit the first stack on the full training set</span>
+</span></span><span style="display:flex;"><span>first_stack<span style="color:#f92672">.</span>fit(X_res, y_res)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fit the meta learner</span>
+</span></span><span style="display:flex;"><span>second_stack <span style="color:#f92672">=</span> logreg_clf<span style="color:#f92672">.</span>fit(meta_features, y_res)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot ROC and PR curves using all models and test data</span>
+</span></span><span style="display:flex;"><span>fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name, model <span style="color:#f92672">in</span> models<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            model_probs <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict_proba(X_test)[:, <span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>            model_auc_score <span style="color:#f92672">=</span> roc_auc_score(y_test, model_probs)
+</span></span><span style="display:flex;"><span>            fpr, tpr, _ <span style="color:#f92672">=</span> roc_curve(y_test, model_probs)
+</span></span><span style="display:flex;"><span>            precision, recall, _ <span style="color:#f92672">=</span> precision_recall_curve(y_test, model_probs)
+</span></span><span style="display:flex;"><span>            axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>plot(fpr, tpr, label<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">, auc = </span><span style="color:#e6db74">{</span>model_auc_score<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>plot(recall, precision, label<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>stacked_probs <span style="color:#f92672">=</span> second_stack<span style="color:#f92672">.</span>predict_proba(first_stack<span style="color:#f92672">.</span>transform(X_test))[:, <span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>stacked_auc_score <span style="color:#f92672">=</span> roc_auc_score(y_test, stacked_probs)
+</span></span><span style="display:flex;"><span>fpr, tpr, _ <span style="color:#f92672">=</span> roc_curve(y_test, stacked_probs)
+</span></span><span style="display:flex;"><span>precision, recall, _ <span style="color:#f92672">=</span> precision_recall_curve(y_test, stacked_probs)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>plot(fpr, tpr, label<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;stacked_ensemble, auc = </span><span style="color:#e6db74">{</span>stacked_auc_score<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>plot(recall, precision, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stacked_ensembe&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lower right&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;FPR&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;TPR&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;recall&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;precision&#34;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#34;PR curve&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
+</span></span></code></pre></div><p>
 
 
   
@@ -1616,16 +1154,12 @@ plt.tight_layout()
 </figcaption>
 
 </figure>
-
-
-<p>As we can see from the chart above, stacked ensemble model didn't improve the performance. One of the major reasons are that the base learners are considerably highly correlated especially <em>Random Forest</em> and <em>Gradient Boosting</em> (see the correlation matrix below).</p>
-
-<pre><code class="language-python"># Plot the correlation between base learners
-probs_df = pd.DataFrame(meta_features, columns=[&quot;xgb&quot;, &quot;svm&quot;, &quot;rf&quot;])
-corrmat(probs_df.corr(), inflate=True);
-</code></pre>
-
-
+\</p>
+<p>As we can see from the chart above, stacked ensemble model didn&rsquo;t improve the performance. One of the major reasons are that the base learners are considerably highly correlated especially <em>Random Forest</em> and <em>Gradient Boosting</em> (see the correlation matrix below).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Plot the correlation between base learners</span>
+</span></span><span style="display:flex;"><span>probs_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(meta_features, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;xgb&#34;</span>, <span style="color:#e6db74">&#34;svm&#34;</span>, <span style="color:#e6db74">&#34;rf&#34;</span>])
+</span></span><span style="display:flex;"><span>corrmat(probs_df<span style="color:#f92672">.</span>corr(), inflate<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>);
+</span></span></code></pre></div>
 
 
   
@@ -1648,24 +1182,20 @@ corrmat(probs_df.corr(), inflate=True);
 
 </figure>
 
-
 <p>In addition, with classification problems where False Negatives are a lot more expensive than False Positives, we may want to have a model with a high precision rather than high recall, i.e. the probability of the model to identify positive examples from randomly selected examples. Below is the confusion matrix:</p>
-
-<pre><code class="language-python">second_stack_probs = second_stack.predict_proba(first_stack.transform(X_test))
-second_stack_preds = second_stack.predict(first_stack.transform(X_test))
-conf_mat = confusion_matrix(y_test, second_stack_preds)
-# Define figure size and figure ratios
-plt.figure(figsize=(16, 8))
-plt.matshow(conf_mat, cmap=plt.cm.Reds, alpha=0.2)
-for i in range(2):
-    for j in range(2):
-        plt.text(x=j, y=i, s=conf_mat[i, j], ha=&quot;center&quot;, va=&quot;center&quot;)
-plt.title(&quot;Confusion matrix&quot;, y=1.1, fontdict={&quot;fontsize&quot;: 20})
-plt.xlabel(&quot;Predicted&quot;, fontdict={&quot;fontsize&quot;: 14})
-plt.ylabel(&quot;Actual&quot;, fontdict={&quot;fontsize&quot;: 14});
-</code></pre>
-
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>second_stack_probs <span style="color:#f92672">=</span> second_stack<span style="color:#f92672">.</span>predict_proba(first_stack<span style="color:#f92672">.</span>transform(X_test))
+</span></span><span style="display:flex;"><span>second_stack_preds <span style="color:#f92672">=</span> second_stack<span style="color:#f92672">.</span>predict(first_stack<span style="color:#f92672">.</span>transform(X_test))
+</span></span><span style="display:flex;"><span>conf_mat <span style="color:#f92672">=</span> confusion_matrix(y_test, second_stack_preds)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Define figure size and figure ratios</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>matshow(conf_mat, cmap<span style="color:#f92672">=</span>plt<span style="color:#f92672">.</span>cm<span style="color:#f92672">.</span>Reds, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        plt<span style="color:#f92672">.</span>text(x<span style="color:#f92672">=</span>j, y<span style="color:#f92672">=</span>i, s<span style="color:#f92672">=</span>conf_mat[i, j], ha<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;center&#34;</span>, va<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;center&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Confusion matrix&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">1.1</span>, fontdict<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;fontsize&#34;</span>: <span style="color:#ae81ff">20</span>})
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Predicted&#34;</span>, fontdict<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;fontsize&#34;</span>: <span style="color:#ae81ff">14</span>})
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Actual&#34;</span>, fontdict<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;fontsize&#34;</span>: <span style="color:#ae81ff">14</span>});
+</span></span></code></pre></div>
 
 
   
@@ -1688,28 +1218,24 @@ plt.ylabel(&quot;Actual&quot;, fontdict={&quot;fontsize&quot;: 14});
 
 </figure>
 
-
-<p>Let's finally check the partial dependence plots to see what are the most important features and their relationships with whether the borrower will most likely pay the loan in full before mature data. we will plot only the top 8 features to make it easier to read. Note that the partial plots are based on Gradient Boosting model.</p>
-
-<pre><code class="language-python"># Plot partial dependence plots
-gbrt = GradientBoostingClassifier(loss=&quot;deviance&quot;,
-                                  learning_rate=0.1,
-                                  n_estimators=100,
-                                  max_depth=3,
-                                  random_state=123)
-gbrt.fit(X_res, y_res)
-fig, axes = plot_partial_dependence(gbrt, X_res,
-                                    np.argsort(gbrt.feature_importances_)[::-1][:8],
-                                    n_cols=4,
-                                    feature_names=df.columns[:-6],
-                                    figsize=(14, 8))
-plt.subplots_adjust(top=0.9)
-plt.suptitle(&quot;Partial dependence plots of borrower not fully paid\n&quot;
-             &quot;the loan based on top most influential features&quot;)
-for ax in axes: ax.set_xticks(())
-</code></pre>
-
-
+<p>Let&rsquo;s finally check the partial dependence plots to see what are the most important features and their relationships with whether the borrower will most likely pay the loan in full before mature data. we will plot only the top 8 features to make it easier to read. Note that the partial plots are based on Gradient Boosting model.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Plot partial dependence plots</span>
+</span></span><span style="display:flex;"><span>gbrt <span style="color:#f92672">=</span> GradientBoostingClassifier(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;deviance&#34;</span>,
+</span></span><span style="display:flex;"><span>                                  learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>,
+</span></span><span style="display:flex;"><span>                                  n_estimators<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>,
+</span></span><span style="display:flex;"><span>                                  max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>                                  random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">123</span>)
+</span></span><span style="display:flex;"><span>gbrt<span style="color:#f92672">.</span>fit(X_res, y_res)
+</span></span><span style="display:flex;"><span>fig, axes <span style="color:#f92672">=</span> plot_partial_dependence(gbrt, X_res,
+</span></span><span style="display:flex;"><span>                                    np<span style="color:#f92672">.</span>argsort(gbrt<span style="color:#f92672">.</span>feature_importances_)[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][:<span style="color:#ae81ff">8</span>],
+</span></span><span style="display:flex;"><span>                                    n_cols<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>                                    feature_names<span style="color:#f92672">=</span>df<span style="color:#f92672">.</span>columns[:<span style="color:#f92672">-</span><span style="color:#ae81ff">6</span>],
+</span></span><span style="display:flex;"><span>                                    figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplots_adjust(top<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>suptitle(<span style="color:#e6db74">&#34;Partial dependence plots of borrower not fully paid</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;the loan based on top most influential features&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> ax <span style="color:#f92672">in</span> axes: ax<span style="color:#f92672">.</span>set_xticks(())
+</span></span></code></pre></div>
 
 
   
@@ -1732,18 +1258,13 @@ for ax in axes: ax.set_xticks(())
 
 </figure>
 
-
 <p>As we might expected, borrowers with lower annual income and less FICO scores are less likely to pay the loan fully; however, borrowers with lower interest rates (riskier) and smaller installments are more likely to pay the loan fully.</p>
-
-<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Conclusion</h2><br>
-Most classification problems in the real world are imbalanced. Also, almost always data sets have missing values. In this post, we covered strategies to deal with both missing values and imbalanced data sets. We also explored different ways of building ensembles in sklearn. Below are some takeaway points:</p>
-
+<!-- raw HTML omitted -->
 <ul>
 <li>There is no definitive guide of which algorithms to use given any situation. What may work on some data sets may not necessarily work on others. Therefore, always evaluate methods using cross validation to get a reliable estimates.</li>
 <li>Sometimes we may be willing to give up some improvement to the model if that would increase the complexity much more than the percentage change in the improvement to the evaluation metrics.</li>
 <li>In some classification problems, <em>False Negatives</em> are a lot more expensive than <em>False Positives</em>. Therefore, we can reduce cut-off points to reduce the False Negatives.</li>
-<li>When building ensemble models, try to use good models that are as different as possible to reduce correlation between the base learners. We could've enhanced our stacked ensemble model by adding <em>Dense Neural Network</em> and some other kind of base learners as well as adding more layers to the stacked model.</li>
+<li>When building ensemble models, try to use good models that are as different as possible to reduce correlation between the base learners. We could&rsquo;ve enhanced our stacked ensemble model by adding <em>Dense Neural Network</em> and some other kind of base learners as well as adding more layers to the stacked model.</li>
 <li>EasyEnsemble usually performs better than any other resampling methods.</li>
 <li>Missing values sometimes add more information to the model than we might expect. One way of capturing it is to add binary features for each feature that has missing values to check if each example is missing or not.</li>
 </ul>
@@ -1990,8 +1511,6 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -2076,7 +1595,7 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -2091,7 +1610,7 @@ Most classification problems in the real world are imbalanced. Also, almost alwa
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

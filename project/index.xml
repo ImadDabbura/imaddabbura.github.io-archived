@@ -7,7 +7,7 @@
     <description>Projects</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Imad Dabbura 2018</copyright><lastBuildDate>Mon, 22 Apr 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://imaddabbura.github.io/img/icon-192.png</url>
+      <url>https://imaddabbura.github.io/img/icon.png</url>
       <title>Projects</title>
       <link>https://imaddabbura.github.io/project/</link>
     </image>
@@ -18,12 +18,9 @@
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
       <guid>https://imaddabbura.github.io/project/transient-ischemic-attack/</guid>
       <description>&lt;p&gt;A transient ischemic attack (TIA) is like a stroke, producing similar symptoms, but usually lasting only a few minutes and causing no permanent damage. Often called a ministroke, a transient ischemic attack may be a warning.&lt;/p&gt;
-
 &lt;p&gt;About 1 in 3 people who have a transient ischemic attack will eventually have a stroke, with about half occurring within a year after the transient ischemic attack.&lt;/p&gt;
-
 &lt;p&gt;The goal of this project is to build a binary classifier to predict Transient Ischemic Attack (TIA) and then deploy the best model as a RESTful API.&lt;/p&gt;
-
-&lt;p&gt;Check out the project on &lt;a href=&#34;https://github.com/ImadDabbura/transient-ischemic-attack&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Check out the project on &lt;a href=&#34;https://github.com/ImadDabbura/transient-ischemic-attack&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
@@ -32,71 +29,61 @@
       <link>https://imaddabbura.github.io/project/data-modeling-with-postgres/</link>
       <pubDate>Mon, 08 Apr 2019 00:00:00 +0000</pubDate>
       <guid>https://imaddabbura.github.io/project/data-modeling-with-postgres/</guid>
-      <description>
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;The goal of this project is to build a PostgreSQL database utilizing the data on users activity and songs metadata. Building the database helps us do complex analytics regarding users activity as well as song play analysis.&lt;/p&gt;
-
 &lt;h2 id=&#34;data&#34;&gt;Data&lt;/h2&gt;
-
-&lt;p&gt;The songs&amp;rsquo; metadata sourse is a subset of the &lt;a href=&#34;https://labrosa.ee.columbia.edu/millionsong/&#34; target=&#34;_blank&#34;&gt;Million Song Dataset&lt;/a&gt;. Also, the users&amp;rsquo; activities is a simulated data using &lt;a href=&#34;https://github.com/Interana/eventsim&#34; target=&#34;_blank&#34;&gt;eventsim&lt;/a&gt;. The data resides in two main directories:&lt;/p&gt;
-
+&lt;p&gt;The songs&amp;rsquo; metadata sourse is a subset of the &lt;a href=&#34;https://labrosa.ee.columbia.edu/millionsong/&#34;&gt;Million Song Dataset&lt;/a&gt;. Also, the users&amp;rsquo; activities is a simulated data using &lt;a href=&#34;https://github.com/Interana/eventsim&#34;&gt;eventsim&lt;/a&gt;. The data resides in two main directories:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Songs metadata: collection of JSON files that describes the songs such as title, artist name, year, etc.&lt;/li&gt;
 &lt;li&gt;Logs data: collection of JSON files where each file covers the users activities over a given day.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h2 id=&#34;methodology&#34;&gt;Methodology&lt;/h2&gt;
-
 &lt;p&gt;We&amp;rsquo;ll build the database by optimizing the tables around efficient reads for complex queries. To do that, &lt;strong&gt;Star&lt;/strong&gt; schema will be used utilizing dimensional modeling as follows:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Fact table: songplays.&lt;/li&gt;
 &lt;li&gt;Dimensions tables: songs, artist, users, time.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;p&gt;The three most important advantages of using Star schema are:&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Denormalized tables.&lt;/li&gt;
 &lt;li&gt;Simplified queries.&lt;/li&gt;
 &lt;li&gt;Fast aggregation.&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;h2 id=&#34;how-to&#34;&gt;HOW TO&lt;/h2&gt;
-
 &lt;p&gt;The source code is available in three separate &lt;strong&gt;Python&lt;/strong&gt; scripts. Below is a brief description of the main files:&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;sql_queries.py&lt;/code&gt; has all the queries needed to both create/drop tables for the database as well as a SQL query to get song_id and artist_id from other tables since they are not provided in logs dataset.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;create_tables.py&lt;/code&gt; creates the database, establish the connection and creates/drops all the tables required using sql_queries module.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;etl.py&lt;/code&gt; build the pipeline that extracts the data from JSON files, does some transformation (such as adding different time attributes from timestamp) and then insert all the data into the corresponding tables.&lt;/li&gt;
 &lt;/ol&gt;
-
 &lt;p&gt;Therefore, we first run &lt;code&gt;create_tables.py&lt;/code&gt; then &lt;code&gt;etl.py&lt;/code&gt; to create the database, create tables, and then insert the data using the ETL pipeline.&lt;/p&gt;
-
 &lt;h2 id=&#34;examples&#34;&gt;Examples&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;%load_ext sql
-%sql postgresql://student:student@127.0.0.1/sparkifydb
-%%sql
-SELECT COUNT(*) from songplays;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;load_ext sql
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;sql postgresql:&lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt;student:student&lt;span style=&#34;color:#f92672&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;127.0.0.1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;sparkifydb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%%&lt;/span&gt;sql
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SELECT COUNT(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; songplays;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
 &lt;blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;postgresql://student:***@127.0.0.1/sparkifydb&lt;/p&gt;
-
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
 &lt;p&gt;1 rows affected.&lt;/p&gt;
-
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Out[1]: count 6820&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
-
-&lt;p&gt;Check out the project on &lt;a href=&#34;https://github.com/ImadDabbura/data-modeling-with-postgres&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Check out the project on &lt;a href=&#34;https://github.com/ImadDabbura/data-modeling-with-postgres&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

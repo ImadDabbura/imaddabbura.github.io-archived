@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Iphone&rsquo;s text suggestion.   -- Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a Statistical Language Model. What is a statistical language model?">
+  <meta name="description" content="Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a Statistical Language Model. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it&rsquo;s trained on.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/character-level-language-model/">
@@ -84,7 +84,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -129,7 +129,7 @@
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/post/character-level-language-model/">
   <meta property="og:title" content="Character-level Language Model | Imad Dabbura">
-  <meta property="og:description" content="Iphone&rsquo;s text suggestion.   -- Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a Statistical Language Model. What is a statistical language model?"><meta property="og:image" content="https://imaddabbura.github.io/post/character-level-language-model/featured.jpg">
+  <meta property="og:description" content="Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a Statistical Language Model. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it&rsquo;s trained on."><meta property="og:image" content="https://imaddabbura.github.io/post/character-level-language-model/featured.jpg">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/character-level-language-model/featured.jpg"><meta property="og:locale" content="en-us">
   
     
@@ -295,6 +295,26 @@
         
         
         
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
           
         
 
@@ -428,7 +448,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    16 min read
+    15 min read
   </span>
   
 
@@ -567,52 +587,24 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <!-- 
-
-
-  
-
-
-
-
-<figure>
-
-  <a data-fancybox="" href="/img/character-level-language-model/text_sample.jpg" >
-
-<img src="/img/character-level-language-model/text_sample.jpg" >
-</a>
-
-
-<figcaption data-pre="Figure " data-post=":" class="numbered">
-  <h4>Iphone&rsquo;s text suggestion.</h4>
-  
-</figcaption>
-
-</figure>
- -->
-
-<p>Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a <strong>Statistical Language Model</strong>. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it's trained on. Usually <strong>Recurrent Neural Network (RNN)</strong> models family are used to train the model due to the fact that they are very powerful and expressive in which they remember and process past information through their high dimensional hidden state units. The main goal of any language model is to learn the joint probability distribution of sequences of characters/words in a training text, i.e. trying to learn the joint probability function. For example, if we're trying to predict a sequence of $T$ words, we try to get the joint probability $P(w_1, w_2, ..., w_T)$ as big as we can which is equal to the product of all conditional probabilities $\prod_{t = 1}^T P(w_t/w_{t-1})$ at all time steps (t).</p>
-
-<p>In this post, we'll cover the <strong>Character-Level Language Model</strong> where almost all the concepts hold for any other language models such as word-language models. The main task of the character-level language model is to predict the next character given all previous characters in a sequence of data, i.e. generates text character by character. More formally, given a training sequence $(x^1, ... , x^T)$, the RNN uses the sequence of its output vectors $(o^1, ... , o^T)$ to obtain a sequence of predictive distributions $P(x<sup>t/x</sup>{t-1}) = softmax(o^t)$.</p>
-
-<p>Let's illustrate how the character-level language model works using my first name (&quot;imad&quot;) as an example (see figure 1 for all the details of this example).</p>
-
+      <!-- raw HTML omitted -->
+<p>Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a <strong>Statistical Language Model</strong>. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it&rsquo;s trained on. Usually <strong>Recurrent Neural Network (RNN)</strong> models family are used to train the model due to the fact that they are very powerful and expressive in which they remember and process past information through their high dimensional hidden state units. The main goal of any language model is to learn the joint probability distribution of sequences of characters/words in a training text, i.e. trying to learn the joint probability function. For example, if we&rsquo;re trying to predict a sequence of $T$ words, we try to get the joint probability $P(w_1, w_2, &hellip;, w_T)$ as big as we can which is equal to the product of all conditional probabilities $\prod_{t = 1}^T P(w_t/w_{t-1})$ at all time steps (t).</p>
+<p>In this post, we&rsquo;ll cover the <strong>Character-Level Language Model</strong> where almost all the concepts hold for any other language models such as word-language models. The main task of the character-level language model is to predict the next character given all previous characters in a sequence of data, i.e. generates text character by character. More formally, given a training sequence $(x^1, &hellip; , x^T)$, the RNN uses the sequence of its output vectors $(o^1, &hellip; , o^T)$ to obtain a sequence of predictive distributions $P(x^t/x^{t-1}) = softmax(o^t)$.</p>
+<p>Let&rsquo;s illustrate how the character-level language model works using my first name (&ldquo;imad&rdquo;) as an example (see figure 1 for all the details of this example).</p>
 <ol>
-<li>We first build a vocabulary dictionary using all the unique letters of the names in the corpus as keys and the index of each letter starting from zero (since Python is a zero-indexed language) in an ascending order. For our example, the vocabulary dictionary would be: {&quot;a&quot;: 0, &quot;d&quot;: 1, &quot;i&quot;: 2, &quot;m&quot;: 3}. Therefore, &quot;imad&quot; would become a list of the following integers: [2, 3, 0, 1].</li>
-<li>Convert the input and the output characters to lists of integers using the vocabulary dictionary. In this post, we'll assume that $x^1 = \vec{0}$ for all examples. Therefore, $y = &quot;imad&quot;$ and $x = \vec{0}\ + &quot;ima&quot;$. In other words, $x^{t + 1} = y^t$ which gives us: $y = [2, 3, 0, 1]$ and $x = [\vec{0}, 2, 3, 0]$.</li>
+<li>We first build a vocabulary dictionary using all the unique letters of the names in the corpus as keys and the index of each letter starting from zero (since Python is a zero-indexed language) in an ascending order. For our example, the vocabulary dictionary would be: {&ldquo;a&rdquo;: 0, &ldquo;d&rdquo;: 1, &ldquo;i&rdquo;: 2, &ldquo;m&rdquo;: 3}. Therefore, &ldquo;imad&rdquo; would become a list of the following integers: [2, 3, 0, 1].</li>
+<li>Convert the input and the output characters to lists of integers using the vocabulary dictionary. In this post, we&rsquo;ll assume that $x^1 = \vec{0}$ for all examples. Therefore, $y = &ldquo;imad&rdquo;$ and $x = \vec{0}\ + &ldquo;ima&rdquo;$. In other words, $x^{t + 1} = y^t$ which gives us: $y = [2, 3, 0, 1]$ and $x = [\vec{0}, 2, 3, 0]$.</li>
 <li>For each character in the input:
-
 <ol>
 <li>Convert the input characters into one-hot vectors. Notice how the first character $x^1 = \vec{0}$.</li>
 <li>Compute the hidden state layer.</li>
 <li>Compute the output layer and then pass it through softmax to get the results as probabilities.</li>
 <li>Feed the target character at time step (t) as the input character at time step $(t + 1)$.</li>
 <li>Go back to step A and repeat until we finish all the letters in the name.</li>
-</ol></li>
 </ol>
-
-<p>The objective is to make the green numbers as big as we can and the red numbers as small as we can in the probability distribution layer. The reason is that the true index should have the highest probability by making it as close as we can to 1. The way to do that is to measure the loss using cross-entropy and then compute the gradients of the loss w.r.t. all parameters to update them in the opposite of the gradient direction. Repeating the process over many times where each time we adjust the parameters based on the gradient direction --&gt; model will be able to correctly predict next characters given all previous ones using all names in the training text. Notice that hidden state $h^4$ has all past information about all characters.</p>
-
+</li>
+</ol>
+<p>The objective is to make the green numbers as big as we can and the red numbers as small as we can in the probability distribution layer. The reason is that the true index should have the highest probability by making it as close as we can to 1. The way to do that is to measure the loss using cross-entropy and then compute the gradients of the loss w.r.t. all parameters to update them in the opposite of the gradient direction. Repeating the process over many times where each time we adjust the parameters based on the gradient direction &ndash;&gt; model will be able to correctly predict next characters given all previous ones using all names in the training text. Notice that hidden state $h^4$ has all past information about all characters.</p>
 
 
 
@@ -636,14 +628,9 @@
 
 </figure>
 
-
-<p><em>Note</em>: To shorten the length of the post, I deleted all the docstrings of python functions and I didn't include some functions that i didn't think are necessary to understand the main concepts. The notebook and the script that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb">here</a> and <a href="https://github.com/ImadDabbura/blog-posts/blob/master/scripts/character_level_language_model.py">here</a>.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Training</h2>
-
-<p>The <a href="http://deron.meranda.us/data/census-derived-all-first.txt">dataset</a> we'll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we'll be using to train the character-level language model is called <strong>many to many</strong> where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 2).</p>
-
+<p><em>Note</em>: To shorten the length of the post, I deleted all the docstrings of python functions and I didn&rsquo;t include some functions that i didn&rsquo;t think are necessary to understand the main concepts. The notebook and the script that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb">here</a> and <a href="https://github.com/ImadDabbura/blog-posts/blob/master/scripts/character_level_language_model.py">here</a>.</p>
+<!-- raw HTML omitted -->
+<p>The <a href="http://deron.meranda.us/data/census-derived-all-first.txt">dataset</a> we&rsquo;ll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we&rsquo;ll be using to train the character-level language model is called <strong>many to many</strong> where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 2).</p>
 
 
 
@@ -667,131 +654,112 @@ Training</h2>
 
 </figure>
 
-
-<p>The character-level language model will be trained on names; which means after we're done with training the model, we'll be able to generate some interesting names :).</p>
-
-<p>In this section, we'll go over four main parts:</p>
-
+<p>The character-level language model will be trained on names; which means after we&rsquo;re done with training the model, we&rsquo;ll be able to generate some interesting names :).</p>
+<p>In this section, we&rsquo;ll go over four main parts:</p>
 <ol>
 <li><a href="#fwd_prop">Forward propagation</a>.</li>
 <li><a href="#bckwrd_prop">Backpropagation</a>.</li>
 <li><a href="#sampling">Sampling</a>.</li>
 <li><a href="#train">Fitting the model</a>.</li>
 </ol>
-
-<p><a id='fwd_prop'></a>
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Forward Propagation</h3></p>
-
-<p>We'll be using Stochastic Gradient Descent (SGD) where each batch consists of only one example. In other words, the RNN model will learn from each example (name) separately, i.e. run both forward and backward passes on each example and update parameters accordingly. Below are all the steps needed for a forward pass:</p>
-
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>We&rsquo;ll be using Stochastic Gradient Descent (SGD) where each batch consists of only one example. In other words, the RNN model will learn from each example (name) separately, i.e. run both forward and backward passes on each example and update parameters accordingly. Below are all the steps needed for a forward pass:</p>
 <ul>
-<li><p>Create a vocabulary dictionary using the unique lower case letters.</p>
-
+<li>
+<p>Create a vocabulary dictionary using the unique lower case letters.</p>
 <ul>
-<li>Create a character to index dictionary that maps each character to its corresponding index in an ascending order. For example, &quot;a&quot; would have index 1 (since python is a zero index language and we'll reserve 0 index to EOS &quot;\n&quot;) and &quot;z&quot; would have index 26. We will use this dictionary in converting names into lists of integers where each letter will be represented as one-hot vector.</li>
+<li>Create a character to index dictionary that maps each character to its corresponding index in an ascending order. For example, &ldquo;a&rdquo; would have index 1 (since python is a zero index language and we&rsquo;ll reserve 0 index to EOS &ldquo;\n&rdquo;) and &ldquo;z&rdquo; would have index 26. We will use this dictionary in converting names into lists of integers where each letter will be represented as one-hot vector.</li>
 <li>Create an index to character dictionary that maps indices to characters. This dictionary will be used to convert the output of the RNN model into characters which will be translated into names.</li>
-</ul></li>
-
-<li><p>Initialize parameters: weights will be initialized to small random numbers from standard normal distribution to break symmetry and make sure different hidden units learn different things. On the other hand, biases will be initialized to zeros.</p>
-
+</ul>
+</li>
+<li>
+<p>Initialize parameters: weights will be initialized to small random numbers from standard normal distribution to break symmetry and make sure different hidden units learn different things. On the other hand, biases will be initialized to zeros.</p>
 <ul>
 <li>$W_{hh}$: weight matrix connecting previous hidden state $h^{t - 1}$ to current hidden state $h^t$.</li>
 <li>$W_{xh}$: weight matrix connecting input $x^t$ to hidden state $h^t$.</li>
 <li>$b$: hidden state bias vector.</li>
 <li>$W_{hy}$: weight matrix connecting hidden state $h^t$ to output $o^t$.</li>
 <li>$c$: output bias vector.</li>
-</ul></li>
-
-<li><p>Convert input $x^t$ and output $y^t$ into one-hot vector each. The dimension of the one-hot vector is vocab_size x 1. Everything will be zero except for the index of the letter at (t) would be 1. In our case, $x^t$ would be the same as $y^t$ shifted to the left where $x^1 = \vec{0}$; however, starting from $t = 2$, $x^{t + 1} = y^{t}$. For example, if we use &quot;imad&quot; as the input, then $y = [3, 4, 1, 2, 0]$ while $x = [\vec{0}, 3, 4, 1, 2]$. Notice that $x^1 = \vec{0}$ and not the index 0. Moreover, we're using &quot;\n&quot; as EOS (end of sentence/name) for each name so that the RNN learns &quot;\n&quot; as any other character. This will help the network learn when to to stop generating characters. Therefore, the last target character for all names will be &quot;\n&quot; that represents the end of the name.</p></li>
-
-<li><p>Compute the hidden state using the following formula:</p></li>
 </ul>
-
-<p><span  class="math">\(h^t = tanh(W_{hh}h^{t - 1} + W_{xh}x^t + b)\tag{1}\)</span>
-Notice that we use hyperbolic tangent $(\frac{e^x - e<sup>{-x}}{e</sup>x + e^{-x}})$ as the non-linear function. One of the main advantages of the hyperbolic tangent function is that it resembles the identity function.</p>
-
+</li>
+<li>
+<p>Convert input $x^t$ and output $y^t$ into one-hot vector each. The dimension of the one-hot vector is vocab_size x 1. Everything will be zero except for the index of the letter at (t) would be 1. In our case, $x^t$ would be the same as $y^t$ shifted to the left where $x^1 = \vec{0}$; however, starting from $t = 2$, $x^{t + 1} = y^{t}$. For example, if we use &ldquo;imad&rdquo; as the input, then $y = [3, 4, 1, 2, 0]$ while $x = [\vec{0}, 3, 4, 1, 2]$. Notice that $x^1 = \vec{0}$ and not the index 0. Moreover, we&rsquo;re using &ldquo;\n&rdquo; as EOS (end of sentence/name) for each name so that the RNN learns &ldquo;\n&rdquo; as any other character. This will help the network learn when to to stop generating characters. Therefore, the last target character for all names will be &ldquo;\n&rdquo; that represents the end of the name.</p>
+</li>
+<li>
+<p>Compute the hidden state using the following formula:</p>
+</li>
+</ul>
+<p>$$h^t = tanh(W_{hh}h^{t - 1} + W_{xh}x^t + b)\tag{1}$$
+Notice that we use hyperbolic tangent $(\frac{e^x - e^{-x}}{e^x + e^{-x}})$ as the non-linear function. One of the main advantages of the hyperbolic tangent function is that it resembles the identity function.</p>
 <ul>
 <li>Compute the output layer using the following formula:</li>
 </ul>
-
-<p><span  class="math">\[o^t = W_{hy}h^{t} + c \tag{2}\]</span></p>
-
+<p>$$o^t = W_{hy}h^{t} + c \tag{2}$$</p>
 <ul>
 <li>Pass the output through softmax layer to normalize the output that allows us to express it as a probability, i.e. all output will be between 0 and 1 and sum up to 1. Below is the softmax formula:</li>
 </ul>
-
-<p><span  class="math">\(\widehat{y^t} = \frac{e^{o^t}}{\sum_ie^{o_i^t}}\tag{3}\)</span>
+<p>$$\widehat{y^t} = \frac{e^{o^t}}{\sum_ie^{o_i^t}}\tag{3}$$
 The softmax layer has the same dimension as the output layer which is vocab_size x 1. As a result, $y^t[i]$ is the probability of index $i$ being the next character at time step (t).</p>
-
 <ul>
 <li>As mentioned before, the objective of a character-level language model is to minimize the negative log-likelihood of the training sequence. Therefore, the loss function at time step (t) and the total loss across all time steps are:</li>
 </ul>
-
-<p><span  class="math">\[\mathcal{L}^t = -\sum_{i = 1}^{T_y}y^tlog\widehat{y^t}\tag{4}\]</span></p>
-
-<p><span  class="math">\(\mathcal{L} = \sum_{t = 1}^{T_y}\mathcal{L}^t(\widehat{y^t}, y^t)\tag{5}\)</span>
-Since we'll be using SGD, the loss will be noisy and have many oscillations, so it's a good practice to smooth out the loss using exponential weighted average.</p>
-
+<p>$$\mathcal{L}^t = -\sum_{i = 1}^{T_y}y^tlog\widehat{y^t}\tag{4}$$</p>
+<p>$$\mathcal{L} = \sum_{t = 1}^{T_y}\mathcal{L}^t(\widehat{y^t}, y^t)\tag{5}$$
+Since we&rsquo;ll be using SGD, the loss will be noisy and have many oscillations, so it&rsquo;s a good practice to smooth out the loss using exponential weighted average.</p>
 <ul>
 <li>Pass the target character $y^t$ as the next input $x^{t + 1}$ until we finish the sequence.</li>
 </ul>
-
-<pre><code class="language-python"># Load packages
-import os
-
-import numpy as np
-
-os.chdir(&quot;../scripts/&quot;)
-from character_level_language_model import (initialize_parameters,
-                                            initialize_rmsprop,
-                                            softmax,
-                                            smooth_loss,
-                                            update_parameters_with_rmsprop)
-
-
-def rnn_forward(x, y, h_prev, parameters):
-    &quot;&quot;&quot;Implement one Forward pass on one name.&quot;&quot;&quot;
-    # Retrieve parameters
-    Wxh, Whh, b = parameters[&quot;Wxh&quot;], parameters[&quot;Whh&quot;], parameters[&quot;b&quot;]
-    Why, c = parameters[&quot;Why&quot;], parameters[&quot;c&quot;]
-
-    # Initialize inputs, hidden state, output, and probabilities dictionaries
-    xs, hs, os, probs = {}, {}, {}, {}
-
-    # Initialize x0 to zero vector
-    xs[0] = np.zeros((vocab_size, 1))
-
-    # Initialize loss and assigns h_prev to last hidden state in hs
-    loss = 0
-    hs[-1] = np.copy(h_prev)
-
-    # Forward pass: loop over all characters of the name
-    for t in range(len(x)):
-        # Convert to one-hot vector
-        if t &gt; 0:
-            xs[t] = np.zeros((vocab_size, 1))
-            xs[t][x[t]] = 1
-        # Hidden state
-        hs[t] = np.tanh(np.dot(Wxh, xs[t]) + np.dot(Whh, hs[t - 1]) + b)
-        # Logits
-        os[t] = np.dot(Why, hs[t]) + c
-        # Probs
-        probs[t] = softmax(os[t])
-        # Loss
-        loss -= np.log(probs[t][y[t], 0])
-
-    cache = (xs, hs, probs)
-
-    return loss, cache
-</code></pre>
-
-<p><a id='bckwrd_prop'></a>
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Backpropagation</h3></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(<span style="color:#e6db74">&#34;../scripts/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> character_level_language_model <span style="color:#f92672">import</span> (initialize_parameters,
+</span></span><span style="display:flex;"><span>                                            initialize_rmsprop,
+</span></span><span style="display:flex;"><span>                                            softmax,
+</span></span><span style="display:flex;"><span>                                            smooth_loss,
+</span></span><span style="display:flex;"><span>                                            update_parameters_with_rmsprop)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rnn_forward</span>(x, y, h_prev, parameters):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Implement one Forward pass on one name.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Retrieve parameters</span>
+</span></span><span style="display:flex;"><span>    Wxh, Whh, b <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;Wxh&#34;</span>], parameters[<span style="color:#e6db74">&#34;Whh&#34;</span>], parameters[<span style="color:#e6db74">&#34;b&#34;</span>]
+</span></span><span style="display:flex;"><span>    Why, c <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;Why&#34;</span>], parameters[<span style="color:#e6db74">&#34;c&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize inputs, hidden state, output, and probabilities dictionaries</span>
+</span></span><span style="display:flex;"><span>    xs, hs, os, probs <span style="color:#f92672">=</span> {}, {}, {}, {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize x0 to zero vector</span>
+</span></span><span style="display:flex;"><span>    xs[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((vocab_size, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize loss and assigns h_prev to last hidden state in hs</span>
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    hs[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(h_prev)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Forward pass: loop over all characters of the name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(len(x)):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Convert to one-hot vector</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> t <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            xs[t] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((vocab_size, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>            xs[t][x[t]] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Hidden state</span>
+</span></span><span style="display:flex;"><span>        hs[t] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>tanh(np<span style="color:#f92672">.</span>dot(Wxh, xs[t]) <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>dot(Whh, hs[t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">+</span> b)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Logits</span>
+</span></span><span style="display:flex;"><span>        os[t] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(Why, hs[t]) <span style="color:#f92672">+</span> c
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Probs</span>
+</span></span><span style="display:flex;"><span>        probs[t] <span style="color:#f92672">=</span> softmax(os[t])
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Loss</span>
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">-=</span> np<span style="color:#f92672">.</span>log(probs[t][y[t], <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cache <span style="color:#f92672">=</span> (xs, hs, probs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> loss, cache
+</span></span></code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
 <p>With RNN based models, the gradient-based technique that will be used is called <strong>Backpropagation Through Time (BPTT)</strong>. We start at last time step $T$ and backpropagate loss function w.r.t. all parameters across all time steps and sum them up (see figure 4).</p>
-
 
 
 
@@ -815,80 +783,69 @@ Backpropagation</h3></p>
 
 </figure>
 
-
-<p>In addition, since RNNs are known to have steep cliffs (sudden steep decrease in $\mathcal{L}$), gradients may overshoot the minimum and undo a lot of the work that was done even if we are using adaptive learning methods such as RMSProp. The reason is because gradient is a linear approximation of the loss function and may not capture information further than the point it was evaluated on such as the curvature of loss curve. Therefore, it's a common practice to clip the gradients to be in the interval . For this exercise, we'll clip the gradients to be in the interval . That means if the gradient is &gt; 5 or &lt; -5, it would be clipped to 5 and -5 respectively. Below are all the formulas needed to compute the gradients w.r.t. all parameters at all time steps.</p>
-
-<p><span  class="math">\(\nabla_{o^t}\mathcal{L} = \widehat{y^t} - y^t\tag{6}\)</span>
-<span  class="math">\(\nabla_{W_{hy}}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} . {h^t}^T\tag{7}\)</span>
-<span  class="math">\(\nabla_{c}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} \tag{8}\)</span>
-<span  class="math">\(\nabla_{h^t}\mathcal{L} = W_{hy}^T . \nabla_{o^t}\mathcal{L} + \underbrace { W_{hh}^T . \nabla_{h^{t + 1}}\mathcal{L} * (1 - tanh(W_{hh}h^{t} + W_{xh}x^{t + 1} + b) ^ 2)}_{dh_{next}} \tag{9}\)</span>
-<span  class="math">\(\nabla_{h^{t - 1}}\mathcal{L} = W_{hh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2)\tag{10}\)</span>
-<span  class="math">\(\nabla_{x^t}\mathcal{L} = W_{xh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2)\tag{11}\)</span>
-<span  class="math">\(\nabla_{W_{hh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {h^{t - 1}}^T\tag{12}\)</span>
-<span  class="math">\(\nabla_{W_{xh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {x^t}^T\tag{13}\)</span>
-<span  class="math">\(\nabla_{b}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2) \tag{14}\)</span></p>
-
-<p>Note that at last time step $T$, we'll initialize $dh_{next}$  to zeros since we can't get values from future. To stabilize the update at each time step since SGD may have so many oscillations, we'll be using one of the adaptive learning method optimizers. More specifically, we'll use <a href="https://nbviewer.jupyter.org/github/ImadDabbura/Deep-Learning/blob/master/notebooks/Optimization-Algorithms.ipynb">Root Mean Squared Propagation (RMSProp)</a> which tends to have acceptable performance.</p>
-
-<pre><code class="language-python">def clip_gradients(gradients, max_value):
-    &quot;&quot;&quot;
-    Implements gradient clipping element-wise on gradients to be between the
-    interval [-max_value, max_value].
-    &quot;&quot;&quot;
-    for grad in gradients.keys():
-        np.clip(gradients[grad], -max_value, max_value, out=gradients[grad])
-
-    return gradients
-
-
-def rnn_backward(y, parameters, cache):
-    &quot;&quot;&quot;
-    Implements Backpropagation on one name.
-    &quot;&quot;&quot;
-    # Retrieve xs, hs, and probs
-    xs, hs, probs = cache
-
-    # Initialize all gradients to zero
-    dh_next = np.zeros_like(hs[0])
-
-    parameters_names = [&quot;Whh&quot;, &quot;Wxh&quot;, &quot;b&quot;, &quot;Why&quot;, &quot;c&quot;]
-    grads = {}
-    for param_name in parameters_names:
-        grads[&quot;d&quot; + param_name] = np.zeros_like(parameters[param_name])
-
-    # Iterate over all time steps in reverse order starting from Tx
-    for t in reversed(range(len(xs))):
-        dy = np.copy(probs[t])
-        dy[y[t]] -= 1
-        grads[&quot;dWhy&quot;] += np.dot(dy, hs[t].T)
-        grads[&quot;dc&quot;] += dy
-        dh = np.dot(parameters[&quot;Why&quot;].T, dy) + dh_next
-        dhraw = (1 - hs[t] ** 2) * dh
-        grads[&quot;dWhh&quot;] += np.dot(dhraw, hs[t - 1].T)
-        grads[&quot;dWxh&quot;] += np.dot(dhraw, xs[t].T)
-        grads[&quot;db&quot;] += dhraw
-        dh_next = np.dot(parameters[&quot;Whh&quot;].T, dhraw)
-        # Clip the gradients using [-5, 5] as the interval
-        grads = clip_gradients(grads, 5)
-    
-    # Get the last hidden state
-    h_prev = hs[len(xs) - 1]
-
-    return grads, h_prev
-</code></pre>
-
-<p><a id='sampling'></a>
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Sampling</h3><br>
-Sampling is what makes the text generated by the RNN at each time step an interesting/creative text. On each time step (t), the RNN output the conditional probability distribution of the next character given all the previous characters, i.e. $P(c_t/c_1, c_2, ..., c_{t-1})$. Let's assume that we are at time step $t = 3$ and we're trying to predict the third character, the conditional probability distribution is: $P(c_3/c_1, c_2) = (0.2, 0.3, 0.4, 0.1)$. We'll have two extremes:</p>
-
+<p>In addition, since RNNs are known to have steep cliffs (sudden steep decrease in $\mathcal{L}$), gradients may overshoot the minimum and undo a lot of the work that was done even if we are using adaptive learning methods such as RMSProp. The reason is because gradient is a linear approximation of the loss function and may not capture information further than the point it was evaluated on such as the curvature of loss curve. Therefore, it&rsquo;s a common practice to clip the gradients to be in the interval [-maxValue, maxValue]. For this exercise, we&rsquo;ll clip the gradients to be in the interval [-5, 5]. That means if the gradient is &gt; 5 or &lt; -5, it would be clipped to 5 and -5 respectively. Below are all the formulas needed to compute the gradients w.r.t. all parameters at all time steps.</p>
+<p>$$\nabla_{o^t}\mathcal{L} = \widehat{y^t} - y^t\tag{6}$$
+$$\nabla_{W_{hy}}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} . {h^t}^T\tag{7}$$
+$$\nabla_{c}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} \tag{8}$$
+$$\nabla_{h^t}\mathcal{L} = W_{hy}^T . \nabla_{o^t}\mathcal{L} + \underbrace { W_{hh}^T . \nabla_{h^{t + 1}}\mathcal{L} * (1 - tanh(W_{hh}h^{t} + W_{xh}x^{t + 1} + b) ^ 2)}<em>{dh</em>{next}} \tag{9}$$
+$$\nabla_{h^{t - 1}}\mathcal{L} = W_{hh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2)\tag{10}$$
+$$\nabla_{x^t}\mathcal{L} = W_{xh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2)\tag{11}$$
+$$\nabla_{W_{hh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {h^{t - 1}}^T\tag{12}$$
+$$\nabla_{W_{xh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {x^t}^T\tag{13}$$
+$$\nabla_{b}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2) \tag{14}$$</p>
+<p>Note that at last time step $T$, we&rsquo;ll initialize $dh_{next}$  to zeros since we can&rsquo;t get values from future. To stabilize the update at each time step since SGD may have so many oscillations, we&rsquo;ll be using one of the adaptive learning method optimizers. More specifically, we&rsquo;ll use <a href="https://nbviewer.jupyter.org/github/ImadDabbura/Deep-Learning/blob/master/notebooks/Optimization-Algorithms.ipynb">Root Mean Squared Propagation (RMSProp)</a> which tends to have acceptable performance.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clip_gradients</span>(gradients, max_value):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Implements gradient clipping element-wise on gradients to be between the
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    interval [-max_value, max_value].
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> grad <span style="color:#f92672">in</span> gradients<span style="color:#f92672">.</span>keys():
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>clip(gradients[grad], <span style="color:#f92672">-</span>max_value, max_value, out<span style="color:#f92672">=</span>gradients[grad])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> gradients
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rnn_backward</span>(y, parameters, cache):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Implements Backpropagation on one name.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Retrieve xs, hs, and probs</span>
+</span></span><span style="display:flex;"><span>    xs, hs, probs <span style="color:#f92672">=</span> cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize all gradients to zero</span>
+</span></span><span style="display:flex;"><span>    dh_next <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros_like(hs[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    parameters_names <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;Whh&#34;</span>, <span style="color:#e6db74">&#34;Wxh&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;Why&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>]
+</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> param_name <span style="color:#f92672">in</span> parameters_names:
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;d&#34;</span> <span style="color:#f92672">+</span> param_name] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros_like(parameters[param_name])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Iterate over all time steps in reverse order starting from Tx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> reversed(range(len(xs))):
+</span></span><span style="display:flex;"><span>        dy <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(probs[t])
+</span></span><span style="display:flex;"><span>        dy[y[t]] <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dWhy&#34;</span>] <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>dot(dy, hs[t]<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dc&#34;</span>] <span style="color:#f92672">+=</span> dy
+</span></span><span style="display:flex;"><span>        dh <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(parameters[<span style="color:#e6db74">&#34;Why&#34;</span>]<span style="color:#f92672">.</span>T, dy) <span style="color:#f92672">+</span> dh_next
+</span></span><span style="display:flex;"><span>        dhraw <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> hs[t] <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> dh
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dWhh&#34;</span>] <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>dot(dhraw, hs[t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dWxh&#34;</span>] <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>dot(dhraw, xs[t]<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;db&#34;</span>] <span style="color:#f92672">+=</span> dhraw
+</span></span><span style="display:flex;"><span>        dh_next <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(parameters[<span style="color:#e6db74">&#34;Whh&#34;</span>]<span style="color:#f92672">.</span>T, dhraw)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Clip the gradients using [-5, 5] as the interval</span>
+</span></span><span style="display:flex;"><span>        grads <span style="color:#f92672">=</span> clip_gradients(grads, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Get the last hidden state</span>
+</span></span><span style="display:flex;"><span>    h_prev <span style="color:#f92672">=</span> hs[len(xs) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> grads, h_prev
+</span></span></code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
 <ol>
-<li>Maximum entropy: the character will be picked randomly using uniform probability distribution; which means that all characters in the vocabulary dictionary are equally likely. Therefore, we'll end up with maximum randomness in picking the next character and the generated text will not be either meaningful or sound real.</li>
+<li>Maximum entropy: the character will be picked randomly using uniform probability distribution; which means that all characters in the vocabulary dictionary are equally likely. Therefore, we&rsquo;ll end up with maximum randomness in picking the next character and the generated text will not be either meaningful or sound real.</li>
 <li>Minimum entropy: the character with the highest conditional probability will be picked on each time step. That means next character will be what the model estimates to be the right one based on the training text and learned parameters. As a result, the names generated will be both meaningful and sound real. However, it will also be repetitive and not as interesting since all the parameters were optimized to learn joint probability distribution in predicting the next character.</li>
 </ol>
-
-<p>As we increase randomness, text will lose local structure; however, as we decrease randomness, the generated text will sound more real and start to preserve its local structure. For this exercise, we will sample from the distribution that's generated by the model which can be seen as an intermediate level of randomness between maximum and minimum entropy (see figure 5). Using this sampling strategy on the above distribution, the index 0 has $20$% probability of being picked, while index 2 has $40$% probability to be picked.</p>
-
+<p>As we increase randomness, text will lose local structure; however, as we decrease randomness, the generated text will sound more real and start to preserve its local structure. For this exercise, we will sample from the distribution that&rsquo;s generated by the model which can be seen as an intermediate level of randomness between maximum and minimum entropy (see figure 5). Using this sampling strategy on the above distribution, the index 0 has $20$% probability of being picked, while index 2 has $40$% probability to be picked.</p>
 
 
 
@@ -912,142 +869,130 @@ Sampling is what makes the text generated by the RNN at each time step an intere
 
 </figure>
 
-
 <p>Therefore, sampling will be used at test time to generate names character by character.</p>
-
-<pre><code class="language-python">def sample(parameters, idx_to_chars, chars_to_idx, n):
-    &quot;&quot;&quot;
-    Implements sampling of a squence of n characters characters length. The
-    sampling will be based on the probability distribution output of RNN.
-    &quot;&quot;&quot;
-    # Retrienve parameters, shapes, and vocab size
-    Whh, Wxh, b = parameters[&quot;Whh&quot;], parameters[&quot;Wxh&quot;], parameters[&quot;b&quot;]
-    Why, c = parameters[&quot;Why&quot;], parameters[&quot;c&quot;]
-    n_h, n_x = Wxh.shape
-    vocab_size = c.shape[0]
-
-    # Initialize a0 and x1 to zero vectors
-    h_prev = np.zeros((n_h, 1))
-    x = np.zeros((n_x, 1))
-
-    # Initialize empty sequence
-    indices = []
-    idx = -1
-    counter = 0
-    while (counter &lt;= n and idx != chars_to_idx[&quot;\n&quot;]):
-        # Fwd propagation
-        h = np.tanh(np.dot(Whh, h_prev) + np.dot(Wxh, x) + b)
-        o = np.dot(Why, h) + c
-        probs = softmax(o)
-
-        # Sample the index of the character using generated probs distribution
-        idx = np.random.choice(vocab_size, p=probs.ravel())
-
-        # Get the character of the sampled index
-        char = idx_to_chars[idx]
-
-        # Add the char to the sequence
-        indices.append(idx)
-
-        # Update a_prev and x
-        h_prev = np.copy(h)
-        x = np.zeros((n_x, 1))
-        x[idx] = 1
-
-        counter += 1
-    sequence = &quot;&quot;.join([idx_to_chars[idx] for idx in indices if idx != 0])
-
-    return sequence
-</code></pre>
-
-<p><a id='train'></a>
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Fitting the model</h3><br>
-After covering all the concepts/intuitions behind character-level language model, now we're ready to fit the model. We'll use the default settings for RMSProp's hyperparameters and run the model for 100 iterations. On each iteration, we'll print out one sampled name and smoothed loss to see how the names generated start to get more interesting with more iterations as well as the loss will start decreasing. When done with fitting the model, we'll plot the loss function and generate some names.</p>
-
-<pre><code class="language-python">def model(
-        file_path, chars_to_idx, idx_to_chars, hidden_layer_size, vocab_size,
-        num_epochs=10, learning_rate=0.01):
-    &quot;&quot;&quot;Implements RNN to generate characters.&quot;&quot;&quot;
-    # Get the data
-    with open(file_path) as f:
-        data = f.readlines()
-    examples = [x.lower().strip() for x in data]
-
-    # Initialize parameters
-    parameters = initialize_parameters(vocab_size, hidden_layer_size)
-
-    # Initialize Adam parameters
-    s = initialize_rmsprop(parameters)
-
-    # Initialize loss
-    smoothed_loss = -np.log(1 / vocab_size) * 7
-
-    # Initialize hidden state h0 and overall loss
-    h_prev = np.zeros((hidden_layer_size, 1))
-    overall_loss = []
-
-    # Iterate over number of epochs
-    for epoch in range(num_epochs):
-        print(f&quot;\033[1m\033[94mEpoch {epoch}&quot;)
-        print(f&quot;\033[1m\033[92m=======&quot;)
-
-        # Sample one name
-        print(f&quot;&quot;&quot;Sampled name: {sample(parameters, idx_to_chars, chars_to_idx,
-            10).capitalize()}&quot;&quot;&quot;)
-        print(f&quot;Smoothed loss: {smoothed_loss:.4f}\n&quot;)
-
-        # Shuffle examples
-        np.random.shuffle(examples)
-
-        # Iterate over all examples (SGD)
-        for example in examples:
-            x = [None] + [chars_to_idx[char] for char in example]
-            y = x[1:] + [chars_to_idx[&quot;\n&quot;]]
-            # Fwd pass
-            loss, cache = rnn_forward(x, y, h_prev, parameters)
-            # Compute smooth loss
-            smoothed_loss = smooth_loss(smoothed_loss, loss)
-            # Bwd pass
-            grads, h_prev = rnn_backward(y, parameters, cache)
-            # Update parameters
-            parameters, s = update_parameters_with_rmsprop(
-                parameters, grads, s)
-
-        overall_loss.append(smoothed_loss)
-
-    return parameters, overall_loss
-</code></pre>
-
-<pre><code class="language-python"># Load names
-data = open(&quot;../data/names.txt&quot;, &quot;r&quot;).read()
-
-# Convert characters to lower case
-data = data.lower()
-
-# Construct vocabulary using unique characters, sort it in ascending order,
-# then construct two dictionaries that maps character to index and index to
-# characters.
-chars = list(sorted(set(data)))
-chars_to_idx = {ch:i for i, ch in enumerate(chars)}
-idx_to_chars = {i:ch for ch, i in chars_to_idx.items()}
-
-# Get the size of the data and vocab size
-data_size = len(data)
-vocab_size = len(chars_to_idx)
-print(f&quot;There are {data_size} characters and {vocab_size} unique characters.&quot;)
-
-# Fitting the model
-parameters, loss = model(&quot;../data/names.txt&quot;, chars_to_idx, idx_to_chars, 100, vocab_size, 100, 0.01)
-
-# Plotting the loss
-plt.plot(range(len(loss)), loss)
-plt.xlabel(&quot;Epochs&quot;)
-plt.ylabel(&quot;Smoothed loss&quot;);
-
-</code></pre>
-
-<pre><code>There are 36121 characters and 27 unique characters.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sample</span>(parameters, idx_to_chars, chars_to_idx, n):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Implements sampling of a squence of n characters characters length. The
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    sampling will be based on the probability distribution output of RNN.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Retrienve parameters, shapes, and vocab size</span>
+</span></span><span style="display:flex;"><span>    Whh, Wxh, b <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;Whh&#34;</span>], parameters[<span style="color:#e6db74">&#34;Wxh&#34;</span>], parameters[<span style="color:#e6db74">&#34;b&#34;</span>]
+</span></span><span style="display:flex;"><span>    Why, c <span style="color:#f92672">=</span> parameters[<span style="color:#e6db74">&#34;Why&#34;</span>], parameters[<span style="color:#e6db74">&#34;c&#34;</span>]
+</span></span><span style="display:flex;"><span>    n_h, n_x <span style="color:#f92672">=</span> Wxh<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>    vocab_size <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize a0 and x1 to zero vectors</span>
+</span></span><span style="display:flex;"><span>    h_prev <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((n_h, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((n_x, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize empty sequence</span>
+</span></span><span style="display:flex;"><span>    indices <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    idx <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (counter <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">and</span> idx <span style="color:#f92672">!=</span> chars_to_idx[<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>]):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Fwd propagation</span>
+</span></span><span style="display:flex;"><span>        h <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>tanh(np<span style="color:#f92672">.</span>dot(Whh, h_prev) <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>dot(Wxh, x) <span style="color:#f92672">+</span> b)
+</span></span><span style="display:flex;"><span>        o <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(Why, h) <span style="color:#f92672">+</span> c
+</span></span><span style="display:flex;"><span>        probs <span style="color:#f92672">=</span> softmax(o)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Sample the index of the character using generated probs distribution</span>
+</span></span><span style="display:flex;"><span>        idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(vocab_size, p<span style="color:#f92672">=</span>probs<span style="color:#f92672">.</span>ravel())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Get the character of the sampled index</span>
+</span></span><span style="display:flex;"><span>        char <span style="color:#f92672">=</span> idx_to_chars[idx]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Add the char to the sequence</span>
+</span></span><span style="display:flex;"><span>        indices<span style="color:#f92672">.</span>append(idx)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Update a_prev and x</span>
+</span></span><span style="display:flex;"><span>        h_prev <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(h)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((n_x, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>        x[idx] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        counter <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    sequence <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([idx_to_chars[idx] <span style="color:#66d9ef">for</span> idx <span style="color:#f92672">in</span> indices <span style="color:#66d9ef">if</span> idx <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sequence
+</span></span></code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">model</span>(
+</span></span><span style="display:flex;"><span>        file_path, chars_to_idx, idx_to_chars, hidden_layer_size, vocab_size,
+</span></span><span style="display:flex;"><span>        num_epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Implements RNN to generate characters.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Get the data</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(file_path) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>    examples <span style="color:#f92672">=</span> [x<span style="color:#f92672">.</span>lower()<span style="color:#f92672">.</span>strip() <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> data]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize parameters</span>
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> initialize_parameters(vocab_size, hidden_layer_size)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize Adam parameters</span>
+</span></span><span style="display:flex;"><span>    s <span style="color:#f92672">=</span> initialize_rmsprop(parameters)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize loss</span>
+</span></span><span style="display:flex;"><span>    smoothed_loss <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>np<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> vocab_size) <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize hidden state h0 and overall loss</span>
+</span></span><span style="display:flex;"><span>    h_prev <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((hidden_layer_size, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    overall_loss <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Iterate over number of epochs</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(num_epochs):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[1m</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[94mEpoch </span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[1m</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[92m=======&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Sample one name</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;Sampled name: </span><span style="color:#e6db74">{</span>sample(parameters, idx_to_chars, chars_to_idx,
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">10</span>)<span style="color:#f92672">.</span>capitalize()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Smoothed loss: </span><span style="color:#e6db74">{</span>smoothed_loss<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Shuffle examples</span>
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(examples)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Iterate over all examples (SGD)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> example <span style="color:#f92672">in</span> examples:
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> [<span style="color:#66d9ef">None</span>] <span style="color:#f92672">+</span> [chars_to_idx[char] <span style="color:#66d9ef">for</span> char <span style="color:#f92672">in</span> example]
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">=</span> x[<span style="color:#ae81ff">1</span>:] <span style="color:#f92672">+</span> [chars_to_idx[<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Fwd pass</span>
+</span></span><span style="display:flex;"><span>            loss, cache <span style="color:#f92672">=</span> rnn_forward(x, y, h_prev, parameters)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Compute smooth loss</span>
+</span></span><span style="display:flex;"><span>            smoothed_loss <span style="color:#f92672">=</span> smooth_loss(smoothed_loss, loss)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Bwd pass</span>
+</span></span><span style="display:flex;"><span>            grads, h_prev <span style="color:#f92672">=</span> rnn_backward(y, parameters, cache)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Update parameters</span>
+</span></span><span style="display:flex;"><span>            parameters, s <span style="color:#f92672">=</span> update_parameters_with_rmsprop(
+</span></span><span style="display:flex;"><span>                parameters, grads, s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        overall_loss<span style="color:#f92672">.</span>append(smoothed_loss)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters, overall_loss
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load names</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;../data/names.txt&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>)<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Convert characters to lower case</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>lower()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Construct vocabulary using unique characters, sort it in ascending order,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># then construct two dictionaries that maps character to index and index to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># characters.</span>
+</span></span><span style="display:flex;"><span>chars <span style="color:#f92672">=</span> list(sorted(set(data)))
+</span></span><span style="display:flex;"><span>chars_to_idx <span style="color:#f92672">=</span> {ch:i <span style="color:#66d9ef">for</span> i, ch <span style="color:#f92672">in</span> enumerate(chars)}
+</span></span><span style="display:flex;"><span>idx_to_chars <span style="color:#f92672">=</span> {i:ch <span style="color:#66d9ef">for</span> ch, i <span style="color:#f92672">in</span> chars_to_idx<span style="color:#f92672">.</span>items()}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the size of the data and vocab size</span>
+</span></span><span style="display:flex;"><span>data_size <span style="color:#f92672">=</span> len(data)
+</span></span><span style="display:flex;"><span>vocab_size <span style="color:#f92672">=</span> len(chars_to_idx)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;There are </span><span style="color:#e6db74">{</span>data_size<span style="color:#e6db74">}</span><span style="color:#e6db74"> characters and </span><span style="color:#e6db74">{</span>vocab_size<span style="color:#e6db74">}</span><span style="color:#e6db74"> unique characters.&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fitting the model</span>
+</span></span><span style="display:flex;"><span>parameters, loss <span style="color:#f92672">=</span> model(<span style="color:#e6db74">&#34;../data/names.txt&#34;</span>, chars_to_idx, idx_to_chars, <span style="color:#ae81ff">100</span>, vocab_size, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">0.01</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plotting the loss</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(range(len(loss)), loss)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Epochs&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Smoothed loss&#34;</span>);
+</span></span></code></pre></div><pre><code>There are 36121 characters and 27 unique characters.
 
 Epoch 0
 =======
@@ -1058,7 +1003,7 @@ Epoch 10
 =======
 Sampled name: Milton
 Smoothed loss: 14.7446
-
+    
 Epoch 30
 =======
 Sampled name: Dangelyn
@@ -1074,7 +1019,6 @@ Epoch 99
 Sampled name: Cathranda
 Smoothed loss: 13.3380
 </code></pre>
-
 
 
 
@@ -1098,18 +1042,13 @@ Smoothed loss: 13.3380
 
 </figure>
 
-
-<p>The names that were generated started to get more interesting after 15 epochs. I didn't include the results of all epochs to shorten the post; however, you can check the results in the <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb">notebook</a> associated with this post. One of the interesting names is &quot;Yasira&quot; which is an Arabic name :).</p>
-
-<p><h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Conclusion</h2><br>
-Statistical language models are very crucial in Natural Language Processing (NLP) such as speech recognition and machine translation. We demonstrated in this post the main concepts behind statistical language models using the character-level language model. The task of this model is to generate names character by character using names obtained from census data that were consisted of 5,163 names. Below are the main key takeaways:</p>
-
+<p>The names that were generated started to get more interesting after 15 epochs. I didn&rsquo;t include the results of all epochs to shorten the post; however, you can check the results in the <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb">notebook</a> associated with this post. One of the interesting names is &ldquo;Yasira&rdquo; which is an Arabic name :).</p>
+<!-- raw HTML omitted -->
 <ul>
 <li>If we have more data, a bigger model, and train longer, we may get more interesting results. However, to get very interesting results, we should instead use <strong>Long Short-Term Memory (LSTM)</strong> model with more than one layer deep. People have used 3 layers deep LSTM model with dropout and were able to generate very interesting results when applied on cookbooks and Shakespeare poems. LSTM models outperform simple RNN due to its ability in capturing longer time dependencies.</li>
-<li>With the sampling technique we're using, don't expect the RNN to generate meaningful sequence of characters (names).</li>
-<li>We used in this post each name as its own sequence; however, we may be able to speed up learning and get better results if we increase the batch size; let's say from one name to a sequence of 50 characters.</li>
-<li>We can control the level of randomness using the sampling strategy. Here, we balanced between what the model thinks it's the right character and the level of randomness.</li>
+<li>With the sampling technique we&rsquo;re using, don&rsquo;t expect the RNN to generate meaningful sequence of characters (names).</li>
+<li>We used in this post each name as its own sequence; however, we may be able to speed up learning and get better results if we increase the batch size; let&rsquo;s say from one name to a sequence of 50 characters.</li>
+<li>We can control the level of randomness using the sampling strategy. Here, we balanced between what the model thinks it&rsquo;s the right character and the level of randomness.</li>
 </ul>
 
     </div>
@@ -1352,8 +1291,6 @@ Statistical language models are very crucial in Natural Language Processing (NLP
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -1438,7 +1375,7 @@ Statistical language models are very crucial in Natural Language Processing (NLP
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1453,7 +1390,7 @@ Statistical language models are very crucial in Natural Language Processing (NLP
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

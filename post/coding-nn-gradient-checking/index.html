@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="In the previous post, Coding Neural Network - Forward Propagation and Backpropagation, we implemented both forward propagation and backpropagation in numpy. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it&#39;s necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let&#39;s revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge&#39;s node tail.">
+  <meta name="description" content="In the previous post, Coding Neural Network - Forward Propagation and Backpropagation, we implemented both forward propagation and backpropagation in numpy. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it&rsquo;s necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let&rsquo;s revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge&rsquo;s node tail.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/coding-nn-gradient-checking/">
@@ -84,7 +84,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -129,7 +129,7 @@
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/post/coding-nn-gradient-checking/">
   <meta property="og:title" content="Coding Neural Network - Gradient Checking | Imad Dabbura">
-  <meta property="og:description" content="In the previous post, Coding Neural Network - Forward Propagation and Backpropagation, we implemented both forward propagation and backpropagation in numpy. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it&#39;s necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let&#39;s revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge&#39;s node tail."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-gradient-checking/featured.png">
+  <meta property="og:description" content="In the previous post, Coding Neural Network - Forward Propagation and Backpropagation, we implemented both forward propagation and backpropagation in numpy. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it&rsquo;s necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let&rsquo;s revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge&rsquo;s node tail."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-gradient-checking/featured.png">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/coding-nn-gradient-checking/featured.png"><meta property="og:locale" content="en-us">
   
     
@@ -285,6 +285,26 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
         </li>
 
         
@@ -567,22 +587,16 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p>In the previous post, <a href="https://imaddabbura.github.io/blog/machine%20learning/deep%20learning/2018/04/01/coding-neural-network-fwd-back-prop.html"><em>Coding Neural Network - Forward Propagation and Backpropagation</em></a>, we implemented both forward propagation and backpropagation in <code>numpy</code>. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it's necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let's revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge's node tail. In other words, we compute the derivative of cost function with respect to all parameters, i.e $\frac{\partial J}{\partial \theta}$ where $\theta$ represents the parameters of the model.</p>
-
+      <p>In the previous post, <a href="https://imaddabbura.github.io/blog/machine%20learning/deep%20learning/2018/04/01/coding-neural-network-fwd-back-prop.html"><em>Coding Neural Network - Forward Propagation and Backpropagation</em></a>, we implemented both forward propagation and backpropagation in <code>numpy</code>. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it&rsquo;s necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let&rsquo;s revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge&rsquo;s node tail. In other words, we compute the derivative of cost function with respect to all parameters, i.e $\frac{\partial J}{\partial \theta}$ where $\theta$ represents the parameters of the model.</p>
 <p>The way to test our implementation is by computing numerical gradients and compare it with gradients from backpropagation (analytical). There are two way of computing numerical gradients:</p>
-
 <ul>
 <li>Right-hand form:</li>
 </ul>
-
-<p><span  class="math">\[\frac{J(\theta + \epsilon) - J(\theta)}{\epsilon}\tag{1}\]</span></p>
-
+<p>$$\frac{J(\theta + \epsilon) - J(\theta)}{\epsilon}\tag{1}$$</p>
 <ul>
 <li>Two-sided form (see figure 2):</li>
 </ul>
-
-<p><span  class="math">\[\frac{J(\theta + \epsilon) - J(\theta - \epsilon)}{2 \epsilon}\tag{2}\]</span></p>
-
+<p>$$\frac{J(\theta + \epsilon) - J(\theta - \epsilon)}{2 \epsilon}\tag{2}$$</p>
 
 
 
@@ -606,243 +620,207 @@
 
 </figure>
 
-
-<p>Two-sided form of approximating the derivative is closer than the right-hand form. Let's illustrate that with the following example using the function $f(x) = x^2$ by taking its derivative at $x = 3$.</p>
-
+<p>Two-sided form of approximating the derivative is closer than the right-hand form. Let&rsquo;s illustrate that with the following example using the function $f(x) = x^2$ by taking its derivative at $x = 3$.</p>
 <ul>
 <li>Analytical derivative:</li>
 </ul>
-
-<p><span  class="math">\[\nabla_x f(x) = 2x\ \Rightarrow\nabla_x f(3) = 6\]</span></p>
-
+<p>$$\nabla_x f(x) = 2x\ \Rightarrow\nabla_x f(3) = 6$$</p>
 <ul>
 <li>Two-sided numerical derivative:</li>
 </ul>
-
-<p><span  class="math">\[\frac{(3 + 1e-2)^2 - (3 - 1e-2)^2}{2 * 1e-2} = 5.999999999999872\]</span></p>
-
+<p>$$\frac{(3 + 1e-2)^2 - (3 - 1e-2)^2}{2 * 1e-2} = 5.999999999999872$$</p>
 <ul>
 <li>Right-hand numerical derivative:</li>
 </ul>
-
-<p><span  class="math">\[\frac{(3 + 1e-2)^2 - 3^2}{1e-2} = 6.009999999999849\]</span></p>
-
-<p>As we see above, the difference between analytical derivative and two-sided numerical gradient is almost zero; however, the difference between analytical derivative and right-sided derivative is 0.01. Therefore, we'll use two-sided epsilon method to compute the numerical gradients.</p>
-
-<p>In addition, we'll normalize the difference between numerical. gradients and analytical gradients using the following formula:</p>
-
-<p><span  class="math">\[\frac{\|grad - grad\_{approx}\|_2}{\|grad\|_2 + \|grad\_{approx}\|_2}\tag{3}\]</span></p>
-
+<p>$$\frac{(3 + 1e-2)^2 - 3^2}{1e-2} = 6.009999999999849$$</p>
+<p>As we see above, the difference between analytical derivative and two-sided numerical gradient is almost zero; however, the difference between analytical derivative and right-sided derivative is 0.01. Therefore, we&rsquo;ll use two-sided epsilon method to compute the numerical gradients.</p>
+<p>In addition, we&rsquo;ll normalize the difference between numerical. gradients and analytical gradients using the following formula:</p>
+<p>$$\frac{|grad - grad_{approx}|_2}{|grad|_2 + |grad_{approx}|_2}\tag{3}$$</p>
 <p>If the difference is $\leq 10^{-7}$, then our implementation is fine; otherwise, we have a mistake somewhere and have to go back and revisit backpropagation code.</p>
-
 <p>Below are the steps needed to implement gradient checking:</p>
-
 <ol>
 <li>Pick random number of examples from training data to use it when computing both numerical and analytical gradients.
-
 <ul>
-<li>Don't use all examples in the training data because gradient checking is very slow.</li>
-</ul></li>
+<li>Don&rsquo;t use all examples in the training data because gradient checking is very slow.</li>
+</ul>
+</li>
 <li>Initialize parameters.</li>
 <li>Compute forward propagation and the cross-entropy cost.</li>
 <li>Compute the gradients using our back-propagation implementation.</li>
 <li>Compute the numerical gradients using the two-sided epsilon method.</li>
 <li>Compute the difference between numerical and analytical gradients.</li>
 </ol>
-
-<p>We'll be using functions we wrote in <em>&quot;Coding Neural Network - Forward Propagation and Backpropagation&quot;</em> post to initialize parameters, compute forward propagation and back-propagation as well as the cross-entropy cost.</p>
-
-<p>Let's first import the data.</p>
-
-<pre><code class="language-python"># Loading packages
-import sys
-
-import h5py
-import matplotlib.pyplot as plt
-import numpy as np
-from numpy.linalg import norm
-import seaborn as sns
-
-sys.path.append(&quot;../scripts/&quot;)
-from coding_neural_network_from_scratch import (initialize_parameters,
-                                                L_model_forward,
-                                                L_model_backward,
-                                                compute_cost)
+<p>We&rsquo;ll be using functions we wrote in <em>&ldquo;Coding Neural Network - Forward Propagation and Backpropagation&rdquo;</em> post to initialize parameters, compute forward propagation and back-propagation as well as the cross-entropy cost.</p>
+<p>Let&rsquo;s first import the data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Loading packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> h5py
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy.linalg <span style="color:#f92672">import</span> norm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;../scripts/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> coding_neural_network_from_scratch <span style="color:#f92672">import</span> (initialize_parameters,
+</span></span><span style="display:flex;"><span>                                                L_model_forward,
+</span></span><span style="display:flex;"><span>                                                L_model_backward,
+</span></span><span style="display:flex;"><span>                                                compute_cost)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import the data</span>
+</span></span><span style="display:flex;"><span>train_dataset <span style="color:#f92672">=</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;../data/train_catvnoncat.h5&#34;</span>)
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(train_dataset[<span style="color:#e6db74">&#34;train_set_x&#34;</span>])<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>y_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(train_dataset[<span style="color:#e6db74">&#34;train_set_y&#34;</span>])<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> X_train<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">209</span>)
+</span></span><span style="display:flex;"><span>y_train <span style="color:#f92672">=</span> y_train<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">209</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X_train<span style="color:#f92672">.</span>shape, y_train<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><pre><code>((12288, 209), (1, 209))
 </code></pre>
-
-<pre><code class="language-python"># Import the data
-train_dataset = h5py.File(&quot;../data/train_catvnoncat.h5&quot;)
-X_train = np.array(train_dataset[&quot;train_set_x&quot;]).T
-y_train = np.array(train_dataset[&quot;train_set_y&quot;]).T
-X_train = X_train.reshape(-1, 209)
-y_train = y_train.reshape(-1, 209)
-
-X_train.shape, y_train.shape
-</code></pre>
-
-<pre><code>((12288, 209), (1, 209))
-</code></pre>
-
-<p>Next, we'll write helper functions that faciltate converting parameters and gradients dictionaries into vectors and then re-convert them back to dictionaries.</p>
-
-<pre><code class="language-python">def dictionary_to_vector(params_dict):
-    count = 0
-    for key in params_dict.keys():
-        new_vector = np.reshape(params_dict[key], (-1, 1))
-        if count == 0:
-            theta_vector = new_vector
-        else:
-            theta_vector = np.concatenate((theta_vector, new_vector))
-        count += 1
-
-    return theta_vector
-
-
-def vector_to_dictionary(vector, layers_dims):
-    L = len(layers_dims)
-    parameters = {}
-    k = 0
-
-    for l in range(1, L):
-        # Create temp variable to store dimension used on each layer
-        w_dim = layers_dims[l] * layers_dims[l - 1]
-        b_dim = layers_dims[l]
-
-        # Create temp var to be used in slicing parameters vector
-        temp_dim = k + w_dim
-
-        # add parameters to the dictionary
-        parameters[&quot;W&quot; + str(l)] = vector[
-            k:temp_dim].reshape(layers_dims[l], layers_dims[l - 1])
-        parameters[&quot;b&quot; + str(l)] = vector[
-            temp_dim:temp_dim + b_dim].reshape(b_dim, 1)
-
-        k += w_dim + b_dim
-
-    return parameters
-
-
-def gradients_to_vector(gradients):
-    # Get the number of indices for the gradients to iterate over
-    valid_grads = [key for key in gradients.keys()
-                   if not key.startswith(&quot;dA&quot;)]
-    L = len(valid_grads)// 2
-    count = 0
-    
-    # Iterate over all gradients and append them to new_grads list
-    for l in range(1, L + 1):
-        if count == 0:
-            new_grads = gradients[&quot;dW&quot; + str(l)].reshape(-1, 1)
-            new_grads = np.concatenate(
-                (new_grads, gradients[&quot;db&quot; + str(l)].reshape(-1, 1)))
-        else:
-            new_grads = np.concatenate(
-                (new_grads, gradients[&quot;dW&quot; + str(l)].reshape(-1, 1)))
-            new_grads = np.concatenate(
-                (new_grads, gradients[&quot;db&quot; + str(l)].reshape(-1, 1)))
-        count += 1
-        
-    return new_grads
-</code></pre>
-
-<p>Finally, we'll write the gradient checking function that will compute the difference between the analytical and numerical gradients and tell us if our implementation of back-propagation is correct. We'll randomly choose 1 example to compute the difference.</p>
-
-<pre><code class="language-python">def forward_prop_cost(X, parameters, Y, hidden_layers_activation_fn=&quot;tanh&quot;):
-    # Compute forward prop
-    AL, _ = L_model_forward(X, parameters, hidden_layers_activation_fn)
-
-    # Compute cost
-    cost = compute_cost(AL, Y)
-
-    return cost
-
-
-def gradient_check(
-        parameters, gradients, X, Y, layers_dims, epsilon=1e-7,
-        hidden_layers_activation_fn=&quot;tanh&quot;):
-    # Roll out parameters and gradients dictionaries
-    parameters_vector = dictionary_to_vector(parameters)
-    gradients_vector = gradients_to_vector(gradients)
-
-    # Create vector of zeros to be used with epsilon
-    grads_approx = np.zeros_like(parameters_vector)
-
-    for i in range(len(parameters_vector)):
-        # Compute cost of theta + epsilon
-        theta_plus = np.copy(parameters_vector)
-        theta_plus[i] = theta_plus[i] + epsilon
-        j_plus = forward_prop_cost(
-            X, vector_to_dictionary(theta_plus, layers_dims), Y,
-            hidden_layers_activation_fn)
-
-        # Compute cost of theta - epsilon
-        theta_minus = np.copy(parameters_vector)
-        theta_minus[i] = theta_minus[i] - epsilon
-        j_minus = forward_prop_cost(
-            X, vector_to_dictionary(theta_minus, layers_dims), Y,
-            hidden_layers_activation_fn)
-
-        # Compute numerical gradients
-        grads_approx[i] = (j_plus - j_minus) / (2 * epsilon)
-
-    # Compute the difference of numerical and analytical gradients
-    numerator = norm(gradients_vector - grads_approx)
-    denominator = norm(grads_approx) + norm(gradients_vector)
-    difference = numerator / denominator
-
-    if difference &gt; 10e-7:
-        print (&quot;\033[31mThere is a mistake in back-propagation &quot; +\
-               &quot;implementation. The difference is: {}&quot;.format(difference))
-    else:
-        print (&quot;\033[32mThere implementation of back-propagation is fine! &quot;+\
-               &quot;The difference is: {}&quot;.format(difference))
-
-    return difference
-</code></pre>
-
-<pre><code class="language-python"># Set up neural network architecture
-layers_dims = [X_train.shape[0], 5, 5, 1]
-
-# Initialize parameters
-parameters = initialize_parameters(layers_dims)
-
-# Randomly selecting 1 example from training data
-perms = np.random.permutation(X_train.shape[1])
-index = perms[:1]
-
-# Compute forward propagation
-AL, caches = L_model_forward(X_train[:, index], parameters, &quot;tanh&quot;)
-
-# Compute analytical gradients
-gradients = L_model_backward(AL, y_train[:, index], caches, &quot;tanh&quot;)
-
-# Compute difference of numerical and analytical gradients
-difference = gradient_check(parameters, gradients, X_train[:, index], y_train[:, index], layers_dims)
-</code></pre>
-
-<p>There implementation of back-propagation is fine! The difference is: 3.0220555297630148e-09</p>
-
+<p>Next, we&rsquo;ll write helper functions that faciltate converting parameters and gradients dictionaries into vectors and then re-convert them back to dictionaries.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dictionary_to_vector</span>(params_dict):
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> params_dict<span style="color:#f92672">.</span>keys():
+</span></span><span style="display:flex;"><span>        new_vector <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>reshape(params_dict[key], (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            theta_vector <span style="color:#f92672">=</span> new_vector
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            theta_vector <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((theta_vector, new_vector))
+</span></span><span style="display:flex;"><span>        count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> theta_vector
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">vector_to_dictionary</span>(vector, layers_dims):
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(layers_dims)
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create temp variable to store dimension used on each layer</span>
+</span></span><span style="display:flex;"><span>        w_dim <span style="color:#f92672">=</span> layers_dims[l] <span style="color:#f92672">*</span> layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        b_dim <span style="color:#f92672">=</span> layers_dims[l]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create temp var to be used in slicing parameters vector</span>
+</span></span><span style="display:flex;"><span>        temp_dim <span style="color:#f92672">=</span> k <span style="color:#f92672">+</span> w_dim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># add parameters to the dictionary</span>
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> vector[
+</span></span><span style="display:flex;"><span>            k:temp_dim]<span style="color:#f92672">.</span>reshape(layers_dims[l], layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> vector[
+</span></span><span style="display:flex;"><span>            temp_dim:temp_dim <span style="color:#f92672">+</span> b_dim]<span style="color:#f92672">.</span>reshape(b_dim, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        k <span style="color:#f92672">+=</span> w_dim <span style="color:#f92672">+</span> b_dim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gradients_to_vector</span>(gradients):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Get the number of indices for the gradients to iterate over</span>
+</span></span><span style="display:flex;"><span>    valid_grads <span style="color:#f92672">=</span> [key <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> gradients<span style="color:#f92672">.</span>keys()
+</span></span><span style="display:flex;"><span>                   <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> key<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;dA&#34;</span>)]
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(valid_grads)<span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Iterate over all gradients and append them to new_grads list</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            new_grads <span style="color:#f92672">=</span> gradients[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(l)]<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            new_grads <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate(
+</span></span><span style="display:flex;"><span>                (new_grads, gradients[<span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(l)]<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            new_grads <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate(
+</span></span><span style="display:flex;"><span>                (new_grads, gradients[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(l)]<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)))
+</span></span><span style="display:flex;"><span>            new_grads <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate(
+</span></span><span style="display:flex;"><span>                (new_grads, gradients[<span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(l)]<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)))
+</span></span><span style="display:flex;"><span>        count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> new_grads
+</span></span></code></pre></div><p>Finally, we&rsquo;ll write the gradient checking function that will compute the difference between the analytical and numerical gradients and tell us if our implementation of back-propagation is correct. We&rsquo;ll randomly choose 1 example to compute the difference.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward_prop_cost</span>(X, parameters, Y, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Compute forward prop</span>
+</span></span><span style="display:flex;"><span>    AL, _ <span style="color:#f92672">=</span> L_model_forward(X, parameters, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Compute cost</span>
+</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">=</span> compute_cost(AL, Y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cost
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gradient_check</span>(
+</span></span><span style="display:flex;"><span>        parameters, gradients, X, Y, layers_dims, epsilon<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-7</span>,
+</span></span><span style="display:flex;"><span>        hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Roll out parameters and gradients dictionaries</span>
+</span></span><span style="display:flex;"><span>    parameters_vector <span style="color:#f92672">=</span> dictionary_to_vector(parameters)
+</span></span><span style="display:flex;"><span>    gradients_vector <span style="color:#f92672">=</span> gradients_to_vector(gradients)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Create vector of zeros to be used with epsilon</span>
+</span></span><span style="display:flex;"><span>    grads_approx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros_like(parameters_vector)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(parameters_vector)):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Compute cost of theta + epsilon</span>
+</span></span><span style="display:flex;"><span>        theta_plus <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(parameters_vector)
+</span></span><span style="display:flex;"><span>        theta_plus[i] <span style="color:#f92672">=</span> theta_plus[i] <span style="color:#f92672">+</span> epsilon
+</span></span><span style="display:flex;"><span>        j_plus <span style="color:#f92672">=</span> forward_prop_cost(
+</span></span><span style="display:flex;"><span>            X, vector_to_dictionary(theta_plus, layers_dims), Y,
+</span></span><span style="display:flex;"><span>            hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Compute cost of theta - epsilon</span>
+</span></span><span style="display:flex;"><span>        theta_minus <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(parameters_vector)
+</span></span><span style="display:flex;"><span>        theta_minus[i] <span style="color:#f92672">=</span> theta_minus[i] <span style="color:#f92672">-</span> epsilon
+</span></span><span style="display:flex;"><span>        j_minus <span style="color:#f92672">=</span> forward_prop_cost(
+</span></span><span style="display:flex;"><span>            X, vector_to_dictionary(theta_minus, layers_dims), Y,
+</span></span><span style="display:flex;"><span>            hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Compute numerical gradients</span>
+</span></span><span style="display:flex;"><span>        grads_approx[i] <span style="color:#f92672">=</span> (j_plus <span style="color:#f92672">-</span> j_minus) <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> epsilon)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Compute the difference of numerical and analytical gradients</span>
+</span></span><span style="display:flex;"><span>    numerator <span style="color:#f92672">=</span> norm(gradients_vector <span style="color:#f92672">-</span> grads_approx)
+</span></span><span style="display:flex;"><span>    denominator <span style="color:#f92672">=</span> norm(grads_approx) <span style="color:#f92672">+</span> norm(gradients_vector)
+</span></span><span style="display:flex;"><span>    difference <span style="color:#f92672">=</span> numerator <span style="color:#f92672">/</span> denominator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> difference <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">10e-7</span>:
+</span></span><span style="display:flex;"><span>        print (<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[31mThere is a mistake in back-propagation &#34;</span> <span style="color:#f92672">+</span>\
+</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">&#34;implementation. The difference is: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(difference))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print (<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[32mThere implementation of back-propagation is fine! &#34;</span><span style="color:#f92672">+</span>\
+</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">&#34;The difference is: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(difference))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> difference
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Set up neural network architecture</span>
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Initialize parameters</span>
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> initialize_parameters(layers_dims)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Randomly selecting 1 example from training data</span>
+</span></span><span style="display:flex;"><span>perms <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> perms[:<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute forward propagation</span>
+</span></span><span style="display:flex;"><span>AL, caches <span style="color:#f92672">=</span> L_model_forward(X_train[:, index], parameters, <span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute analytical gradients</span>
+</span></span><span style="display:flex;"><span>gradients <span style="color:#f92672">=</span> L_model_backward(AL, y_train[:, index], caches, <span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute difference of numerical and analytical gradients</span>
+</span></span><span style="display:flex;"><span>difference <span style="color:#f92672">=</span> gradient_check(parameters, gradients, X_train[:, index], y_train[:, index], layers_dims)
+</span></span></code></pre></div><p>There implementation of back-propagation is fine! The difference is: 3.0220555297630148e-09</p>
 <p>Congratulations! Our implementation is correct 👍</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Conclusion
-</h2>
-
+<!-- raw HTML omitted -->
 <p>Below are some key takeaways:</p>
-
 <ul>
 <li>Two-sided numerical gradient approximates the analytical gradients more closely than right-side form.</li>
 <li>Since gradient checking is very slow:
-
 <ul>
 <li>Apply it on one or few training examples.</li>
-<li>Turn it off when training neural network after making sure that backpropagation's implementation is correct.</li>
-</ul></li>
-<li>Gradient checking doesn't work when applying drop-out method. Use keep-prob = 1 to check gradient checking and then change it when training neural network.</li>
-<li>Epsilon = $10e-7$ is a common value used for the difference between analytical gradient and numerical gradient. If the difference is less than 10e-7 then the implementation of backpropagation is correct.</li>
-<li>Thanks to <em>Deep Learning</em> frameworks such as Tensorflow and Pytorch, we may find ourselves rarely implement backpropagation because such frameworks compute that for us; however, it's a good practice to understand what happens under the hood to become a good Deep Learning practitioner.</li>
+<li>Turn it off when training neural network after making sure that backpropagation&rsquo;s implementation is correct.</li>
 </ul>
-
+</li>
+<li>Gradient checking doesn&rsquo;t work when applying drop-out method. Use keep-prob = 1 to check gradient checking and then change it when training neural network.</li>
+<li>Epsilon = $10e-7$ is a common value used for the difference between analytical gradient and numerical gradient. If the difference is less than 10e-7 then the implementation of backpropagation is correct.</li>
+<li>Thanks to <em>Deep Learning</em> frameworks such as Tensorflow and Pytorch, we may find ourselves rarely implement backpropagation because such frameworks compute that for us; however, it&rsquo;s a good practice to understand what happens under the hood to become a good Deep Learning practitioner.</li>
+</ul>
 <p>The source code that created this post can be found <a href="https://github.com/ImadDabbura/blog-posts/blob/master/notebooks/Coding-Neural-Network-Gradient-Checking.ipynb">here</a>.</p>
 
     </div>
@@ -1087,8 +1065,6 @@ Conclusion
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -1173,7 +1149,7 @@ Conclusion
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1188,7 +1164,7 @@ Conclusion
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

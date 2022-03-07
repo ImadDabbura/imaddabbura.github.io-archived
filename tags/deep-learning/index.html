@@ -84,7 +84,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -121,10 +121,9 @@
   
   
     
-    
   
   
-  <meta property="twitter:card" content="summary">
+  <meta property="twitter:card" content="summary_large_image">
   
   <meta property="twitter:site" content="@ImadPhd">
   <meta property="twitter:creator" content="@ImadPhd">
@@ -132,8 +131,8 @@
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/tags/deep-learning/">
   <meta property="og:title" content="Deep Learning | Imad Dabbura">
-  <meta property="og:description" content="Senior Data Scientist"><meta property="og:image" content="https://imaddabbura.github.io/img/icon-192.png">
-  <meta property="twitter:image" content="https://imaddabbura.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
+  <meta property="og:description" content="Senior Data Scientist"><meta property="og:image" content="https://imaddabbura.github.io/img/icon.png">
+  <meta property="twitter:image" content="https://imaddabbura.github.io/img/icon.png"><meta property="og:locale" content="en-us">
   
     <meta property="og:updated_time" content="2019-04-22T00:00:00&#43;00:00">
   
@@ -295,6 +294,26 @@
         
         
         
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
           
         
 
@@ -417,7 +436,7 @@
     <h2><a href="/post/coding-nn-dropout/">Coding Neural Network - Dropout</a></h2>
     <div class="article-style">
       
-      Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don't use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).
+      Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&rsquo;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).
       
     </div>
   </div>
@@ -426,7 +445,7 @@
     <h2><a href="/post/coding-nn-regularization/">Coding Neural Network - Regularization</a></h2>
     <div class="article-style">
       
-      Bias-Variance Trade-off  Generalization (test) error is the most important metric in Machine/Deep Learning. It gives us an estimate on the performance of the model on unseen data. Test error is decomposed into 3 parts (see above figure): Variance, Squared-Bias, and Irreducible Error. Models with high bias are not complex enough (too simple) for the data and tend to underfit. The simplest model is taking the average (mode) of target variable and assign it to all predictions.
+      Generalization (test) error is the most important metric in Machine/Deep Learning. It gives us an estimate on the performance of the model on unseen data. Test error is decomposed into 3 parts (see above figure): Variance, Squared-Bias, and Irreducible Error. Models with high bias are not complex enough (too simple) for the data and tend to underfit. The simplest model is taking the average (mode) of target variable and assign it to all predictions.
       
     </div>
   </div>
@@ -435,7 +454,7 @@
     <h2><a href="/post/coding-nn-params-init/">Coding Neural Network - Parameters&#39; Initialization</a></h2>
     <div class="article-style">
       
-      Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model's parameters to improve its performance. In other words, it's the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:
+      Optimization, in Machine Learning/Deep Learning contexts, is the process of changing the model&rsquo;s parameters to improve its performance. In other words, it&rsquo;s the process of finding the best parameters in the predefined hypothesis space to get the best possible performance. There are three kinds of optimization algorithms:
  Optimization algorithm that is not iterative and simply solves for one point. Optimization algorithm that is iterative in nature and converges to acceptable solution regardless of the parameters initialization such as gradient descent applied to logistic regression.
       
     </div>
@@ -445,7 +464,7 @@
     <h2><a href="/post/coding-nn-gradient-checking/">Coding Neural Network - Gradient Checking</a></h2>
     <div class="article-style">
       
-      In the previous post, Coding Neural Network - Forward Propagation and Backpropagation, we implemented both forward propagation and backpropagation in numpy. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it's necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let's revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge's node tail.
+      In the previous post, Coding Neural Network - Forward Propagation and Backpropagation, we implemented both forward propagation and backpropagation in numpy. However, implementing backpropagation from scratch is usually more prune to bugs/errors. Therefore, it&rsquo;s necessary before running the neural network on training data to check if our implementation of backpropagation is correct. Before we start, let&rsquo;s revisit what back-propagation is: We loop over the nodes in reverse topological order starting at the final node to compute the derivative of the cost with respect to each edge&rsquo;s node tail.
       
     </div>
   </div>
@@ -464,7 +483,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
     <h2><a href="/post/character-level-language-model/">Character-level Language Model</a></h2>
     <div class="article-style">
       
-      Iphone&rsquo;s text suggestion.   -- Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a Statistical Language Model. What is a statistical language model?
+      Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a Statistical Language Model. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it&rsquo;s trained on.
       
     </div>
   </div>
@@ -473,7 +492,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
     <h2><a href="/post/gradient-descent-algorithm/">Gradient Descent Algorithm and Its Variants</a></h2>
     <div class="article-style">
       
-      Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it's the task of minimizing the cost/loss function J(w) parameterized by the model's parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
+      Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&rsquo;s the task of minimizing the cost/loss function J(w) parameterized by the model&rsquo;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
  Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum.
       
     </div>
@@ -507,8 +526,6 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
       
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
@@ -594,7 +611,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -609,7 +626,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

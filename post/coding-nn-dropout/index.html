@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&#39;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).">
+  <meta name="description" content="Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&rsquo;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).">
 
   
   <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/coding-nn-dropout/">
@@ -84,7 +84,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -129,7 +129,7 @@
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/post/coding-nn-dropout/">
   <meta property="og:title" content="Coding Neural Network - Dropout | Imad Dabbura">
-  <meta property="og:description" content="Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&#39;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units)."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-dropout/featured.png">
+  <meta property="og:description" content="Dropout is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&rsquo;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units)."><meta property="og:image" content="https://imaddabbura.github.io/post/coding-nn-dropout/featured.png">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/coding-nn-dropout/featured.png"><meta property="og:locale" content="en-us">
   
     
@@ -285,6 +285,26 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
         </li>
 
         
@@ -567,79 +587,69 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p><strong>Dropout</strong> is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don't use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).
+      <p><strong>Dropout</strong> is a regularization technique. On each iteration, we randomly shut down some neurons (units) on each layer and don&rsquo;t use those neurons in both forward propagation and back-propagation. Since the units that will be dropped out on each iteration will be random, the learning algorithm will have no idea which neurons will be shut down on every iteration; therefore, force the learning algorithm to spread out the weights and not focus on some specific feattures (units).
 Moreover, dropout help improving generalization error by:</p>
-
 <ul>
 <li>Since we drop some units on each iteration, this will lead to smaller network which in turns means simpler network (regularization).</li>
-<li>Can be seen as an approximation to bagging techniques. Each iteration can be viewed as different model since we're dropping randomly different units on each layer. This means that the error would be the average of errors from all different models (iterations). Therefore, averaging errors from different models especially if those errors are uncorrelated would reduce the overall errors. In the worst case where errors are perfectly correlated, averaging among all models won't help at all; however, we know that in practice errors have some degree of uncorrelation. As result, it will always improve generalization error.</li>
+<li>Can be seen as an approximation to bagging techniques. Each iteration can be viewed as different model since we&rsquo;re dropping randomly different units on each layer. This means that the error would be the average of errors from all different models (iterations). Therefore, averaging errors from different models especially if those errors are uncorrelated would reduce the overall errors. In the worst case where errors are perfectly correlated, averaging among all models won&rsquo;t help at all; however, we know that in practice errors have some degree of uncorrelation. As result, it will always improve generalization error.</li>
 </ul>
-
 <p>We can use different probabilities on each layer; however, the output layer would always have <code>keep_prob = 1</code> and the input layer has high <code>keep_prob</code> such as 0.9 or 1. If a hidden layer has <code>keep_prob = 0.8</code>, this means that; on each iteration, each unit has 80% probablitity of being included and 20% probability of being dropped out.</p>
-
-<p>Dropout is used a lot in computer vision problems because we have a lot of features and not a lot of data. Also, features (pixels) next to each other usually don't add a lot of information. Therefore, models always suffer from overfitting.</p>
-
-<p>To illustrate how dropout helps us reduce generalization error, we'll use the same dataset we've used in the previous posts. The dataset has images for cats and non-cat. We'll try to build a neural network to classify if the image has cat or not. Each image is 64 x 64 pixels on RGB scale. Let's import the data and take a look at the shape as well as a sample of a cat image from the training set.</p>
-
-<pre><code class="language-python"># Loading packages
-import os
-
-import h5py
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-
-# local modules
-os.chdir(&quot;../scripts/&quot;)
-from coding_neural_network_from_scratch import (initialize_parameters,
-                                                linear_activation_forward,
-                                                compute_cost,
-                                                linear_activation_backward,
-                                                update_parameters,
-                                                accuracy)
-
-%matplotlib inline
-sns.set_context(&quot;notebook&quot;)
-plt.style.use(&quot;fivethirtyeight&quot;)
-plt.rcParams['figure.figsize'] = (12, 6)
-</code></pre>
-
-<pre><code class="language-python"># Import training data
-train_dataset = h5py.File(&quot;../data/train_catvnoncat.h5&quot;)
-X_train = np.array(train_dataset[&quot;train_set_x&quot;])
-Y_train = np.array(train_dataset[&quot;train_set_y&quot;])
-
-# Plot a sample image
-plt.imshow(X_train[50])
-plt.axis(&quot;off&quot;);
-
-# Import test data
-test_dataset = h5py.File(&quot;../data/test_catvnoncat.h5&quot;)
-X_test = np.array(test_dataset[&quot;test_set_x&quot;])
-Y_test = np.array(test_dataset[&quot;test_set_y&quot;])
-
-# Transform data
-X_train = X_train.reshape(209, -1).T
-X_train = X_train / 255
-Y_train = Y_train.reshape(-1, 209)
-
-X_test = X_test.reshape(50, -1).T
-X_test = X_test / 255
-Y_test = Y_test.reshape(-1, 50)
-
-# print the new shape of both training and test datasets
-print(&quot;Training data dimensions:&quot;)
-print(&quot;X's dimension: {}, Y's dimension: {}&quot;.format(X_train.shape, Y_train.shape))
-print(&quot;Test data dimensions:&quot;)
-print(&quot;X's dimension: {}, Y's dimension: {}&quot;.format(X_test.shape, Y_test.shape))
-</code></pre>
-
-<pre><code>Training data dimensions:
+<p>Dropout is used a lot in computer vision problems because we have a lot of features and not a lot of data. Also, features (pixels) next to each other usually don&rsquo;t add a lot of information. Therefore, models always suffer from overfitting.</p>
+<p>To illustrate how dropout helps us reduce generalization error, we&rsquo;ll use the same dataset we&rsquo;ve used in the previous posts. The dataset has images for cats and non-cat. We&rsquo;ll try to build a neural network to classify if the image has cat or not. Each image is 64 x 64 pixels on RGB scale. Let&rsquo;s import the data and take a look at the shape as well as a sample of a cat image from the training set.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Loading packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> h5py
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># local modules</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(<span style="color:#e6db74">&#34;../scripts/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> coding_neural_network_from_scratch <span style="color:#f92672">import</span> (initialize_parameters,
+</span></span><span style="display:flex;"><span>                                                linear_activation_forward,
+</span></span><span style="display:flex;"><span>                                                compute_cost,
+</span></span><span style="display:flex;"><span>                                                linear_activation_backward,
+</span></span><span style="display:flex;"><span>                                                update_parameters,
+</span></span><span style="display:flex;"><span>                                                accuracy)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
+</span></span><span style="display:flex;"><span>sns<span style="color:#f92672">.</span>set_context(<span style="color:#e6db74">&#34;notebook&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>use(<span style="color:#e6db74">&#34;fivethirtyeight&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74">&#39;figure.figsize&#39;</span>] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">6</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import training data</span>
+</span></span><span style="display:flex;"><span>train_dataset <span style="color:#f92672">=</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;../data/train_catvnoncat.h5&#34;</span>)
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(train_dataset[<span style="color:#e6db74">&#34;train_set_x&#34;</span>])
+</span></span><span style="display:flex;"><span>Y_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(train_dataset[<span style="color:#e6db74">&#34;train_set_y&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot a sample image</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(X_train[<span style="color:#ae81ff">50</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#34;off&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Import test data</span>
+</span></span><span style="display:flex;"><span>test_dataset <span style="color:#f92672">=</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;../data/test_catvnoncat.h5&#34;</span>)
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(test_dataset[<span style="color:#e6db74">&#34;test_set_x&#34;</span>])
+</span></span><span style="display:flex;"><span>Y_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(test_dataset[<span style="color:#e6db74">&#34;test_set_y&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Transform data</span>
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> X_train<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">209</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> X_train <span style="color:#f92672">/</span> <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>Y_train <span style="color:#f92672">=</span> Y_train<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">209</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> X_test<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">50</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> X_test <span style="color:#f92672">/</span> <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>Y_test <span style="color:#f92672">=</span> Y_test<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print the new shape of both training and test datasets</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Training data dimensions:&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;X&#39;s dimension: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, Y&#39;s dimension: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(X_train<span style="color:#f92672">.</span>shape, Y_train<span style="color:#f92672">.</span>shape))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Test data dimensions:&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;X&#39;s dimension: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, Y&#39;s dimension: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(X_test<span style="color:#f92672">.</span>shape, Y_test<span style="color:#f92672">.</span>shape))
+</span></span></code></pre></div><pre><code>Training data dimensions:
 X's dimension: (12288, 209), Y's dimension: (1, 209)
 Test data dimensions:
 X's dimension: (12288, 50), Y's dimension: (1, 50)
 </code></pre>
-
 
 
 
@@ -663,152 +673,145 @@ X's dimension: (12288, 50), Y's dimension: (1, 50)
 
 </figure>
 
-
-<p>Now, we'll write the functions needed to apply dropout on both forward propagation and back-propagation. Note that we'll utilize the functions we wrote in previous posts such as <code>initialize_parameters</code>.</p>
-
-<pre><code class="language-python">def drop_out_matrices(layers_dims, m, keep_prob):
-    np.random.seed(1)
-    D = {}
-    L = len(layers_dims)
-
-    for l in range(L):
-        # initialize the random values for the dropout matrix
-        D[str(l)] = np.random.rand(layers_dims[l], m)
-        # Convert it to 0/1 to shut down neurons corresponding to each element
-        D[str(l)] = D[str(l)] &lt; keep_prob[l]
-        assert(D[str(l)].shape == (layers_dims[l], m))
-    return D
-
-
-def L_model_forward(
-        X, parameters, D, keep_prob, hidden_layers_activation_fn=&quot;relu&quot;):
-    A = X                           # since input matrix A0
-    A = np.multiply(A, D[str(0)])
-    A /= keep_prob[0]
-    caches = []                     # initialize the caches list
-    L = len(parameters) // 2        # number of layer in the network
-
-    for l in range(1, L):
-        A_prev = A
-        A, cache = linear_activation_forward(
-            A_prev, parameters[&quot;W&quot; + str(l)], parameters[&quot;b&quot; + str(l)],
-            hidden_layers_activation_fn)
-        # shut down some units
-        A = np.multiply(A, D[str(l)])
-        # scale that value of units to keep expected value the same
-        A /= keep_prob[l]
-        caches.append(cache)
-
-    AL, cache = linear_activation_forward(
-        A, parameters[&quot;W&quot; + str(L)], parameters[&quot;b&quot; + str(L)], &quot;sigmoid&quot;)
-    AL = np.multiply(AL, D[str(L)])
-    AL /= keep_prob[L]
-    caches.append(cache)
-    assert(AL.shape == (1, X.shape[1]))
-
-    return AL, caches
-
-
-def L_model_backward(
-        AL, Y, caches, D, keep_prob, hidden_layers_activation_fn=&quot;relu&quot;):
-    Y = Y.reshape(AL.shape)
-    L = len(caches)
-    grads = {}
-
-    # dA for output layer
-    dAL = np.divide(AL - Y, np.multiply(AL, 1 - AL))
-    dAL = np.multiply(dAL, D[str(L)])
-    dAL /= keep_prob[L]
-
-    grads[&quot;dA&quot; + str(L - 1)], grads[&quot;dW&quot; + str(L)], grads[
-        &quot;db&quot; + str(L)] = linear_activation_backward(
-            dAL, caches[L - 1], &quot;sigmoid&quot;)
-    grads[&quot;dA&quot; + str(L - 1)] = np.multiply(
-        grads[&quot;dA&quot; + str(L - 1)], D[str(L - 1)])
-    grads[&quot;dA&quot; + str(L - 1)] /= keep_prob[L - 1]
-
-    for l in range(L - 1, 0, -1):
-        current_cache = caches[l - 1]
-        grads[&quot;dA&quot; + str(l - 1)], grads[&quot;dW&quot; + str(l)], grads[
-            &quot;db&quot; + str(l)] = linear_activation_backward(
-                grads[&quot;dA&quot; + str(l)], current_cache,
-                hidden_layers_activation_fn)
-
-        grads[&quot;dA&quot; + str(l - 1)] = np.multiply(
-            grads[&quot;dA&quot; + str(l - 1)], D[str(l - 1)])
-        grads[&quot;dA&quot; + str(l - 1)] /= keep_prob[l - 1]
-
-    return grads
-
-
-def model_with_dropout(
-        X, Y, layers_dims, keep_prob, learning_rate=0.01, num_iterations=3000,
-        print_cost=True, hidden_layers_activation_fn=&quot;relu&quot;):
-    # get number of examples
-    m = X.shape[1]
-
-    # to get consistents output
-    np.random.seed(1)
-
-    # initialize parameters
-    parameters = initialize_parameters(layers_dims)
-
-    # intialize cost list
-    cost_list = []
-
-    # implement gradient descent
-    for i in range(num_iterations):
-        # Initialize dropout matrices
-        D = drop_out_matrices(layers_dims, m, keep_prob)
-
-        # compute forward propagation
-        AL, caches = L_model_forward(
-            X, parameters, D, keep_prob, hidden_layers_activation_fn)
-
-        # compute regularized cost
-        cost = compute_cost(AL, Y)
-
-        # compute gradients
-        grads = L_model_backward(
-            AL, Y, caches, D, keep_prob, hidden_layers_activation_fn)
-
-        # update parameters
-        parameters = update_parameters(parameters, grads, learning_rate)
-
-        # print cost
-        if (i + 1) % 100 == 0 and print_cost:
-            print(f&quot;The cost after {i + 1} iterations : {cost:.4f}.&quot;)
-        # append cost
-        if i % 100 == 0:
-            cost_list.append(cost)
-
-    # plot the cost curve
-    plt.plot(cost_list)
-    plt.xlabel(&quot;Iteration (per hundreds)&quot;)
-    plt.ylabel(&quot;Cost&quot;)
-    plt.title(f&quot;Cost curve for the learning rate = {learning_rate}&quot;)
-
-    return parameters
-</code></pre>
-
-<p>Finally, we're ready to build our neural network. First, we'll build one fully connected network without dropout. That is to say, <code>keep_prob = 1</code>. Next, we'll build another network where <code>keep_prob &lt; 1</code>. Lastly, we'll compare the generalization error of both networks and see how dropout technique can help us in improving our generalization error.</p>
-
-<pre><code class="language-python"># setup layers dimensions, number of examples, and keep probabilities list
-m = X_train.shape[0]
-keep_prob = [1, 1, 1, 1]
-layers_dims = [m, 10, 10, 1]
-
-# train NN with no dropout
-parameters = model_with_dropout(X_train, Y_train, layers_dims, keep_prob=keep_prob,
-                                learning_rate=0.03, num_iterations=1000,
-                                hidden_layers_activation_fn=&quot;relu&quot;)
-
-# print the test accuracy
-print(&quot;The training accuracy rate: {}&quot;.format(accuracy(X_train, parameters, Y_train, &quot;relu&quot;)[-7:]))
-print(&quot;The test accuracy rate: {}&quot;.format(accuracy(X_test, parameters, Y_test, &quot;relu&quot;)[-7:]))
-</code></pre>
-
-<pre><code>The cost after 100 iterations : 0.6555.
+<p>Now, we&rsquo;ll write the functions needed to apply dropout on both forward propagation and back-propagation. Note that we&rsquo;ll utilize the functions we wrote in previous posts such as <code>initialize_parameters</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drop_out_matrices</span>(layers_dims, m, keep_prob):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    D <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(layers_dims)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(L):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># initialize the random values for the dropout matrix</span>
+</span></span><span style="display:flex;"><span>        D[str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(layers_dims[l], m)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Convert it to 0/1 to shut down neurons corresponding to each element</span>
+</span></span><span style="display:flex;"><span>        D[str(l)] <span style="color:#f92672">=</span> D[str(l)] <span style="color:#f92672">&lt;</span> keep_prob[l]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span>(D[str(l)]<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> (layers_dims[l], m))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> D
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">L_model_forward</span>(
+</span></span><span style="display:flex;"><span>        X, parameters, D, keep_prob, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X                           <span style="color:#75715e"># since input matrix A0</span>
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(A, D[str(<span style="color:#ae81ff">0</span>)])
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">/=</span> keep_prob[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    caches <span style="color:#f92672">=</span> []                     <span style="color:#75715e"># initialize the caches list</span>
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(parameters) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>        <span style="color:#75715e"># number of layer in the network</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>        A_prev <span style="color:#f92672">=</span> A
+</span></span><span style="display:flex;"><span>        A, cache <span style="color:#f92672">=</span> linear_activation_forward(
+</span></span><span style="display:flex;"><span>            A_prev, parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)], parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)],
+</span></span><span style="display:flex;"><span>            hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># shut down some units</span>
+</span></span><span style="display:flex;"><span>        A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(A, D[str(l)])
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># scale that value of units to keep expected value the same</span>
+</span></span><span style="display:flex;"><span>        A <span style="color:#f92672">/=</span> keep_prob[l]
+</span></span><span style="display:flex;"><span>        caches<span style="color:#f92672">.</span>append(cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    AL, cache <span style="color:#f92672">=</span> linear_activation_forward(
+</span></span><span style="display:flex;"><span>        A, parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(L)], parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(L)], <span style="color:#e6db74">&#34;sigmoid&#34;</span>)
+</span></span><span style="display:flex;"><span>    AL <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(AL, D[str(L)])
+</span></span><span style="display:flex;"><span>    AL <span style="color:#f92672">/=</span> keep_prob[L]
+</span></span><span style="display:flex;"><span>    caches<span style="color:#f92672">.</span>append(cache)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span>(AL<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> (<span style="color:#ae81ff">1</span>, X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> AL, caches
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">L_model_backward</span>(
+</span></span><span style="display:flex;"><span>        AL, Y, caches, D, keep_prob, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    Y <span style="color:#f92672">=</span> Y<span style="color:#f92672">.</span>reshape(AL<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(caches)
+</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># dA for output layer</span>
+</span></span><span style="display:flex;"><span>    dAL <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>divide(AL <span style="color:#f92672">-</span> Y, np<span style="color:#f92672">.</span>multiply(AL, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> AL))
+</span></span><span style="display:flex;"><span>    dAL <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(dAL, D[str(L)])
+</span></span><span style="display:flex;"><span>    dAL <span style="color:#f92672">/=</span> keep_prob[L]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)], grads[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(L)], grads[
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(L)] <span style="color:#f92672">=</span> linear_activation_backward(
+</span></span><span style="display:flex;"><span>            dAL, caches[L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34;sigmoid&#34;</span>)
+</span></span><span style="display:flex;"><span>    grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)], D[str(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)])
+</span></span><span style="display:flex;"><span>    grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)] <span style="color:#f92672">/=</span> keep_prob[L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        current_cache <span style="color:#f92672">=</span> caches[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)], grads[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(l)], grads[
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> linear_activation_backward(
+</span></span><span style="display:flex;"><span>                grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l)], current_cache,
+</span></span><span style="display:flex;"><span>                hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(
+</span></span><span style="display:flex;"><span>            grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)], D[str(l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)])
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)] <span style="color:#f92672">/=</span> keep_prob[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> grads
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">model_with_dropout</span>(
+</span></span><span style="display:flex;"><span>        X, Y, layers_dims, keep_prob, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3000</span>,
+</span></span><span style="display:flex;"><span>        print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># get number of examples</span>
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># to get consistents output</span>
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># initialize parameters</span>
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> initialize_parameters(layers_dims)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># intialize cost list</span>
+</span></span><span style="display:flex;"><span>    cost_list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># implement gradient descent</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_iterations):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Initialize dropout matrices</span>
+</span></span><span style="display:flex;"><span>        D <span style="color:#f92672">=</span> drop_out_matrices(layers_dims, m, keep_prob)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># compute forward propagation</span>
+</span></span><span style="display:flex;"><span>        AL, caches <span style="color:#f92672">=</span> L_model_forward(
+</span></span><span style="display:flex;"><span>            X, parameters, D, keep_prob, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># compute regularized cost</span>
+</span></span><span style="display:flex;"><span>        cost <span style="color:#f92672">=</span> compute_cost(AL, Y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># compute gradients</span>
+</span></span><span style="display:flex;"><span>        grads <span style="color:#f92672">=</span> L_model_backward(
+</span></span><span style="display:flex;"><span>            AL, Y, caches, D, keep_prob, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># update parameters</span>
+</span></span><span style="display:flex;"><span>        parameters <span style="color:#f92672">=</span> update_parameters(parameters, grads, learning_rate)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print cost</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> print_cost:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;The cost after </span><span style="color:#e6db74">{</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> iterations : </span><span style="color:#e6db74">{</span>cost<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># append cost</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            cost_list<span style="color:#f92672">.</span>append(cost)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># plot the cost curve</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(cost_list)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Iteration (per hundreds)&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Cost&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Cost curve for the learning rate = </span><span style="color:#e6db74">{</span>learning_rate<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span></code></pre></div><p>Finally, we&rsquo;re ready to build our neural network. First, we&rsquo;ll build one fully connected network without dropout. That is to say, <code>keep_prob = 1</code>. Next, we&rsquo;ll build another network where <code>keep_prob &lt; 1</code>. Lastly, we&rsquo;ll compare the generalization error of both networks and see how dropout technique can help us in improving our generalization error.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># setup layers dimensions, number of examples, and keep probabilities list</span>
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>keep_prob <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [m, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># train NN with no dropout</span>
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> model_with_dropout(X_train, Y_train, layers_dims, keep_prob<span style="color:#f92672">=</span>keep_prob,
+</span></span><span style="display:flex;"><span>                                learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.03</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>,
+</span></span><span style="display:flex;"><span>                                hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print the test accuracy</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;The training accuracy rate: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(accuracy(X_train, parameters, Y_train, <span style="color:#e6db74">&#34;relu&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">7</span>:]))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;The test accuracy rate: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(accuracy(X_test, parameters, Y_test, <span style="color:#e6db74">&#34;relu&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">7</span>:]))
+</span></span></code></pre></div><pre><code>The cost after 100 iterations : 0.6555.
 The cost after 200 iterations : 0.6468.
 The cost after 300 iterations : 0.6447.
 The cost after 400 iterations : 0.6442.
@@ -821,7 +824,6 @@ The cost after 1000 iterations : 0.6440.
 The training accuracy rate: 65.55%.
 The test accuracy rate: 34.00%.
 </code></pre>
-
 
 
 
@@ -845,21 +847,18 @@ The test accuracy rate: 34.00%.
 
 </figure>
 
-
-<pre><code class="language-python"># setup keep probabilities list
-keep_prob = [1, 0.5, 0.5, 1]
-
-# train NN with no dropout
-parameters = model_with_dropout(X_train, Y_train, layers_dims, keep_prob=keep_prob,
-                                learning_rate=0.03, num_iterations=1000,
-                                hidden_layers_activation_fn=&quot;relu&quot;)
-
-# print the test accuracy
-print(&quot;The training accuracy rate: {}&quot;.format(accuracy(X_train, parameters, Y_train, &quot;relu&quot;)[-7:]))
-print(&quot;The test accuracy rate: {}&quot;.format(accuracy(X_test, parameters, Y_test, &quot;relu&quot;)[-7:]))
-</code></pre>
-
-<pre><code>The cost after 100 iterations : 0.6555.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># setup keep probabilities list</span>
+</span></span><span style="display:flex;"><span>keep_prob <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># train NN with no dropout</span>
+</span></span><span style="display:flex;"><span>parameters <span style="color:#f92672">=</span> model_with_dropout(X_train, Y_train, layers_dims, keep_prob<span style="color:#f92672">=</span>keep_prob,
+</span></span><span style="display:flex;"><span>                                learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.03</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>,
+</span></span><span style="display:flex;"><span>                                hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print the test accuracy</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;The training accuracy rate: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(accuracy(X_train, parameters, Y_train, <span style="color:#e6db74">&#34;relu&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">7</span>:]))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;The test accuracy rate: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(accuracy(X_test, parameters, Y_test, <span style="color:#e6db74">&#34;relu&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">7</span>:]))
+</span></span></code></pre></div><pre><code>The cost after 100 iterations : 0.6555.
 The cost after 200 iterations : 0.6467.
 The cost after 300 iterations : 0.6445.
 The cost after 400 iterations : 0.6437.
@@ -872,7 +871,6 @@ The cost after 1000 iterations : 0.3114.
 The training accuracy rate: 74.16%.
 The test accuracy rate: 44.00%.
 </code></pre>
-
 
 
 
@@ -896,23 +894,16 @@ The test accuracy rate: 44.00%.
 
 </figure>
 
-
 <p>As the results above showed, the network with dropout improved on test accuracy rate by 30%. Note that this is just an illustrative example to show the effectiveness of the dropout technique. We chose an arbitrary probabilities in this example; however, we can tune the dropout probabilities on each layer to yield the best validation loss and accuracy.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Conclusion
-</h2>
-
+<!-- raw HTML omitted -->
 <p>Dropout is a very effective regularization technique that is used a lot in <em>Convolutional Neural Networks</em>. Below are some takeaways:</p>
-
 <ul>
-<li>Set <code>keep_prob = 1</code> when using gradient checking; otherwise, it won't work.</li>
-<li>Dropout is used only during training. Don't use it when testing/predicting new examples.</li>
+<li>Set <code>keep_prob = 1</code> when using gradient checking; otherwise, it won&rsquo;t work.</li>
+<li>Dropout is used only during training. Don&rsquo;t use it when testing/predicting new examples.</li>
 <li>The lowest the <code>keep_prob</code> $\rightarrow$ the simpler the neural network. As <code>keep_prob</code> decreases, the bias increases and the variance decreases. Therefore, layers with more neurons are expected to have lower <code>keep_prob</code> to avoid overfitting.</li>
-<li>It's computationally a cheap way to improve generalization error and help resolve overfitting.</li>
+<li>It&rsquo;s computationally a cheap way to improve generalization error and help resolve overfitting.</li>
 <li>One can tune <code>keep_prob</code> to get the best results out of the task at hand.</li>
 </ul>
-
 <p>The source code that created this post can be found <a href="https://github.com/ImadDabbura/blog-posts/blob/master/notebooks/Coding-Neural-Network-Dropout.ipynb">here</a>.
 The post is inspired by deeplearning.ai courses.</p>
 
@@ -1162,8 +1153,6 @@ The post is inspired by deeplearning.ai courses.</p>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -1248,7 +1237,7 @@ The post is inspired by deeplearning.ai courses.</p>
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1263,7 +1252,7 @@ The post is inspired by deeplearning.ai courses.</p>
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

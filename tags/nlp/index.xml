@@ -7,7 +7,7 @@
     <description>NLP</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© Imad Dabbura 2018</copyright><lastBuildDate>Thu, 22 Feb 2018 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://imaddabbura.github.io/img/icon-192.png</url>
+      <url>https://imaddabbura.github.io/img/icon.png</url>
       <title>NLP</title>
       <link>https://imaddabbura.github.io/tags/nlp/</link>
     </image>
@@ -17,52 +17,24 @@
       <link>https://imaddabbura.github.io/post/character-level-language-model/</link>
       <pubDate>Thu, 22 Feb 2018 00:00:00 +0000</pubDate>
       <guid>https://imaddabbura.github.io/post/character-level-language-model/</guid>
-      <description>&lt;!-- 
-
-
-  
-
-
-
-
-&lt;figure&gt;
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/character-level-language-model/text_sample.jpg&#34; &gt;
-
-&lt;img src=&#34;https://imaddabbura.github.io/img/character-level-language-model/text_sample.jpg&#34; &gt;
-&lt;/a&gt;
-
-
-&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
-  &lt;h4&gt;Iphone&amp;rsquo;s text suggestion.&lt;/h4&gt;
-  
-&lt;/figcaption&gt;
-
-&lt;/figure&gt;
- --&gt;
-
-&lt;p&gt;Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a &lt;strong&gt;Statistical Language Model&lt;/strong&gt;. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it&#39;s trained on. Usually &lt;strong&gt;Recurrent Neural Network (RNN)&lt;/strong&gt; models family are used to train the model due to the fact that they are very powerful and expressive in which they remember and process past information through their high dimensional hidden state units. The main goal of any language model is to learn the joint probability distribution of sequences of characters/words in a training text, i.e. trying to learn the joint probability function. For example, if we&#39;re trying to predict a sequence of $T$ words, we try to get the joint probability $P(w_1, w_2, ..., w_T)$ as big as we can which is equal to the product of all conditional probabilities $\prod_{t = 1}^T P(w_t/w_{t-1})$ at all time steps (t).&lt;/p&gt;
-
-&lt;p&gt;In this post, we&#39;ll cover the &lt;strong&gt;Character-Level Language Model&lt;/strong&gt; where almost all the concepts hold for any other language models such as word-language models. The main task of the character-level language model is to predict the next character given all previous characters in a sequence of data, i.e. generates text character by character. More formally, given a training sequence $(x^1, ... , x^T)$, the RNN uses the sequence of its output vectors $(o^1, ... , o^T)$ to obtain a sequence of predictive distributions $P(x&lt;sup&gt;t/x&lt;/sup&gt;{t-1}) = softmax(o^t)$.&lt;/p&gt;
-
-&lt;p&gt;Let&#39;s illustrate how the character-level language model works using my first name (&amp;quot;imad&amp;quot;) as an example (see figure 1 for all the details of this example).&lt;/p&gt;
-
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Have you ever wondered how Gmail automatic reply works? Or how your phone suggests next word when texting? Or even how a Neural Network can generate musical notes? The general way of generating a sequence of text is to train a model to predict the next word/character given all previous words/characters. Such model is called a &lt;strong&gt;Statistical Language Model&lt;/strong&gt;. What is a statistical language model? A statistical language model tries to capture the statistical structure (latent space) of training text it&amp;rsquo;s trained on. Usually &lt;strong&gt;Recurrent Neural Network (RNN)&lt;/strong&gt; models family are used to train the model due to the fact that they are very powerful and expressive in which they remember and process past information through their high dimensional hidden state units. The main goal of any language model is to learn the joint probability distribution of sequences of characters/words in a training text, i.e. trying to learn the joint probability function. For example, if we&amp;rsquo;re trying to predict a sequence of $T$ words, we try to get the joint probability $P(w_1, w_2, &amp;hellip;, w_T)$ as big as we can which is equal to the product of all conditional probabilities $\prod_{t = 1}^T P(w_t/w_{t-1})$ at all time steps (t).&lt;/p&gt;
+&lt;p&gt;In this post, we&amp;rsquo;ll cover the &lt;strong&gt;Character-Level Language Model&lt;/strong&gt; where almost all the concepts hold for any other language models such as word-language models. The main task of the character-level language model is to predict the next character given all previous characters in a sequence of data, i.e. generates text character by character. More formally, given a training sequence $(x^1, &amp;hellip; , x^T)$, the RNN uses the sequence of its output vectors $(o^1, &amp;hellip; , o^T)$ to obtain a sequence of predictive distributions $P(x^t/x^{t-1}) = softmax(o^t)$.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s illustrate how the character-level language model works using my first name (&amp;ldquo;imad&amp;rdquo;) as an example (see figure 1 for all the details of this example).&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;We first build a vocabulary dictionary using all the unique letters of the names in the corpus as keys and the index of each letter starting from zero (since Python is a zero-indexed language) in an ascending order. For our example, the vocabulary dictionary would be: {&amp;quot;a&amp;quot;: 0, &amp;quot;d&amp;quot;: 1, &amp;quot;i&amp;quot;: 2, &amp;quot;m&amp;quot;: 3}. Therefore, &amp;quot;imad&amp;quot; would become a list of the following integers: [2, 3, 0, 1].&lt;/li&gt;
-&lt;li&gt;Convert the input and the output characters to lists of integers using the vocabulary dictionary. In this post, we&#39;ll assume that $x^1 = \vec{0}$ for all examples. Therefore, $y = &amp;quot;imad&amp;quot;$ and $x = \vec{0}\ + &amp;quot;ima&amp;quot;$. In other words, $x^{t + 1} = y^t$ which gives us: $y = [2, 3, 0, 1]$ and $x = [\vec{0}, 2, 3, 0]$.&lt;/li&gt;
+&lt;li&gt;We first build a vocabulary dictionary using all the unique letters of the names in the corpus as keys and the index of each letter starting from zero (since Python is a zero-indexed language) in an ascending order. For our example, the vocabulary dictionary would be: {&amp;ldquo;a&amp;rdquo;: 0, &amp;ldquo;d&amp;rdquo;: 1, &amp;ldquo;i&amp;rdquo;: 2, &amp;ldquo;m&amp;rdquo;: 3}. Therefore, &amp;ldquo;imad&amp;rdquo; would become a list of the following integers: [2, 3, 0, 1].&lt;/li&gt;
+&lt;li&gt;Convert the input and the output characters to lists of integers using the vocabulary dictionary. In this post, we&amp;rsquo;ll assume that $x^1 = \vec{0}$ for all examples. Therefore, $y = &amp;ldquo;imad&amp;rdquo;$ and $x = \vec{0}\ + &amp;ldquo;ima&amp;rdquo;$. In other words, $x^{t + 1} = y^t$ which gives us: $y = [2, 3, 0, 1]$ and $x = [\vec{0}, 2, 3, 0]$.&lt;/li&gt;
 &lt;li&gt;For each character in the input:
-
 &lt;ol&gt;
 &lt;li&gt;Convert the input characters into one-hot vectors. Notice how the first character $x^1 = \vec{0}$.&lt;/li&gt;
 &lt;li&gt;Compute the hidden state layer.&lt;/li&gt;
 &lt;li&gt;Compute the output layer and then pass it through softmax to get the results as probabilities.&lt;/li&gt;
 &lt;li&gt;Feed the target character at time step (t) as the input character at time step $(t + 1)$.&lt;/li&gt;
 &lt;li&gt;Go back to step A and repeat until we finish all the letters in the name.&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;The objective is to make the green numbers as big as we can and the red numbers as small as we can in the probability distribution layer. The reason is that the true index should have the highest probability by making it as close as we can to 1. The way to do that is to measure the loss using cross-entropy and then compute the gradients of the loss w.r.t. all parameters to update them in the opposite of the gradient direction. Repeating the process over many times where each time we adjust the parameters based on the gradient direction --&amp;gt; model will be able to correctly predict next characters given all previous ones using all names in the training text. Notice that hidden state $h^4$ has all past information about all characters.&lt;/p&gt;
-
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The objective is to make the green numbers as big as we can and the red numbers as small as we can in the probability distribution layer. The reason is that the true index should have the highest probability by making it as close as we can to 1. The way to do that is to measure the loss using cross-entropy and then compute the gradients of the loss w.r.t. all parameters to update them in the opposite of the gradient direction. Repeating the process over many times where each time we adjust the parameters based on the gradient direction &amp;ndash;&amp;gt; model will be able to correctly predict next characters given all previous ones using all names in the training text. Notice that hidden state $h^4$ has all past information about all characters.&lt;/p&gt;
 
 
 
@@ -86,14 +58,9 @@
 
 &lt;/figure&gt;
 
-
-&lt;p&gt;&lt;em&gt;Note&lt;/em&gt;: To shorten the length of the post, I deleted all the docstrings of python functions and I didn&#39;t include some functions that i didn&#39;t think are necessary to understand the main concepts. The notebook and the script that created this post can be found &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/ImadDabbura/blog-posts/blob/master/scripts/character_level_language_model.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
-Training&lt;/h2&gt;
-
-&lt;p&gt;The &lt;a href=&#34;http://deron.meranda.us/data/census-derived-all-first.txt&#34;&gt;dataset&lt;/a&gt; we&#39;ll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we&#39;ll be using to train the character-level language model is called &lt;strong&gt;many to many&lt;/strong&gt; where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 2).&lt;/p&gt;
-
+&lt;p&gt;&lt;em&gt;Note&lt;/em&gt;: To shorten the length of the post, I deleted all the docstrings of python functions and I didn&amp;rsquo;t include some functions that i didn&amp;rsquo;t think are necessary to understand the main concepts. The notebook and the script that created this post can be found &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://github.com/ImadDabbura/blog-posts/blob/master/scripts/character_level_language_model.py&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;The &lt;a href=&#34;http://deron.meranda.us/data/census-derived-all-first.txt&#34;&gt;dataset&lt;/a&gt; we&amp;rsquo;ll be using has 5,163 names: 4,275 male names, 1,219 female names, and 331 names that can be both female and male names. The RNN architecture we&amp;rsquo;ll be using to train the character-level language model is called &lt;strong&gt;many to many&lt;/strong&gt; where time steps of the input $(T_x)$ = time steps of the output $(T_y)$. In other words, the sequence of the input and output are synced (see figure 2).&lt;/p&gt;
 
 
 
@@ -117,131 +84,112 @@ Training&lt;/h2&gt;
 
 &lt;/figure&gt;
 
-
-&lt;p&gt;The character-level language model will be trained on names; which means after we&#39;re done with training the model, we&#39;ll be able to generate some interesting names :).&lt;/p&gt;
-
-&lt;p&gt;In this section, we&#39;ll go over four main parts:&lt;/p&gt;
-
+&lt;p&gt;The character-level language model will be trained on names; which means after we&amp;rsquo;re done with training the model, we&amp;rsquo;ll be able to generate some interesting names :).&lt;/p&gt;
+&lt;p&gt;In this section, we&amp;rsquo;ll go over four main parts:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#fwd_prop&#34;&gt;Forward propagation&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#bckwrd_prop&#34;&gt;Backpropagation&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#sampling&#34;&gt;Sampling&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#train&#34;&gt;Fitting the model&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;&lt;a id=&#39;fwd_prop&#39;&gt;&lt;/a&gt;
-&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
-Forward Propagation&lt;/h3&gt;&lt;/p&gt;
-
-&lt;p&gt;We&#39;ll be using Stochastic Gradient Descent (SGD) where each batch consists of only one example. In other words, the RNN model will learn from each example (name) separately, i.e. run both forward and backward passes on each example and update parameters accordingly. Below are all the steps needed for a forward pass:&lt;/p&gt;
-
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;We&amp;rsquo;ll be using Stochastic Gradient Descent (SGD) where each batch consists of only one example. In other words, the RNN model will learn from each example (name) separately, i.e. run both forward and backward passes on each example and update parameters accordingly. Below are all the steps needed for a forward pass:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Create a vocabulary dictionary using the unique lower case letters.&lt;/p&gt;
-
+&lt;li&gt;
+&lt;p&gt;Create a vocabulary dictionary using the unique lower case letters.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Create a character to index dictionary that maps each character to its corresponding index in an ascending order. For example, &amp;quot;a&amp;quot; would have index 1 (since python is a zero index language and we&#39;ll reserve 0 index to EOS &amp;quot;\n&amp;quot;) and &amp;quot;z&amp;quot; would have index 26. We will use this dictionary in converting names into lists of integers where each letter will be represented as one-hot vector.&lt;/li&gt;
+&lt;li&gt;Create a character to index dictionary that maps each character to its corresponding index in an ascending order. For example, &amp;ldquo;a&amp;rdquo; would have index 1 (since python is a zero index language and we&amp;rsquo;ll reserve 0 index to EOS &amp;ldquo;\n&amp;rdquo;) and &amp;ldquo;z&amp;rdquo; would have index 26. We will use this dictionary in converting names into lists of integers where each letter will be represented as one-hot vector.&lt;/li&gt;
 &lt;li&gt;Create an index to character dictionary that maps indices to characters. This dictionary will be used to convert the output of the RNN model into characters which will be translated into names.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Initialize parameters: weights will be initialized to small random numbers from standard normal distribution to break symmetry and make sure different hidden units learn different things. On the other hand, biases will be initialized to zeros.&lt;/p&gt;
-
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Initialize parameters: weights will be initialized to small random numbers from standard normal distribution to break symmetry and make sure different hidden units learn different things. On the other hand, biases will be initialized to zeros.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;$W_{hh}$: weight matrix connecting previous hidden state $h^{t - 1}$ to current hidden state $h^t$.&lt;/li&gt;
 &lt;li&gt;$W_{xh}$: weight matrix connecting input $x^t$ to hidden state $h^t$.&lt;/li&gt;
 &lt;li&gt;$b$: hidden state bias vector.&lt;/li&gt;
 &lt;li&gt;$W_{hy}$: weight matrix connecting hidden state $h^t$ to output $o^t$.&lt;/li&gt;
 &lt;li&gt;$c$: output bias vector.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Convert input $x^t$ and output $y^t$ into one-hot vector each. The dimension of the one-hot vector is vocab_size x 1. Everything will be zero except for the index of the letter at (t) would be 1. In our case, $x^t$ would be the same as $y^t$ shifted to the left where $x^1 = \vec{0}$; however, starting from $t = 2$, $x^{t + 1} = y^{t}$. For example, if we use &amp;quot;imad&amp;quot; as the input, then $y = [3, 4, 1, 2, 0]$ while $x = [\vec{0}, 3, 4, 1, 2]$. Notice that $x^1 = \vec{0}$ and not the index 0. Moreover, we&#39;re using &amp;quot;\n&amp;quot; as EOS (end of sentence/name) for each name so that the RNN learns &amp;quot;\n&amp;quot; as any other character. This will help the network learn when to to stop generating characters. Therefore, the last target character for all names will be &amp;quot;\n&amp;quot; that represents the end of the name.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Compute the hidden state using the following formula:&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(h^t = tanh(W_{hh}h^{t - 1} + W_{xh}x^t + b)\tag{1}\)&lt;/span&gt;
-Notice that we use hyperbolic tangent $(\frac{e^x - e&lt;sup&gt;{-x}}{e&lt;/sup&gt;x + e^{-x}})$ as the non-linear function. One of the main advantages of the hyperbolic tangent function is that it resembles the identity function.&lt;/p&gt;
-
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Convert input $x^t$ and output $y^t$ into one-hot vector each. The dimension of the one-hot vector is vocab_size x 1. Everything will be zero except for the index of the letter at (t) would be 1. In our case, $x^t$ would be the same as $y^t$ shifted to the left where $x^1 = \vec{0}$; however, starting from $t = 2$, $x^{t + 1} = y^{t}$. For example, if we use &amp;ldquo;imad&amp;rdquo; as the input, then $y = [3, 4, 1, 2, 0]$ while $x = [\vec{0}, 3, 4, 1, 2]$. Notice that $x^1 = \vec{0}$ and not the index 0. Moreover, we&amp;rsquo;re using &amp;ldquo;\n&amp;rdquo; as EOS (end of sentence/name) for each name so that the RNN learns &amp;ldquo;\n&amp;rdquo; as any other character. This will help the network learn when to to stop generating characters. Therefore, the last target character for all names will be &amp;ldquo;\n&amp;rdquo; that represents the end of the name.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Compute the hidden state using the following formula:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$h^t = tanh(W_{hh}h^{t - 1} + W_{xh}x^t + b)\tag{1}$$
+Notice that we use hyperbolic tangent $(\frac{e^x - e^{-x}}{e^x + e^{-x}})$ as the non-linear function. One of the main advantages of the hyperbolic tangent function is that it resembles the identity function.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Compute the output layer using the following formula:&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[o^t = W_{hy}h^{t} + c \tag{2}\]&lt;/span&gt;&lt;/p&gt;
-
+&lt;p&gt;$$o^t = W_{hy}h^{t} + c \tag{2}$$&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Pass the output through softmax layer to normalize the output that allows us to express it as a probability, i.e. all output will be between 0 and 1 and sum up to 1. Below is the softmax formula:&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\widehat{y^t} = \frac{e^{o^t}}{\sum_ie^{o_i^t}}\tag{3}\)&lt;/span&gt;
+&lt;p&gt;$$\widehat{y^t} = \frac{e^{o^t}}{\sum_ie^{o_i^t}}\tag{3}$$
 The softmax layer has the same dimension as the output layer which is vocab_size x 1. As a result, $y^t[i]$ is the probability of index $i$ being the next character at time step (t).&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;As mentioned before, the objective of a character-level language model is to minimize the negative log-likelihood of the training sequence. Therefore, the loss function at time step (t) and the total loss across all time steps are:&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[\mathcal{L}^t = -\sum_{i = 1}^{T_y}y^tlog\widehat{y^t}\tag{4}\]&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\mathcal{L} = \sum_{t = 1}^{T_y}\mathcal{L}^t(\widehat{y^t}, y^t)\tag{5}\)&lt;/span&gt;
-Since we&#39;ll be using SGD, the loss will be noisy and have many oscillations, so it&#39;s a good practice to smooth out the loss using exponential weighted average.&lt;/p&gt;
-
+&lt;p&gt;$$\mathcal{L}^t = -\sum_{i = 1}^{T_y}y^tlog\widehat{y^t}\tag{4}$$&lt;/p&gt;
+&lt;p&gt;$$\mathcal{L} = \sum_{t = 1}^{T_y}\mathcal{L}^t(\widehat{y^t}, y^t)\tag{5}$$
+Since we&amp;rsquo;ll be using SGD, the loss will be noisy and have many oscillations, so it&amp;rsquo;s a good practice to smooth out the loss using exponential weighted average.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Pass the target character $y^t$ as the next input $x^{t + 1}$ until we finish the sequence.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Load packages
-import os
-
-import numpy as np
-
-os.chdir(&amp;quot;../scripts/&amp;quot;)
-from character_level_language_model import (initialize_parameters,
-                                            initialize_rmsprop,
-                                            softmax,
-                                            smooth_loss,
-                                            update_parameters_with_rmsprop)
-
-
-def rnn_forward(x, y, h_prev, parameters):
-    &amp;quot;&amp;quot;&amp;quot;Implement one Forward pass on one name.&amp;quot;&amp;quot;&amp;quot;
-    # Retrieve parameters
-    Wxh, Whh, b = parameters[&amp;quot;Wxh&amp;quot;], parameters[&amp;quot;Whh&amp;quot;], parameters[&amp;quot;b&amp;quot;]
-    Why, c = parameters[&amp;quot;Why&amp;quot;], parameters[&amp;quot;c&amp;quot;]
-
-    # Initialize inputs, hidden state, output, and probabilities dictionaries
-    xs, hs, os, probs = {}, {}, {}, {}
-
-    # Initialize x0 to zero vector
-    xs[0] = np.zeros((vocab_size, 1))
-
-    # Initialize loss and assigns h_prev to last hidden state in hs
-    loss = 0
-    hs[-1] = np.copy(h_prev)
-
-    # Forward pass: loop over all characters of the name
-    for t in range(len(x)):
-        # Convert to one-hot vector
-        if t &amp;gt; 0:
-            xs[t] = np.zeros((vocab_size, 1))
-            xs[t][x[t]] = 1
-        # Hidden state
-        hs[t] = np.tanh(np.dot(Wxh, xs[t]) + np.dot(Whh, hs[t - 1]) + b)
-        # Logits
-        os[t] = np.dot(Why, hs[t]) + c
-        # Probs
-        probs[t] = softmax(os[t])
-        # Loss
-        loss -= np.log(probs[t][y[t], 0])
-
-    cache = (xs, hs, probs)
-
-    return loss, cache
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a id=&#39;bckwrd_prop&#39;&gt;&lt;/a&gt;
-&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
-Backpropagation&lt;/h3&gt;&lt;/p&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Load packages&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;chdir(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;../scripts/&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; character_level_language_model &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (initialize_parameters,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                            initialize_rmsprop,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                            softmax,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                            smooth_loss,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                            update_parameters_with_rmsprop)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rnn_forward&lt;/span&gt;(x, y, h_prev, parameters):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;Implement one Forward pass on one name.&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Retrieve parameters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Wxh, Whh, b &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Wxh&amp;#34;&lt;/span&gt;], parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Whh&amp;#34;&lt;/span&gt;], parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;b&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Why, c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Why&amp;#34;&lt;/span&gt;], parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;c&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize inputs, hidden state, output, and probabilities dictionaries&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xs, hs, os, probs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {}, {}, {}, {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize x0 to zero vector&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xs[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((vocab_size, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize loss and assigns h_prev to last hidden state in hs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    hs[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy(h_prev)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Forward pass: loop over all characters of the name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(x)):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Convert to one-hot vector&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            xs[t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((vocab_size, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            xs[t][x[t]] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Hidden state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        hs[t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;tanh(np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(Wxh, xs[t]) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(Whh, hs[t &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; b)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Logits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        os[t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(Why, hs[t]) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; c
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Probs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        probs[t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; softmax(os[t])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log(probs[t][y[t], &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cache &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (xs, hs, probs)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; loss, cache
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;With RNN based models, the gradient-based technique that will be used is called &lt;strong&gt;Backpropagation Through Time (BPTT)&lt;/strong&gt;. We start at last time step $T$ and backpropagate loss function w.r.t. all parameters across all time steps and sum them up (see figure 4).&lt;/p&gt;
-
 
 
 
@@ -265,80 +213,69 @@ Backpropagation&lt;/h3&gt;&lt;/p&gt;
 
 &lt;/figure&gt;
 
-
-&lt;p&gt;In addition, since RNNs are known to have steep cliffs (sudden steep decrease in $\mathcal{L}$), gradients may overshoot the minimum and undo a lot of the work that was done even if we are using adaptive learning methods such as RMSProp. The reason is because gradient is a linear approximation of the loss function and may not capture information further than the point it was evaluated on such as the curvature of loss curve. Therefore, it&#39;s a common practice to clip the gradients to be in the interval . For this exercise, we&#39;ll clip the gradients to be in the interval . That means if the gradient is &amp;gt; 5 or &amp;lt; -5, it would be clipped to 5 and -5 respectively. Below are all the formulas needed to compute the gradients w.r.t. all parameters at all time steps.&lt;/p&gt;
-
-&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\nabla_{o^t}\mathcal{L} = \widehat{y^t} - y^t\tag{6}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{W_{hy}}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} . {h^t}^T\tag{7}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{c}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} \tag{8}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{h^t}\mathcal{L} = W_{hy}^T . \nabla_{o^t}\mathcal{L} + \underbrace { W_{hh}^T . \nabla_{h^{t + 1}}\mathcal{L} * (1 - tanh(W_{hh}h^{t} + W_{xh}x^{t + 1} + b) ^ 2)}_{dh_{next}} \tag{9}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{h^{t - 1}}\mathcal{L} = W_{hh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2)\tag{10}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{x^t}\mathcal{L} = W_{xh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2)\tag{11}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{W_{hh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {h^{t - 1}}^T\tag{12}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{W_{xh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {x^t}^T\tag{13}\)&lt;/span&gt;
-&lt;span  class=&#34;math&#34;&gt;\(\nabla_{b}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2) \tag{14}\)&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Note that at last time step $T$, we&#39;ll initialize $dh_{next}$  to zeros since we can&#39;t get values from future. To stabilize the update at each time step since SGD may have so many oscillations, we&#39;ll be using one of the adaptive learning method optimizers. More specifically, we&#39;ll use &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/Deep-Learning/blob/master/notebooks/Optimization-Algorithms.ipynb&#34;&gt;Root Mean Squared Propagation (RMSProp)&lt;/a&gt; which tends to have acceptable performance.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def clip_gradients(gradients, max_value):
-    &amp;quot;&amp;quot;&amp;quot;
-    Implements gradient clipping element-wise on gradients to be between the
-    interval [-max_value, max_value].
-    &amp;quot;&amp;quot;&amp;quot;
-    for grad in gradients.keys():
-        np.clip(gradients[grad], -max_value, max_value, out=gradients[grad])
-
-    return gradients
-
-
-def rnn_backward(y, parameters, cache):
-    &amp;quot;&amp;quot;&amp;quot;
-    Implements Backpropagation on one name.
-    &amp;quot;&amp;quot;&amp;quot;
-    # Retrieve xs, hs, and probs
-    xs, hs, probs = cache
-
-    # Initialize all gradients to zero
-    dh_next = np.zeros_like(hs[0])
-
-    parameters_names = [&amp;quot;Whh&amp;quot;, &amp;quot;Wxh&amp;quot;, &amp;quot;b&amp;quot;, &amp;quot;Why&amp;quot;, &amp;quot;c&amp;quot;]
-    grads = {}
-    for param_name in parameters_names:
-        grads[&amp;quot;d&amp;quot; + param_name] = np.zeros_like(parameters[param_name])
-
-    # Iterate over all time steps in reverse order starting from Tx
-    for t in reversed(range(len(xs))):
-        dy = np.copy(probs[t])
-        dy[y[t]] -= 1
-        grads[&amp;quot;dWhy&amp;quot;] += np.dot(dy, hs[t].T)
-        grads[&amp;quot;dc&amp;quot;] += dy
-        dh = np.dot(parameters[&amp;quot;Why&amp;quot;].T, dy) + dh_next
-        dhraw = (1 - hs[t] ** 2) * dh
-        grads[&amp;quot;dWhh&amp;quot;] += np.dot(dhraw, hs[t - 1].T)
-        grads[&amp;quot;dWxh&amp;quot;] += np.dot(dhraw, xs[t].T)
-        grads[&amp;quot;db&amp;quot;] += dhraw
-        dh_next = np.dot(parameters[&amp;quot;Whh&amp;quot;].T, dhraw)
-        # Clip the gradients using [-5, 5] as the interval
-        grads = clip_gradients(grads, 5)
-    
-    # Get the last hidden state
-    h_prev = hs[len(xs) - 1]
-
-    return grads, h_prev
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a id=&#39;sampling&#39;&gt;&lt;/a&gt;
-&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
-Sampling&lt;/h3&gt;&lt;br&gt;
-Sampling is what makes the text generated by the RNN at each time step an interesting/creative text. On each time step (t), the RNN output the conditional probability distribution of the next character given all the previous characters, i.e. $P(c_t/c_1, c_2, ..., c_{t-1})$. Let&#39;s assume that we are at time step $t = 3$ and we&#39;re trying to predict the third character, the conditional probability distribution is: $P(c_3/c_1, c_2) = (0.2, 0.3, 0.4, 0.1)$. We&#39;ll have two extremes:&lt;/p&gt;
-
+&lt;p&gt;In addition, since RNNs are known to have steep cliffs (sudden steep decrease in $\mathcal{L}$), gradients may overshoot the minimum and undo a lot of the work that was done even if we are using adaptive learning methods such as RMSProp. The reason is because gradient is a linear approximation of the loss function and may not capture information further than the point it was evaluated on such as the curvature of loss curve. Therefore, it&amp;rsquo;s a common practice to clip the gradients to be in the interval [-maxValue, maxValue]. For this exercise, we&amp;rsquo;ll clip the gradients to be in the interval [-5, 5]. That means if the gradient is &amp;gt; 5 or &amp;lt; -5, it would be clipped to 5 and -5 respectively. Below are all the formulas needed to compute the gradients w.r.t. all parameters at all time steps.&lt;/p&gt;
+&lt;p&gt;$$\nabla_{o^t}\mathcal{L} = \widehat{y^t} - y^t\tag{6}$$
+$$\nabla_{W_{hy}}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} . {h^t}^T\tag{7}$$
+$$\nabla_{c}\mathcal{L} = \sum_t \nabla_{o^t}\mathcal{L} \tag{8}$$
+$$\nabla_{h^t}\mathcal{L} = W_{hy}^T . \nabla_{o^t}\mathcal{L} + \underbrace { W_{hh}^T . \nabla_{h^{t + 1}}\mathcal{L} * (1 - tanh(W_{hh}h^{t} + W_{xh}x^{t + 1} + b) ^ 2)}&lt;em&gt;{dh&lt;/em&gt;{next}} \tag{9}$$
+$$\nabla_{h^{t - 1}}\mathcal{L} = W_{hh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2)\tag{10}$$
+$$\nabla_{x^t}\mathcal{L} = W_{xh}^T . \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2)\tag{11}$$
+$$\nabla_{W_{hh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {h^{t - 1}}^T\tag{12}$$
+$$\nabla_{W_{xh}}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(W_{hh}h^{t-1} + W_{xh}x^t + b) ^ 2) . {x^t}^T\tag{13}$$
+$$\nabla_{b}\mathcal{L} = \sum_t \nabla_{h^t}\mathcal{L} * (1 - tanh(h^t) ^ 2) \tag{14}$$&lt;/p&gt;
+&lt;p&gt;Note that at last time step $T$, we&amp;rsquo;ll initialize $dh_{next}$  to zeros since we can&amp;rsquo;t get values from future. To stabilize the update at each time step since SGD may have so many oscillations, we&amp;rsquo;ll be using one of the adaptive learning method optimizers. More specifically, we&amp;rsquo;ll use &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/Deep-Learning/blob/master/notebooks/Optimization-Algorithms.ipynb&#34;&gt;Root Mean Squared Propagation (RMSProp)&lt;/a&gt; which tends to have acceptable performance.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;clip_gradients&lt;/span&gt;(gradients, max_value):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Implements gradient clipping element-wise on gradients to be between the
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    interval [-max_value, max_value].
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; grad &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; gradients&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;keys():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;clip(gradients[grad], &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;max_value, max_value, out&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;gradients[grad])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; gradients
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;rnn_backward&lt;/span&gt;(y, parameters, cache):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Implements Backpropagation on one name.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Retrieve xs, hs, and probs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xs, hs, probs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cache
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize all gradients to zero&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dh_next &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros_like(hs[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parameters_names &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Whh&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Wxh&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;b&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Why&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;c&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    grads &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; param_name &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; parameters_names:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;d&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; param_name] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros_like(parameters[param_name])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Iterate over all time steps in reverse order starting from Tx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; t &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; reversed(range(len(xs))):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        dy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy(probs[t])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        dy[y[t]] &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dWhy&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(dy, hs[t]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;T)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dc&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; dy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        dh &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Why&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;T, dy) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; dh_next
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        dhraw &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; hs[t] &lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; dh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dWhh&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(dhraw, hs[t &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;T)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dWxh&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(dhraw, xs[t]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;T)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;db&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; dhraw
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        dh_next &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Whh&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;T, dhraw)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Clip the gradients using [-5, 5] as the interval&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        grads &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; clip_gradients(grads, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Get the last hidden state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    h_prev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hs[len(xs) &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; grads, h_prev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
 &lt;ol&gt;
-&lt;li&gt;Maximum entropy: the character will be picked randomly using uniform probability distribution; which means that all characters in the vocabulary dictionary are equally likely. Therefore, we&#39;ll end up with maximum randomness in picking the next character and the generated text will not be either meaningful or sound real.&lt;/li&gt;
+&lt;li&gt;Maximum entropy: the character will be picked randomly using uniform probability distribution; which means that all characters in the vocabulary dictionary are equally likely. Therefore, we&amp;rsquo;ll end up with maximum randomness in picking the next character and the generated text will not be either meaningful or sound real.&lt;/li&gt;
 &lt;li&gt;Minimum entropy: the character with the highest conditional probability will be picked on each time step. That means next character will be what the model estimates to be the right one based on the training text and learned parameters. As a result, the names generated will be both meaningful and sound real. However, it will also be repetitive and not as interesting since all the parameters were optimized to learn joint probability distribution in predicting the next character.&lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;p&gt;As we increase randomness, text will lose local structure; however, as we decrease randomness, the generated text will sound more real and start to preserve its local structure. For this exercise, we will sample from the distribution that&#39;s generated by the model which can be seen as an intermediate level of randomness between maximum and minimum entropy (see figure 5). Using this sampling strategy on the above distribution, the index 0 has $20$% probability of being picked, while index 2 has $40$% probability to be picked.&lt;/p&gt;
-
+&lt;p&gt;As we increase randomness, text will lose local structure; however, as we decrease randomness, the generated text will sound more real and start to preserve its local structure. For this exercise, we will sample from the distribution that&amp;rsquo;s generated by the model which can be seen as an intermediate level of randomness between maximum and minimum entropy (see figure 5). Using this sampling strategy on the above distribution, the index 0 has $20$% probability of being picked, while index 2 has $40$% probability to be picked.&lt;/p&gt;
 
 
 
@@ -362,142 +299,130 @@ Sampling is what makes the text generated by the RNN at each time step an intere
 
 &lt;/figure&gt;
 
-
 &lt;p&gt;Therefore, sampling will be used at test time to generate names character by character.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def sample(parameters, idx_to_chars, chars_to_idx, n):
-    &amp;quot;&amp;quot;&amp;quot;
-    Implements sampling of a squence of n characters characters length. The
-    sampling will be based on the probability distribution output of RNN.
-    &amp;quot;&amp;quot;&amp;quot;
-    # Retrienve parameters, shapes, and vocab size
-    Whh, Wxh, b = parameters[&amp;quot;Whh&amp;quot;], parameters[&amp;quot;Wxh&amp;quot;], parameters[&amp;quot;b&amp;quot;]
-    Why, c = parameters[&amp;quot;Why&amp;quot;], parameters[&amp;quot;c&amp;quot;]
-    n_h, n_x = Wxh.shape
-    vocab_size = c.shape[0]
-
-    # Initialize a0 and x1 to zero vectors
-    h_prev = np.zeros((n_h, 1))
-    x = np.zeros((n_x, 1))
-
-    # Initialize empty sequence
-    indices = []
-    idx = -1
-    counter = 0
-    while (counter &amp;lt;= n and idx != chars_to_idx[&amp;quot;\n&amp;quot;]):
-        # Fwd propagation
-        h = np.tanh(np.dot(Whh, h_prev) + np.dot(Wxh, x) + b)
-        o = np.dot(Why, h) + c
-        probs = softmax(o)
-
-        # Sample the index of the character using generated probs distribution
-        idx = np.random.choice(vocab_size, p=probs.ravel())
-
-        # Get the character of the sampled index
-        char = idx_to_chars[idx]
-
-        # Add the char to the sequence
-        indices.append(idx)
-
-        # Update a_prev and x
-        h_prev = np.copy(h)
-        x = np.zeros((n_x, 1))
-        x[idx] = 1
-
-        counter += 1
-    sequence = &amp;quot;&amp;quot;.join([idx_to_chars[idx] for idx in indices if idx != 0])
-
-    return sequence
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a id=&#39;train&#39;&gt;&lt;/a&gt;
-&lt;h3 style=&#34;font-family: Georgia; font-size:1.5em;color:purple; font-style:bold&#34;&gt;
-Fitting the model&lt;/h3&gt;&lt;br&gt;
-After covering all the concepts/intuitions behind character-level language model, now we&#39;re ready to fit the model. We&#39;ll use the default settings for RMSProp&#39;s hyperparameters and run the model for 100 iterations. On each iteration, we&#39;ll print out one sampled name and smoothed loss to see how the names generated start to get more interesting with more iterations as well as the loss will start decreasing. When done with fitting the model, we&#39;ll plot the loss function and generate some names.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def model(
-        file_path, chars_to_idx, idx_to_chars, hidden_layer_size, vocab_size,
-        num_epochs=10, learning_rate=0.01):
-    &amp;quot;&amp;quot;&amp;quot;Implements RNN to generate characters.&amp;quot;&amp;quot;&amp;quot;
-    # Get the data
-    with open(file_path) as f:
-        data = f.readlines()
-    examples = [x.lower().strip() for x in data]
-
-    # Initialize parameters
-    parameters = initialize_parameters(vocab_size, hidden_layer_size)
-
-    # Initialize Adam parameters
-    s = initialize_rmsprop(parameters)
-
-    # Initialize loss
-    smoothed_loss = -np.log(1 / vocab_size) * 7
-
-    # Initialize hidden state h0 and overall loss
-    h_prev = np.zeros((hidden_layer_size, 1))
-    overall_loss = []
-
-    # Iterate over number of epochs
-    for epoch in range(num_epochs):
-        print(f&amp;quot;\033[1m\033[94mEpoch {epoch}&amp;quot;)
-        print(f&amp;quot;\033[1m\033[92m=======&amp;quot;)
-
-        # Sample one name
-        print(f&amp;quot;&amp;quot;&amp;quot;Sampled name: {sample(parameters, idx_to_chars, chars_to_idx,
-            10).capitalize()}&amp;quot;&amp;quot;&amp;quot;)
-        print(f&amp;quot;Smoothed loss: {smoothed_loss:.4f}\n&amp;quot;)
-
-        # Shuffle examples
-        np.random.shuffle(examples)
-
-        # Iterate over all examples (SGD)
-        for example in examples:
-            x = [None] + [chars_to_idx[char] for char in example]
-            y = x[1:] + [chars_to_idx[&amp;quot;\n&amp;quot;]]
-            # Fwd pass
-            loss, cache = rnn_forward(x, y, h_prev, parameters)
-            # Compute smooth loss
-            smoothed_loss = smooth_loss(smoothed_loss, loss)
-            # Bwd pass
-            grads, h_prev = rnn_backward(y, parameters, cache)
-            # Update parameters
-            parameters, s = update_parameters_with_rmsprop(
-                parameters, grads, s)
-
-        overall_loss.append(smoothed_loss)
-
-    return parameters, overall_loss
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Load names
-data = open(&amp;quot;../data/names.txt&amp;quot;, &amp;quot;r&amp;quot;).read()
-
-# Convert characters to lower case
-data = data.lower()
-
-# Construct vocabulary using unique characters, sort it in ascending order,
-# then construct two dictionaries that maps character to index and index to
-# characters.
-chars = list(sorted(set(data)))
-chars_to_idx = {ch:i for i, ch in enumerate(chars)}
-idx_to_chars = {i:ch for ch, i in chars_to_idx.items()}
-
-# Get the size of the data and vocab size
-data_size = len(data)
-vocab_size = len(chars_to_idx)
-print(f&amp;quot;There are {data_size} characters and {vocab_size} unique characters.&amp;quot;)
-
-# Fitting the model
-parameters, loss = model(&amp;quot;../data/names.txt&amp;quot;, chars_to_idx, idx_to_chars, 100, vocab_size, 100, 0.01)
-
-# Plotting the loss
-plt.plot(range(len(loss)), loss)
-plt.xlabel(&amp;quot;Epochs&amp;quot;)
-plt.ylabel(&amp;quot;Smoothed loss&amp;quot;);
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;There are 36121 characters and 27 unique characters.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sample&lt;/span&gt;(parameters, idx_to_chars, chars_to_idx, n):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    Implements sampling of a squence of n characters characters length. The
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    sampling will be based on the probability distribution output of RNN.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Retrienve parameters, shapes, and vocab size&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Whh, Wxh, b &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Whh&amp;#34;&lt;/span&gt;], parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Wxh&amp;#34;&lt;/span&gt;], parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;b&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Why, c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Why&amp;#34;&lt;/span&gt;], parameters[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;c&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    n_h, n_x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Wxh&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    vocab_size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; c&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize a0 and x1 to zero vectors&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    h_prev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((n_h, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((n_x, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize empty sequence&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    indices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (counter &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; idx &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; chars_to_idx[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;]):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Fwd propagation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        h &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;tanh(np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(Whh, h_prev) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(Wxh, x) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; b)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        o &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(Why, h) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; c
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        probs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; softmax(o)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Sample the index of the character using generated probs distribution&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;choice(vocab_size, p&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;probs&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ravel())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Get the character of the sampled index&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        char &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; idx_to_chars[idx]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Add the char to the sequence&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        indices&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;append(idx)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Update a_prev and x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        h_prev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy(h)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((n_x, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        x[idx] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        counter &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    sequence &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join([idx_to_chars[idx] &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; idx &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; indices &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; idx &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sequence
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;model&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        file_path, chars_to_idx, idx_to_chars, hidden_layer_size, vocab_size,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        num_epochs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, learning_rate&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.01&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;Implements RNN to generate characters.&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Get the data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(file_path) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; f:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;readlines()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    examples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [x&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lower()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;strip() &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; data]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize parameters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parameters &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; initialize_parameters(vocab_size, hidden_layer_size)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize Adam parameters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; initialize_rmsprop(parameters)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    smoothed_loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; vocab_size) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Initialize hidden state h0 and overall loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    h_prev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros((hidden_layer_size, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    overall_loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; []
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Iterate over number of epochs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; epoch &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(num_epochs):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\033&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[1m&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\033&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[94mEpoch &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;epoch&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\033&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[1m&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\033&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;[92m=======&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Sample one name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;Sampled name: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;sample(parameters, idx_to_chars, chars_to_idx,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;capitalize()&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Smoothed loss: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;smoothed_loss&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;.4f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Shuffle examples&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shuffle(examples)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Iterate over all examples (SGD)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; example &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; examples:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; [chars_to_idx[char] &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; char &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; example]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            y &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; [chars_to_idx[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;]]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Fwd pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            loss, cache &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rnn_forward(x, y, h_prev, parameters)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Compute smooth loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            smoothed_loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; smooth_loss(smoothed_loss, loss)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Bwd pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            grads, h_prev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rnn_backward(y, parameters, cache)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Update parameters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            parameters, s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; update_parameters_with_rmsprop(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                parameters, grads, s)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        overall_loss&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;append(smoothed_loss)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; parameters, overall_loss
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Load names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; open(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;../data/names.txt&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;r&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Convert characters to lower case&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lower()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Construct vocabulary using unique characters, sort it in ascending order,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# then construct two dictionaries that maps character to index and index to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# characters.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chars &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(sorted(set(data)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chars_to_idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {ch:i &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i, ch &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; enumerate(chars)}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;idx_to_chars &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {i:ch &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ch, i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; chars_to_idx&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;items()}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Get the size of the data and vocab size&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(data)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;vocab_size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(chars_to_idx)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;There are &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;data_size&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; characters and &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;vocab_size&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; unique characters.&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Fitting the model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;parameters, loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;../data/names.txt&amp;#34;&lt;/span&gt;, chars_to_idx, idx_to_chars, &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, vocab_size, &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.01&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plotting the loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot(range(len(loss)), loss)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Epochs&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Smoothed loss&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;There are 36121 characters and 27 unique characters.
 
 Epoch 0
 =======
@@ -508,7 +433,7 @@ Epoch 10
 =======
 Sampled name: Milton
 Smoothed loss: 14.7446
-
+    
 Epoch 30
 =======
 Sampled name: Dangelyn
@@ -524,7 +449,6 @@ Epoch 99
 Sampled name: Cathranda
 Smoothed loss: 13.3380
 &lt;/code&gt;&lt;/pre&gt;
-
 
 
 
@@ -548,18 +472,13 @@ Smoothed loss: 13.3380
 
 &lt;/figure&gt;
 
-
-&lt;p&gt;The names that were generated started to get more interesting after 15 epochs. I didn&#39;t include the results of all epochs to shorten the post; however, you can check the results in the &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb&#34;&gt;notebook&lt;/a&gt; associated with this post. One of the interesting names is &amp;quot;Yasira&amp;quot; which is an Arabic name :).&lt;/p&gt;
-
-&lt;p&gt;&lt;h2 style=&#34;font-family: Georgia; font-size:2em;color:purple; font-style:bold&#34;&gt;
-Conclusion&lt;/h2&gt;&lt;br&gt;
-Statistical language models are very crucial in Natural Language Processing (NLP) such as speech recognition and machine translation. We demonstrated in this post the main concepts behind statistical language models using the character-level language model. The task of this model is to generate names character by character using names obtained from census data that were consisted of 5,163 names. Below are the main key takeaways:&lt;/p&gt;
-
+&lt;p&gt;The names that were generated started to get more interesting after 15 epochs. I didn&amp;rsquo;t include the results of all epochs to shorten the post; however, you can check the results in the &lt;a href=&#34;https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Character-LeveL-Language-Model.ipynb&#34;&gt;notebook&lt;/a&gt; associated with this post. One of the interesting names is &amp;ldquo;Yasira&amp;rdquo; which is an Arabic name :).&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
 &lt;ul&gt;
 &lt;li&gt;If we have more data, a bigger model, and train longer, we may get more interesting results. However, to get very interesting results, we should instead use &lt;strong&gt;Long Short-Term Memory (LSTM)&lt;/strong&gt; model with more than one layer deep. People have used 3 layers deep LSTM model with dropout and were able to generate very interesting results when applied on cookbooks and Shakespeare poems. LSTM models outperform simple RNN due to its ability in capturing longer time dependencies.&lt;/li&gt;
-&lt;li&gt;With the sampling technique we&#39;re using, don&#39;t expect the RNN to generate meaningful sequence of characters (names).&lt;/li&gt;
-&lt;li&gt;We used in this post each name as its own sequence; however, we may be able to speed up learning and get better results if we increase the batch size; let&#39;s say from one name to a sequence of 50 characters.&lt;/li&gt;
-&lt;li&gt;We can control the level of randomness using the sampling strategy. Here, we balanced between what the model thinks it&#39;s the right character and the level of randomness.&lt;/li&gt;
+&lt;li&gt;With the sampling technique we&amp;rsquo;re using, don&amp;rsquo;t expect the RNN to generate meaningful sequence of characters (names).&lt;/li&gt;
+&lt;li&gt;We used in this post each name as its own sequence; however, we may be able to speed up learning and get better results if we increase the batch size; let&amp;rsquo;s say from one name to a sequence of 50 characters.&lt;/li&gt;
+&lt;li&gt;We can control the level of randomness using the sampling strategy. Here, we balanced between what the model thinks it&amp;rsquo;s the right character and the level of randomness.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

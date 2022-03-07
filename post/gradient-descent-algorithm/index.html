@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&#39;s the task of minimizing the cost/loss function J(w) parameterized by the model&#39;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
+  <meta name="description" content="Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&rsquo;s the task of minimizing the cost/loss function J(w) parameterized by the model&rsquo;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
  Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum.">
 
   
@@ -85,7 +85,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -130,7 +130,7 @@
   <meta property="og:site_name" content="Imad Dabbura">
   <meta property="og:url" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/">
   <meta property="og:title" content="Gradient Descent Algorithm and Its Variants | Imad Dabbura">
-  <meta property="og:description" content="Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&#39;s the task of minimizing the cost/loss function J(w) parameterized by the model&#39;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
+  <meta property="og:description" content="Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&rsquo;s the task of minimizing the cost/loss function J(w) parameterized by the model&rsquo;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
  Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum."><meta property="og:image" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/featured.PNG">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/featured.PNG"><meta property="og:locale" content="en-us">
   
@@ -287,6 +287,26 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
         </li>
 
         
@@ -561,7 +581,7 @@
 
 <div class="article-header container featured-image-wrapper mt-4 mb-4" style="max-width: 1200px; max-height: 678px;">
   <div style="position: relative">
-    <img src="/post/gradient-descent-algorithm/featured_hu6c17d2d6288aaa5362bfbb89cf77ab07_2413744_1200x0_resize_lanczos_2.PNG" alt="" class="featured-image">
+    <img src="/post/gradient-descent-algorithm/featured_hu6c17d2d6288aaa5362bfbb89cf77ab07_2413744_1200x0_resize_lanczos_3.PNG" alt="" class="featured-image">
     
   </div>
 </div>
@@ -571,39 +591,32 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p><strong>Optimization</strong> refers to the task of minimizing/maximizing an objective function <em>f(x)</em> parameterized by <em>x</em>. In machine/deep learning terminology, it's the task of minimizing the cost/loss function <em>J(w)</em> parameterized by the model's parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:</p>
-
+      <p><strong>Optimization</strong> refers to the task of minimizing/maximizing an objective function <em>f(x)</em> parameterized by <em>x</em>. In machine/deep learning terminology, it&rsquo;s the task of minimizing the cost/loss function <em>J(w)</em> parameterized by the model&rsquo;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:</p>
 <ul>
 <li>Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum.</li>
-<li>Find the lowest possible value of the objective function within its neighborhood. That's usually the case if the objective function is not convex as the case in most deep learning problems.</li>
+<li>Find the lowest possible value of the objective function within its neighborhood. That&rsquo;s usually the case if the objective function is not convex as the case in most deep learning problems.</li>
 </ul>
-
 <p>There are three kinds of optimization algorithms:</p>
-
 <ul>
 <li>Optimization algorithm that is not iterative and simply solves for one point.</li>
 <li>Optimization algorithm that is iterative in nature and converges to acceptable solution regardless of the parameters initialization such as gradient descent applied to logistic regression.</li>
-<li>Optimization algorithm that is iterative in nature and applied to a set of problems that have non-convex cost functions such as neural networks. Therefore, parameters' initialization plays a critical role in speeding up convergence and achieving lower error rates.</li>
+<li>Optimization algorithm that is iterative in nature and applied to a set of problems that have non-convex cost functions such as neural networks. Therefore, parameters&rsquo; initialization plays a critical role in speeding up convergence and achieving lower error rates.</li>
 </ul>
-
 <p><strong>Gradient Descent</strong> is the most common optimization algorithm in <em>machine learning</em> and <em>deep learning</em>. It is a first-order optimization algorithm. This means it only takes into account the first derivative when performing the updates on the parameters. On each iteration, we update the parameters in the opposite direction of the gradient of the objective function <em>J(w)</em> w.r.t the parameters where the gradient gives the direction of the steepest ascent. The size of the step we take on each iteration to reach the local minimum is determined by the learning rate α. Therefore, we follow the direction of the slope downhill until we reach a local minimum.</p>
-
-<p>In this post, we'll cover gradient descent algorithm and its variants: <em>Batch Gradient Descent, Mini-batch Gradient Descent, and Stochastic Gradient Descent</em>.</p>
-
-<p>Let's first see how gradient descent and its associated steps works on logistic regression before going into the details of its variants. For the sake of simplicity, let's assume that the logistic regression model has only two parameters: weight <em>w</em> and bias <em>b</em>.</p>
-
+<p>In this post, we&rsquo;ll cover gradient descent algorithm and its variants: <em>Batch Gradient Descent, Mini-batch Gradient Descent, and Stochastic Gradient Descent</em>.</p>
+<p>Let&rsquo;s first see how gradient descent and its associated steps works on logistic regression before going into the details of its variants. For the sake of simplicity, let&rsquo;s assume that the logistic regression model has only two parameters: weight <em>w</em> and bias <em>b</em>.</p>
 <ol>
-<li>Initialize weight <em>w</em> and bias <em>b</em> to any random numbers.</li>
-
-<li><p>Pick a value for the learning rate α. The learning rate determines how big the step would be on each iteration.</p>
-
+<li>
+<p>Initialize weight <em>w</em> and bias <em>b</em> to any random numbers.</p>
+</li>
+<li>
+<p>Pick a value for the learning rate α. The learning rate determines how big the step would be on each iteration.</p>
 <ul>
 <li>If α is very small, it would take long time to converge and become computationally expensive.</li>
 <li>IF α is large, it may fail to converge and overshoot the minimum.</li>
 </ul>
+<p>Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn&rsquo;t converge so that we would have a very fast learning algorithm that converges (see figure 1).
 
-<p>Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn't converge so that we would have a very fast learning algorithm that converges (see figure 1).
-   
 
 
   
@@ -631,12 +644,12 @@
 
 </figure>
 </p>
-
 <ul>
 <li>The most commonly used rates are : <em>0.001, 0.003, 0.01, 0.03, 0.1, 0.3</em>.</li>
-</ul></li>
-
-<li><p>Make sure to scale the data if it's on very different scales. If we don't scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 2).
+</ul>
+</li>
+<li>
+<p>Make sure to scale the data if it&rsquo;s on very different scales. If we don&rsquo;t scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 2).
 
 
 
@@ -660,23 +673,18 @@
 
 </figure>
 </p>
-
 <p>Scale the data to have μ = 0 and σ = 1. Below is the formula for scaling each example:
-<span  class="math">\(\frac {x_i - \mu}{\sigma}\)</span></p></li>
-
-<li><p>On each iteration, take the partial derivative of the cost function <em>J(w)</em> w.r.t each parameter (gradient):</p></li>
+$$\frac {x_i - \mu}{\sigma}$$</p>
+</li>
+<li>
+<p>On each iteration, take the partial derivative of the cost function <em>J(w)</em> w.r.t each parameter (gradient):</p>
+</li>
 </ol>
-
-<p><span  class="math">\[\frac{\partial}{\partial w}J(w, b) = \nabla_wJ\]</span></p>
-
-<p><span  class="math">\[\frac{\partial}{\partial b}J(w, b) = \nabla_bJ\]</span></p>
-
+<p>$$\frac{\partial}{\partial w}J(w, b) = \nabla_wJ$$</p>
+<p>$$\frac{\partial}{\partial b}J(w, b) = \nabla_bJ$$</p>
 <p>The update equations are:</p>
-
-<p><span  class="math">\[w = w - \alpha \nabla_w J\]</span></p>
-
-<p><span  class="math">\[b = b - \alpha \nabla_b J\]</span></p>
-
+<p>$$w = w - \alpha \nabla_w J$$</p>
+<p>$$b = b - \alpha \nabla_b J$$</p>
 <ul>
 <li>For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of <em>w &gt; 0</em>, this means that we are to the right of optimal <em>w</em>*. Therefore, the update will be negative, and will start getting close to the optimal values of <em>w</em>*. However, if it’s negative, the update will be positive and will increase the current values of <em>w</em> to converge to the optimal values of <em>w</em>*(see figure 3):
 
@@ -702,76 +710,53 @@
 
 </figure>
 
-
 <ul>
-<li>Continue the process until the cost function converges. That is, until the error curve becomes flat and doesn't change.</li>
-<li>In addition, on each iteration, the step would be in the direction that gives the <em>maximum</em> change since it's perpendicular to level curves at each step.</li>
-</ul></li>
+<li>Continue the process until the cost function converges. That is, until the error curve becomes flat and doesn&rsquo;t change.</li>
+<li>In addition, on each iteration, the step would be in the direction that gives the <em>maximum</em> change since it&rsquo;s perpendicular to level curves at each step.</li>
 </ul>
-
-<p>Now let's discuss the three variants of gradient descent algorithm. The main difference between them is the amount of data we use when computing the gradients for each learning step. The trade-off between them is the accuracy of the gradient versus the time complexity to perform each parameter's update (learning step).</p>
-
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Batch Gradient Descent
-</h3>
-
+</li>
+</ul>
+<p>Now let&rsquo;s discuss the three variants of gradient descent algorithm. The main difference between them is the amount of data we use when computing the gradients for each learning step. The trade-off between them is the accuracy of the gradient versus the time complexity to perform each parameter&rsquo;s update (learning step).</p>
+<!-- raw HTML omitted -->
 <p>Batch Gradient Descent is when we sum up over all examples on each iteration when performing the updates to the parameters. Therefore, for each update, we have to sum over all examples:
-<span  class="math">\(w = w - \alpha \nabla_w J\)</span></p>
-
-<pre><code class="language-python">for i in range(num_epochs):
-  grad = compute_gradient(data, params)
-  params = params - learning_rate * grad
-</code></pre>
-
-<p>The main advantages:</p>
-
+$$w = w - \alpha \nabla_w J$$</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_epochs):
+</span></span><span style="display:flex;"><span>  grad <span style="color:#f92672">=</span> compute_gradient(data, params)
+</span></span><span style="display:flex;"><span>  params <span style="color:#f92672">=</span> params <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> grad
+</span></span></code></pre></div><p>The main advantages:</p>
 <ul>
 <li>We can use fixed learning rate during training without worrying about learning rate decay.</li>
 <li>It has straight trajectory towards the minimum and it is guaranteed to converge in theory to the global minimum if the loss function is convex and to a local minimum if the loss function is not convex.</li>
 <li>It has unbiased estimate of gradients. The more the examples, the lower the standard error.</li>
 </ul>
-
 <p>The main disadvantages:</p>
-
 <ul>
 <li>Even though we can use vectorized implementation, it may still be slow to go over all examples especially when we have large datasets.</li>
-<li>Each step of learning happens after going over all examples where some examples may be redundant and don't contribute much to the update.</li>
+<li>Each step of learning happens after going over all examples where some examples may be redundant and don&rsquo;t contribute much to the update.</li>
 </ul>
-
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Mini-Batch Gradient Descent
-</h3>
-
+<!-- raw HTML omitted -->
 <p>Instead of going over all examples, Mini-batch Gradient Descent sums up over lower number of examples based on batch size. Therefore, learning happens on each mini-batch of <em>b</em> examples:
-<span  class="math">\(w = w - \alpha \nabla_w J(x^{\{i:i + b\}}, y^{\{i: i + b\}}; w, b)\)</span></p>
-
+$$w = w - \alpha \nabla_w J(x^{{i:i + b}}, y^{{i: i + b}}; w, b)$$</p>
 <ul>
 <li>Shuffle the training dataset to avoid pre-existing order of examples.</li>
 <li>Partition the training dataset into <em>b</em> mini-batches based on the batch size. If the training set size is not divisible by batch size, the remaining will be its own batch.</li>
 </ul>
-
-<pre><code class="language-python">for i in range(num_epochs):
-    np.random.shuffle(data)
-    for batch in radom_minibatches(data, batch_size=32):
-        grad = compute_gradient(batch, params)
-        params = params - learning_rate * grad
-</code></pre>
-
-<p>The batch size is something we can tune. It is usually chosen as power of 2 such as 32, 64, 128, 256, 512, etc. The reason behind it is because some hardware such as GPUs achieve better runtime with common batch sizes such as power of 2.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_epochs):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(data)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> batch <span style="color:#f92672">in</span> radom_minibatches(data, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>):
+</span></span><span style="display:flex;"><span>        grad <span style="color:#f92672">=</span> compute_gradient(batch, params)
+</span></span><span style="display:flex;"><span>        params <span style="color:#f92672">=</span> params <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> grad
+</span></span></code></pre></div><p>The batch size is something we can tune. It is usually chosen as power of 2 such as 32, 64, 128, 256, 512, etc. The reason behind it is because some hardware such as GPUs achieve better runtime with common batch sizes such as power of 2.</p>
 <p>The main advantages:</p>
-
 <ul>
 <li>Faster than Batch version because it goes through a lot less examples than Batch (all examples).</li>
-<li>Randomly selecting examples will help avoid redundant examples or examples that are very similar that don't contribute much to the learning.</li>
+<li>Randomly selecting examples will help avoid redundant examples or examples that are very similar that don&rsquo;t contribute much to the learning.</li>
 <li>With batch size &lt; size of training set, it adds noise to the learning process that helps improving generalization error.</li>
 <li>Even though with more examples the estimate would have lower standard error, the return is less than linear compared to the computational burden we incur.</li>
 </ul>
-
 <p>The main disadvantages:</p>
-
 <ul>
-<li>It won't converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.</li>
+<li>It won&rsquo;t converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.</li>
 <li>Due to the noise, the learning steps have more oscillations (see figure 4) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
 
 
@@ -796,36 +781,26 @@ Mini-Batch Gradient Descent
 
 </figure>
 
-With large training datasets, we don't usually need more than 2-10 passes over all training examples (epochs). Note: with batch size <em>b = m</em>, we get the Batch Gradient Descent.</li>
+With large training datasets, we don&rsquo;t usually need more than 2-10 passes over all training examples (epochs). Note: with batch size <em>b = m</em>, we get the Batch Gradient Descent.</li>
 </ul>
-
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Stochastic Gradient Descent
-</h3>
-
+<!-- raw HTML omitted -->
 <p>Instead of going through all examples, Stochastic Gradient Descent (SGD) performs the parameters update on each example $(x^i, y^i)$. Therefore, learning happens on every example:
-<span  class="math">\(w = w - \alpha \nabla_w J(x^i, y^i; w, b)\)</span></p>
-
+$$w = w - \alpha \nabla_w J(x^i, y^i; w, b)$$</p>
 <ul>
 <li>Shuffle the training dataset to avoid pre-existing order of examples.</li>
 <li>Partition the training dataset into <em>m</em> examples.</li>
 </ul>
-
-<pre><code class="language-python">for i in range(num_epochs):
-    np.random.shuffle(data)
-    for example in data:
-        grad = compute_gradient(example, params)
-        params = params - learning_rate * grad
-</code></pre>
-
-<p>It shares most of the advantages and the disadvantages with mini-batch version. Below are the ones that are specific to SGD:</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_epochs):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(data)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> example <span style="color:#f92672">in</span> data:
+</span></span><span style="display:flex;"><span>        grad <span style="color:#f92672">=</span> compute_gradient(example, params)
+</span></span><span style="display:flex;"><span>        params <span style="color:#f92672">=</span> params <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> grad
+</span></span></code></pre></div><p>It shares most of the advantages and the disadvantages with mini-batch version. Below are the ones that are specific to SGD:</p>
 <ul>
 <li>It adds even more noise to the learning process than mini-batch that helps improving generalization error. However, this would increase the run time.</li>
-<li>We can't utilize vectorization over 1 example and becomes very slow. Also, the variance becomes large since we only use 1 example for each learning step.</li>
+<li>We can&rsquo;t utilize vectorization over 1 example and becomes very slow. Also, the variance becomes large since we only use 1 example for each learning step.</li>
 </ul>
-
-<p>Below is a graph that shows the gradient descent's variants and their direction towards the minimum:
+<p>Below is a graph that shows the gradient descent&rsquo;s variants and their direction towards the minimum:
 
 
 
@@ -850,25 +825,20 @@ Stochastic Gradient Descent
 </figure>
 
 As the figure above shows, SGD direction is very noisy compared to mini-batch.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Challenges
-</h2>
-
+<!-- raw HTML omitted -->
 <p>Below are some challenges regarding gradient descent algorithm in general as well as its variants - mainly batch and mini-batch:</p>
-
 <ul>
-<li><p>Gradient descent is a first-order optimization algorithm, which means it doesn't take into account the second derivatives of the cost function. However, the curvature of the function affects the size of each learning step. The gradient measures the steepness of the curve but the second derivative measures the curvature of the curve. Therefore, if:</p>
-
+<li>
+<p>Gradient descent is a first-order optimization algorithm, which means it doesn&rsquo;t take into account the second derivatives of the cost function. However, the curvature of the function affects the size of each learning step. The gradient measures the steepness of the curve but the second derivative measures the curvature of the curve. Therefore, if:</p>
 <ol>
-<li>Second derivative = 0 --&gt; the curvature is linear. Therefore, the step size = the learning rate α.</li>
-<li>Second derivative &gt; 0 --&gt; the curvature is going upward. Therefore, the step size &lt; the learning rate α and may lead to divergence.</li>
-<li>Second derivative &lt; 0 --&gt; the curvature is going downward. Therefore, the step size &gt; the learning rate α.</li>
+<li>Second derivative = 0 &ndash;&gt; the curvature is linear. Therefore, the step size = the learning rate α.</li>
+<li>Second derivative &gt; 0 &ndash;&gt; the curvature is going upward. Therefore, the step size &lt; the learning rate α and may lead to divergence.</li>
+<li>Second derivative &lt; 0 &ndash;&gt; the curvature is going downward. Therefore, the step size &gt; the learning rate α.</li>
 </ol>
-
-<p>As a result, the direction that looks promising to the gradient may not be so and may lead to slow the learning process or even diverge.</p></li>
-
-<li><p>If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 6).
+<p>As a result, the direction that looks promising to the gradient may not be so and may lead to slow the learning process or even diverge.</p>
+</li>
+<li>
+<p>If Hessian matrix has poor conditioning number, i.e. the direction of the most curvature has much more curvature than the direction of the lowest curvature. This will lead the cost function to be very sensitive in some directions and insensitive in other directions. As a result, it will make it harder on the gradient because the direction that looks promising for the gradient may not lead to big changes in the cost function (see figure 6).
 
 
 
@@ -891,9 +861,10 @@ Challenges
 </figcaption>
 
 </figure>
-</p></li>
-
-<li><p>The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients' norm is increasing, we're able to achieve a very low error rates  (see figure 7).
+</p>
+</li>
+<li>
+<p>The norm of the gradient $g^Tg$ is supposed to decrease slowly with each learning step because the curve is getting flatter and steepness of the curve will decrease. However, we see that the norm of the gradient is increasing, because of the curvature of the curve. Nonetheless, even though the gradients&rsquo; norm is increasing, we&rsquo;re able to achieve a very low error rates  (see figure 7).
 
 
 
@@ -921,9 +892,10 @@ Challenges
 </figcaption>
 
 </figure>
-</p></li>
-
-<li><p>In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 8). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
+</p>
+</li>
+<li>
+<p>In small dimensions, local minimum is common; however, in large dimensions, saddle points are more common. Saddle point is when the function curves up in some directions and curves down in other directions. In other words, saddle point looks a minimum from one direction and a maximum from other direction (see figure 8). This happens when at least one eigenvalue of the hessian matrix is negative and the rest of eigenvalues are positive.
 
 
 
@@ -946,11 +918,14 @@ Challenges
 </figcaption>
 
 </figure>
-</p></li>
-
-<li><p>As discussed previously, choosing a proper learning rate is hard. Also, for mini-batch gradient descent, we have to adjust the learning rate during the training process to make sure it converges to the local minimum and not wander around it. Figuring out the decay rate of the learning rate is also hard and changes with different datasets.</p></li>
-
-<li><p>All parameter updates have the same learning rate; however, we may want to perform larger updates to some parameters that have their directional derivatives more inline with the trajectory towards the minimum than other parameters.</p></li>
+</p>
+</li>
+<li>
+<p>As discussed previously, choosing a proper learning rate is hard. Also, for mini-batch gradient descent, we have to adjust the learning rate during the training process to make sure it converges to the local minimum and not wander around it. Figuring out the decay rate of the learning rate is also hard and changes with different datasets.</p>
+</li>
+<li>
+<p>All parameter updates have the same learning rate; however, we may want to perform larger updates to some parameters that have their directional derivatives more inline with the trajectory towards the minimum than other parameters.</p>
+</li>
 </ul>
 
     </div>
@@ -1195,8 +1170,6 @@ Challenges
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -1281,7 +1254,7 @@ Challenges
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1296,7 +1269,7 @@ Challenges
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

@@ -85,7 +85,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -297,6 +297,26 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
         
         
         
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
           
         
 
@@ -432,7 +452,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    18 min read
+    17 min read
   </span>
   
 
@@ -561,7 +581,7 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 839px;">
   <div style="position: relative">
-    <img src="/post/coding-nn-fwd-bckwd-prop/featured_hu9cb68b8ebbc13218b4ea8134708a1538_119462_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    <img src="/post/coding-nn-fwd-bckwd-prop/featured_hu9cb68b8ebbc13218b4ea8134708a1538_119462_720x0_resize_lanczos_3.png" alt="" class="featured-image">
     
   </div>
 </div>
@@ -572,17 +592,13 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
 
     <div class="article-style" itemprop="articleBody">
       <p><strong>Why Neural Networks?</strong></p>
-
 <p>According to <em>Universal Approximate Theorem</em>, Neural Networks can approximate as well as learn and represent any function given a large enough layer and desired error margin. The way neural network learns the true function is by building complex representations on top of simple ones. On each hidden layer, the neural network learns new feature space by first compute the affine (linear) transformations of the given inputs and then apply non-linear function which in turn will be the input of the next layer. This process will continue until we reach the output layer. Therefore, we can define neural network as information flows from inputs through hidden layers towards the output. For a 3-layers neural network, the learned function would be: $f(x) = f_3(f_2(f_1(x)))$ where:</p>
-
 <ul>
 <li>$f_1(x)$: Function learned on first hidden layer</li>
 <li>$f_2(x)$: Function learned on second hidden layer</li>
 <li>$f_3(x)$: Function learned on output layer</li>
 </ul>
-
-<p>Therefore, on each layer we learn different representation that gets more complicated with later hidden layers.Below is an example of a 3-layers neural network (we don't count input layer):</p>
-
+<p>Therefore, on each layer we learn different representation that gets more complicated with later hidden layers.Below is an example of a 3-layers neural network (we don&rsquo;t count input layer):</p>
 
 
 
@@ -606,41 +622,24 @@ According to Universal Approximate Theorem, Neural Networks can approximate as w
 
 </figure>
 
-
-<p>For example, computers can't understand images directly and don't know what to do with pixels data. However, a neural network can build a simple representation of the image in the early hidden layers that identifies edges. Given the first hidden layer output, it can learn corners and contours. Given the second hidden layer, it can learn parts such as nose. Finally, it can learn the object identity.</p>
-
+<p>For example, computers can&rsquo;t understand images directly and don&rsquo;t know what to do with pixels data. However, a neural network can build a simple representation of the image in the early hidden layers that identifies edges. Given the first hidden layer output, it can learn corners and contours. Given the second hidden layer, it can learn parts such as nose. Finally, it can learn the object identity.</p>
 <p>Since <strong>truth is never linear</strong> and representation is very critical to the performance of a machine learning algorithm, neural network can help us build very complex models and leave it to the algorithm to learn such representations without worrying about feature engineering that takes practitioners very long time and effort to curate a good representation.</p>
-
 <p>The post has two parts:</p>
-
 <ol>
-<li><a href="#CodingNN">Coding the neural network</a>: This entails writing all the helper functions that would allow us to implement a multi-layer neural network. While doing so, I'll explain the theoretical parts whenever possible and give some advices on implementations.</li>
-<li><a href="#Application">Application</a>: We'll implement the neural network we coded in the first part on image recognition problem to see if the network we built will be able to detect if the image has a cat or a dog and see it working :)</li>
+<li><a href="#CodingNN">Coding the neural network</a>: This entails writing all the helper functions that would allow us to implement a multi-layer neural network. While doing so, I&rsquo;ll explain the theoretical parts whenever possible and give some advices on implementations.</li>
+<li><a href="#Application">Application</a>: We&rsquo;ll implement the neural network we coded in the first part on image recognition problem to see if the network we built will be able to detect if the image has a cat or a dog and see it working :)</li>
 </ol>
-
 <p>This post will be the first in a series of posts that cover implementing neural network in numpy including <em>gradient checking, parameter initialization, L2 regularization, dropout</em>. The code that created this post can be found <a href="https://nbviewer.jupyter.org/github/ImadDabbura/blog-posts/blob/master/notebooks/Coding-Neural-Network-Forwad-Back-Propagation.ipynb">here</a>.</p>
-
-<pre><code class="language-python"># Import packages
-import h5py
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-</code></pre>
-
-<p><a id="CodingNN"></a></p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-I. Coding The Neural Network
-</h2>
-
-<h3 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Forward Propagation
-</h3>
-
-<p>The input $X$ provides the initial information that then propagates to the hidden units at each layer and finally produce the output $\widehat{Y}$. The architecture of the network entails determining its depth, width, and activation functions used on each layer. <strong>Depth</strong> is the number of hidden layers. <strong>Width</strong> is the number of units (nodes) on each hidden layer since we don't control neither input layer nor output layer dimensions. There are quite a few set of activation functions such <em>Rectified Linear Unit, Sigmoid, Hyperbolic tangent, etc</em>. Research has proven that deeper networks outperform networks with more hidden units. Therefore, it's always better and won't hurt to train a deeper network (with diminishing returns).</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> h5py
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span></code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>The input $X$ provides the initial information that then propagates to the hidden units at each layer and finally produce the output $\widehat{Y}$. The architecture of the network entails determining its depth, width, and activation functions used on each layer. <strong>Depth</strong> is the number of hidden layers. <strong>Width</strong> is the number of units (nodes) on each hidden layer since we don&rsquo;t control neither input layer nor output layer dimensions. There are quite a few set of activation functions such <em>Rectified Linear Unit, Sigmoid, Hyperbolic tangent, etc</em>. Research has proven that deeper networks outperform networks with more hidden units. Therefore, it&rsquo;s always better and won&rsquo;t hurt to train a deeper network (with diminishing returns).</p>
 <p>Lets first introduce some notations that will be used throughout the post:</p>
-
 <ul>
 <li>$W^l$: Weights matrix for the $l^{th}$ layer</li>
 <li>$b^l$: Bias vector for the $l^{th}$ layer</li>
@@ -655,124 +654,103 @@ Forward Propagation
 <li>$m$: Number of examples</li>
 <li>$L$: Number of layers in the network (not including the input layer)</li>
 </ul>
-
-<p>Next, we'll write down the dimensions of a multi-layer neural network in the general form to help us in matrix multiplication because one of the major challenges in implementing a neural network is getting the dimensions right.</p>
-
+<p>Next, we&rsquo;ll write down the dimensions of a multi-layer neural network in the general form to help us in matrix multiplication because one of the major challenges in implementing a neural network is getting the dimensions right.</p>
 <ul>
 <li>$W^l$, $dW^l$: Number of units (nodes) in $l^{th}$ layer x Number of units (nodes) in $l - 1$ layer</li>
 <li>$b^l$, $db^l$: Number of units (nodes) in $l^{th}$ layer x 1</li>
 <li>$Z^l$, $dZ^l$: Number of units (nodes) in $l^{th}$ layer x number of examples</li>
 <li>$A^l$, $dA^l$: Number of units (nodes) in $l^{th}$ layer x number of examples</li>
 </ul>
-
 <p>The two equations we need to implement forward propagations are:</p>
-
-<p><span  class="math">\(Z^l = W^lA^{l - 1} + b ^l\tag1\)</span>
-<span  class="math">\(A^l = g^l(Z^l) = g^l(W^lA^{l - 1} + b ^l)\tag2\)</span>
+<p>$$Z^l = W^lA^{l - 1} + b ^l\tag1$$
+$$A^l = g^l(Z^l) = g^l(W^lA^{l - 1} + b ^l)\tag2$$
 These computations will take place on each layer.</p>
-
-<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
-Parameters Initialization
-</h3><br>
-We'll first initialize the weight matrices and the bias vectors. It's important to note that we shouldn't initialize all the parameters to zero because doing so will lead the gradients to be equal and on each iteration the output would be the same and the learning algorithm won't learn anything. Therefore, it's important to randomly initialize the parameters to values between 0 and 1. It's also recommended to multiply the random values by small scalar such as 0.01 to make the activation units active and be on the regions where activation functions' derivatives are not close to zero.</p>
-
-<pre><code class="language-python"># Initialize parameters
-def initialize_parameters(layers_dims):
-    np.random.seed(1)               
-    parameters = {}
-    L = len(layers_dims)            
-
-    for l in range(1, L):           
-        parameters[&quot;W&quot; + str(l)] = np.random.randn(
-            layers_dims[l], layers_dims[l - 1]) * 0.01
-        parameters[&quot;b&quot; + str(l)] = np.zeros((layers_dims[l], 1))
-
-        assert parameters[&quot;W&quot; + str(l)].shape == (
-            layers_dims[l], layers_dims[l - 1])
-        assert parameters[&quot;b&quot; + str(l)].shape == (layers_dims[l], 1)
-
-    return parameters
-</code></pre>
-
-<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
-Activation Functions
-</h3><br>
-There is no definitive guide for which activation function works best on specific problems. It's a trial and error process where one should try different set of functions and see which one works best on the problem at hand. We'll cover 4 of the most commonly used activation functions:</p>
-
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Initialize parameters</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initialize_parameters</span>(layers_dims):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)               
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(layers_dims)            
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):           
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(
+</span></span><span style="display:flex;"><span>            layers_dims[l], layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.01</span>
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((layers_dims[l], <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)]<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> (
+</span></span><span style="display:flex;"><span>            layers_dims[l], layers_dims[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)]<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> (layers_dims[l], <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <ul>
-<li><strong>Sigmoid function ($\sigma$)</strong>: $g(z) = \frac{1}{1 + e^{-z}}$. It's recommended to be used only on the output layer so that we can easily interpret the output as probabilities since it has restricted output between 0 and 1. One of the main disadvantages for using sigmoid function on hidden layers is that the gradient is very close to zero over a large portion of its domain which makes it slow and harder for the learning algorithm to learn.</li>
-<li><strong>Hyperbolic Tangent function</strong>: $g(z) = \frac{e^z - e<sup>{-z}}{e</sup>z + e^{-z}}$. It's superior to sigmoid function in which the mean of its output is very close to zero, which in other words center the output of the activation units around zero and make the range of values very small which means faster to learn. The disadvantage that it shares with sigmoid function is that the gradient is very small on good portion of the domain.</li>
-<li><strong>Rectified Linear Unit (ReLU)</strong>: $g(z) = max(0, z)$. The models that are close to linear are easy to optimize. Since ReLU shares a lot of the properties of linear functions, it tends to work well on most of the problems. The only issue is that the derivative is not defined at $z = 0$, which we can overcome by assigning the derivative to 0 at $z = 0$. However, this means that for $z\leq 0$ the gradient is zero and again can't learn.</li>
+<li><strong>Sigmoid function ($\sigma$)</strong>: $g(z) = \frac{1}{1 + e^{-z}}$. It&rsquo;s recommended to be used only on the output layer so that we can easily interpret the output as probabilities since it has restricted output between 0 and 1. One of the main disadvantages for using sigmoid function on hidden layers is that the gradient is very close to zero over a large portion of its domain which makes it slow and harder for the learning algorithm to learn.</li>
+<li><strong>Hyperbolic Tangent function</strong>: $g(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$. It&rsquo;s superior to sigmoid function in which the mean of its output is very close to zero, which in other words center the output of the activation units around zero and make the range of values very small which means faster to learn. The disadvantage that it shares with sigmoid function is that the gradient is very small on good portion of the domain.</li>
+<li><strong>Rectified Linear Unit (ReLU)</strong>: $g(z) = max(0, z)$. The models that are close to linear are easy to optimize. Since ReLU shares a lot of the properties of linear functions, it tends to work well on most of the problems. The only issue is that the derivative is not defined at $z = 0$, which we can overcome by assigning the derivative to 0 at $z = 0$. However, this means that for $z\leq 0$ the gradient is zero and again can&rsquo;t learn.</li>
 <li><strong>Leaky Rectified Linear Unit</strong>: $g(z) = max(\alpha*z, z)$. It overcomes the zero gradient issue from ReLU and assigns $\alpha$ which is a small value for $z\leq 0$.</li>
 </ul>
-
-<p>If you're not sure which activation function to choose, start with ReLU.
-Next, we'll implement the above activation functions and draw a graph for each one to make it easier to see the domain and range of each function.</p>
-
-<pre><code class="language-python"># Define activation functions that will be used in forward propagation
-def sigmoid(Z):
-    A = 1 / (1 + np.exp(-Z))
-    return A, Z
-
-
-def tanh(Z):
-    A = np.tanh(Z)
-    return A, Z
-
-
-def relu(Z):
-    A = np.maximum(0, Z)
-    return A, Z
-
-
-def leaky_relu(Z):
-    A = np.maximum(0.1 * Z, Z)
-
-    return A, Z
-</code></pre>
-
-<pre><code class="language-python"># Plot the 4 activation functions
-z = np.linspace(-10, 10, 100)
-
-# Computes post-activation outputs
-A_sigmoid, z = sigmoid(z)
-A_tanh, z = tanh(z)
-A_relu, z = relu(z)
-A_leaky_relu, z = leaky_relu(z)
-
-# Plot sigmoid
-plt.figure(figsize=(12, 8))
-plt.subplot(2, 2, 1)
-plt.plot(z, A_sigmoid, label = &quot;Function&quot;)
-plt.plot(z, A_sigmoid * (1 - A_sigmoid), label = &quot;Derivative&quot;)
-plt.legend(loc = &quot;upper left&quot;)
-plt.xlabel(&quot;z&quot;)
-plt.ylabel(r&quot;$\frac{1}{1 + e^{-z}}$&quot;)
-plt.title(&quot;Sigmoid Function&quot;, fontsize = 16)
-# Plot tanh
-plt.subplot(2, 2, 2)
-plt.plot(z, A_tanh, 'b', label = &quot;Function&quot;)
-plt.plot(z, 1 - np.square(A_tanh), 'r',label = &quot;Derivative&quot;)
-plt.legend(loc = &quot;upper left&quot;)
-plt.xlabel(&quot;z&quot;)
-plt.ylabel(r&quot;$\frac{e^z - e^{-z}}{e^z + e^{-z}}$&quot;)
-plt.title(&quot;Hyperbolic Tangent Function&quot;, fontsize = 16)
-# plot relu
-plt.subplot(2, 2, 3)
-plt.plot(z, A_relu, 'g')
-plt.xlabel(&quot;z&quot;)
-plt.ylabel(r&quot;$max\{0, z\}$&quot;)
-plt.title(&quot;ReLU Function&quot;, fontsize = 16)
-# plot leaky relu
-plt.subplot(2, 2, 4)
-plt.plot(z, A_leaky_relu, 'y')
-plt.xlabel(&quot;z&quot;)
-plt.ylabel(r&quot;$max\{0.1z, z\}$&quot;)
-plt.title(&quot;Leaky ReLU Function&quot;, fontsize = 16)
-plt.tight_layout();
-</code></pre>
-
-
+<p>If you&rsquo;re not sure which activation function to choose, start with ReLU.
+Next, we&rsquo;ll implement the above activation functions and draw a graph for each one to make it easier to see the domain and range of each function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define activation functions that will be used in forward propagation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sigmoid</span>(Z):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>Z))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> A, Z
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tanh</span>(Z):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>tanh(Z)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> A, Z
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">relu</span>(Z):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>maximum(<span style="color:#ae81ff">0</span>, Z)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> A, Z
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">leaky_relu</span>(Z):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>maximum(<span style="color:#ae81ff">0.1</span> <span style="color:#f92672">*</span> Z, Z)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> A, Z
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Plot the 4 activation functions</span>
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Computes post-activation outputs</span>
+</span></span><span style="display:flex;"><span>A_sigmoid, z <span style="color:#f92672">=</span> sigmoid(z)
+</span></span><span style="display:flex;"><span>A_tanh, z <span style="color:#f92672">=</span> tanh(z)
+</span></span><span style="display:flex;"><span>A_relu, z <span style="color:#f92672">=</span> relu(z)
+</span></span><span style="display:flex;"><span>A_leaky_relu, z <span style="color:#f92672">=</span> leaky_relu(z)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot sigmoid</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(z, A_sigmoid, label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Function&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(z, A_sigmoid <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> A_sigmoid), label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Derivative&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend(loc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;upper left&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;z&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;$\frac</span><span style="color:#e6db74">{1}</span><span style="color:#e6db74">{1 + e^{-z}}$&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Sigmoid Function&#34;</span>, fontsize <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot tanh</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(z, A_tanh, <span style="color:#e6db74">&#39;b&#39;</span>, label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Function&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(z, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>square(A_tanh), <span style="color:#e6db74">&#39;r&#39;</span>,label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Derivative&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend(loc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;upper left&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;z&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;$\frac{e^z - e^{-z}}{e^z + e^{-z}}$&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Hyperbolic Tangent Function&#34;</span>, fontsize <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># plot relu</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(z, A_relu, <span style="color:#e6db74">&#39;g&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;z&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;$max\{0, z\}$&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;ReLU Function&#34;</span>, fontsize <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># plot leaky relu</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(z, A_leaky_relu, <span style="color:#e6db74">&#39;y&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;z&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;$max\{0.1z, z\}$&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Leaky ReLU Function&#34;</span>, fontsize <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout();
+</span></span></code></pre></div>
 
 
   
@@ -795,233 +773,204 @@ plt.tight_layout();
 
 </figure>
 
-
-<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
-Feed Forward
-</h3><br>
-Given its inputs from previous layer, each unit computes affine transformation $z = W^Tx + b$ and then apply an activation function $g(z)$ such as ReLU element-wise. During the process, we'll store (cache) all variables computed and used on each layer to be used in back-propagation. We'll write first two helper functions that will be used in the L-model forward propagation to make it easier to debug. Keep in mind that on each layer, we may have different activation function.</p>
-
-<pre><code class="language-python"># Define helper functions that will be used in L-model forward prop
-def linear_forward(A_prev, W, b):
-    Z = np.dot(W, A_prev) + b
-    cache = (A_prev, W, b)
-
-    return Z, cache
-
-
-def linear_activation_forward(A_prev, W, b, activation_fn):
-    assert activation_fn == &quot;sigmoid&quot; or activation_fn == &quot;tanh&quot; or \
-        activation_fn == &quot;relu&quot;
-
-    if activation_fn == &quot;sigmoid&quot;:
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = sigmoid(Z)
-
-    elif activation_fn == &quot;tanh&quot;:
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = tanh(Z)
-
-    elif activation_fn == &quot;relu&quot;:
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = relu(Z)
-
-    assert A.shape == (W.shape[0], A_prev.shape[1])
-
-    cache = (linear_cache, activation_cache)
-
-    return A, cache
-
-
-def L_model_forward(X, parameters, hidden_layers_activation_fn=&quot;relu&quot;):
-    A = X                           
-    caches = []                     
-    L = len(parameters) // 2        
-
-    for l in range(1, L):
-        A_prev = A
-        A, cache = linear_activation_forward(
-            A_prev, parameters[&quot;W&quot; + str(l)], parameters[&quot;b&quot; + str(l)],
-            activation_fn=hidden_layers_activation_fn)
-        caches.append(cache)
-
-    AL, cache = linear_activation_forward(
-        A, parameters[&quot;W&quot; + str(L)], parameters[&quot;b&quot; + str(L)],
-        activation_fn=&quot;sigmoid&quot;)
-    caches.append(cache)
-
-    assert AL.shape == (1, X.shape[1])
-
-    return AL, caches
-</code></pre>
-
-<p><h3 style="font-family: Georgia; font-size:1.3em;color:purple; font-style:bold">
-Cost
-</h3><br>
-We'll use the binary <strong>Cross-Entropy</strong> cost. It uses the log-likelihood method to estimate its error. The cost is:
-<span  class="math">\(J(W, b) = -\frac{1}{m}\sum_{i = 1}^m\big(y^ilog(\widehat{y^i}) + (1 - y^i)log(1 - \widehat{y^i}\big)\tag3\)</span>
-The above cost function is convex; however, neural network usually stuck on a local minimum and is not guaranteed to find the optimal parameters. We'll use here gradient-based learning.</p>
-
-<pre><code class="language-python"># Compute cross-entropy cost
-def compute_cost(AL, y):
-    m = y.shape[1]              
-    cost = - (1 / m) * np.sum(
-        np.multiply(y, np.log(AL)) + np.multiply(1 - y, np.log(1 - AL)))
-
-    return cost
-</code></pre>
-
-<h2 style="font-family: Georgia; font-size:1.5em;color:purple; font-style:bold">
-Back-Propagation
-</h2>
-
-<p>Allows the information to go back from the cost backward through the network in order to compute the gradient. Therefore, loop over the nodes starting at the final node in reverse topological order to compute the derivative of the final node output with respect to each edge's node tail. Doing so will help us know who is responsible for the most error and change the parameters in that direction. The following derivatives' formulas will help us write the back-propagate functions:
-<span  class="math">\(dA^L = \frac{A^L - Y}{A^L(1 - A^L)}\tag4\)</span>
-<span  class="math">\(dZ^L = A^L - Y\tag5\)</span>
-<span  class="math">\(dW^l = \frac{1}{m}dZ^l{A^{l - 1}}^T\tag6\)</span>
-<span  class="math">\(db^l = \frac{1}{m}\sum_i(dZ^l)\tag7\)</span>
-<span  class="math">\(dA^{l - 1} = {W^l}^TdZ^l\tag8\)</span>
-<span  class="math">\(dZ^{l} = dA^l*g^{'l}(Z^l)\tag9\)</span>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define helper functions that will be used in L-model forward prop</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">linear_forward</span>(A_prev, W, b):
+</span></span><span style="display:flex;"><span>    Z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(W, A_prev) <span style="color:#f92672">+</span> b
+</span></span><span style="display:flex;"><span>    cache <span style="color:#f92672">=</span> (A_prev, W, b)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Z, cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">linear_activation_forward</span>(A_prev, W, b, activation_fn):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sigmoid&#34;</span> <span style="color:#f92672">or</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;tanh&#34;</span> <span style="color:#f92672">or</span> \
+</span></span><span style="display:flex;"><span>        activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;relu&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sigmoid&#34;</span>:
+</span></span><span style="display:flex;"><span>        Z, linear_cache <span style="color:#f92672">=</span> linear_forward(A_prev, W, b)
+</span></span><span style="display:flex;"><span>        A, activation_cache <span style="color:#f92672">=</span> sigmoid(Z)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;tanh&#34;</span>:
+</span></span><span style="display:flex;"><span>        Z, linear_cache <span style="color:#f92672">=</span> linear_forward(A_prev, W, b)
+</span></span><span style="display:flex;"><span>        A, activation_cache <span style="color:#f92672">=</span> tanh(Z)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;relu&#34;</span>:
+</span></span><span style="display:flex;"><span>        Z, linear_cache <span style="color:#f92672">=</span> linear_forward(A_prev, W, b)
+</span></span><span style="display:flex;"><span>        A, activation_cache <span style="color:#f92672">=</span> relu(Z)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> A<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> (W<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], A_prev<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cache <span style="color:#f92672">=</span> (linear_cache, activation_cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> A, cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">L_model_forward</span>(X, parameters, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X                           
+</span></span><span style="display:flex;"><span>    caches <span style="color:#f92672">=</span> []                     
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(parameters) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L):
+</span></span><span style="display:flex;"><span>        A_prev <span style="color:#f92672">=</span> A
+</span></span><span style="display:flex;"><span>        A, cache <span style="color:#f92672">=</span> linear_activation_forward(
+</span></span><span style="display:flex;"><span>            A_prev, parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)], parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)],
+</span></span><span style="display:flex;"><span>            activation_fn<span style="color:#f92672">=</span>hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>        caches<span style="color:#f92672">.</span>append(cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    AL, cache <span style="color:#f92672">=</span> linear_activation_forward(
+</span></span><span style="display:flex;"><span>        A, parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(L)], parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(L)],
+</span></span><span style="display:flex;"><span>        activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sigmoid&#34;</span>)
+</span></span><span style="display:flex;"><span>    caches<span style="color:#f92672">.</span>append(cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> AL<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> (<span style="color:#ae81ff">1</span>, X<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> AL, caches
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Compute cross-entropy cost</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_cost</span>(AL, y):
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]              
+</span></span><span style="display:flex;"><span>    cost <span style="color:#f92672">=</span> <span style="color:#f92672">-</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>multiply(y, np<span style="color:#f92672">.</span>log(AL)) <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>multiply(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> y, np<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> AL)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cost
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<p>Allows the information to go back from the cost backward through the network in order to compute the gradient. Therefore, loop over the nodes starting at the final node in reverse topological order to compute the derivative of the final node output with respect to each edge&rsquo;s node tail. Doing so will help us know who is responsible for the most error and change the parameters in that direction. The following derivatives&rsquo; formulas will help us write the back-propagate functions:
+$$dA^L = \frac{A^L - Y}{A^L(1 - A^L)}\tag4$$
+$$dZ^L = A^L - Y\tag5$$
+$$dW^l = \frac{1}{m}dZ^l{A^{l - 1}}^T\tag6$$
+$$db^l = \frac{1}{m}\sum_i(dZ^l)\tag7$$
+$$dA^{l - 1} = {W^l}^TdZ^l\tag8$$
+$$dZ^{l} = dA^l*g^{&rsquo;l}(Z^l)\tag9$$
 Since $b^l$ is always a vector, the sum would be across rows (since each column is an example).</p>
-
-<pre><code class="language-python"># Define derivative of activation functions w.r.t z that will be used in back-propagation
-def sigmoid_gradient(dA, Z):
-    A, Z = sigmoid(Z)
-    dZ = dA * A * (1 - A)
-
-    return dZ
-
-
-def tanh_gradient(dA, Z):
-    A, Z = tanh(Z)
-    dZ = dA * (1 - np.square(A))
-
-    return dZ
-
-
-def relu_gradient(dA, Z):
-    A, Z = relu(Z)
-    dZ = np.multiply(dA, np.int64(A &gt; 0))
-
-    return dZ
-
-
-# define helper functions that will be used in L-model back-prop
-def linear_backword(dZ, cache):
-    A_prev, W, b = cache
-    m = A_prev.shape[1]
-
-    dW = (1 / m) * np.dot(dZ, A_prev.T)
-    db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-    dA_prev = np.dot(W.T, dZ)
-
-    assert dA_prev.shape == A_prev.shape
-    assert dW.shape == W.shape
-    assert db.shape == b.shape
-
-    return dA_prev, dW, db
-
-
-def linear_activation_backward(dA, cache, activation_fn):
-    linear_cache, activation_cache = cache
-
-    if activation_fn == &quot;sigmoid&quot;:
-        dZ = sigmoid_gradient(dA, activation_cache)
-        dA_prev, dW, db = linear_backword(dZ, linear_cache)
-
-    elif activation_fn == &quot;tanh&quot;:
-        dZ = tanh_gradient(dA, activation_cache)
-        dA_prev, dW, db = linear_backword(dZ, linear_cache)
-
-    elif activation_fn == &quot;relu&quot;:
-        dZ = relu_gradient(dA, activation_cache)
-        dA_prev, dW, db = linear_backword(dZ, linear_cache)
-
-    return dA_prev, dW, db
-
-
-def L_model_backward(AL, y, caches, hidden_layers_activation_fn=&quot;relu&quot;):
-    y = y.reshape(AL.shape)
-    L = len(caches)
-    grads = {}
-
-    dAL = np.divide(AL - y, np.multiply(AL, 1 - AL))
-
-    grads[&quot;dA&quot; + str(L - 1)], grads[&quot;dW&quot; + str(L)], grads[
-        &quot;db&quot; + str(L)] = linear_activation_backward(
-            dAL, caches[L - 1], &quot;sigmoid&quot;)
-
-    for l in range(L - 1, 0, -1):
-        current_cache = caches[l - 1]
-        grads[&quot;dA&quot; + str(l - 1)], grads[&quot;dW&quot; + str(l)], grads[
-            &quot;db&quot; + str(l)] = linear_activation_backward(
-                grads[&quot;dA&quot; + str(l)], current_cache,
-                hidden_layers_activation_fn)
-
-    return grads
-
-
-# define the function to update both weight matrices and bias vectors
-def update_parameters(parameters, grads, learning_rate):
-    L = len(parameters) // 2
-
-    for l in range(1, L + 1):
-        parameters[&quot;W&quot; + str(l)] = parameters[
-            &quot;W&quot; + str(l)] - learning_rate * grads[&quot;dW&quot; + str(l)]
-        parameters[&quot;b&quot; + str(l)] = parameters[
-            &quot;b&quot; + str(l)] - learning_rate * grads[&quot;db&quot; + str(l)]
-
-    return parameters
-</code></pre>
-
-<p><a id="Application"></a></p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-II. Application
-</h2>
-
-<p>The dataset that we'll be working on has 209 images. Each image is 64 x 64 pixels on RGB scale. We'll build a neural network to classify if the image has a cat or not. Therefore, $y^i \in {0, 1}.$</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define derivative of activation functions w.r.t z that will be used in back-propagation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sigmoid_gradient</span>(dA, Z):
+</span></span><span style="display:flex;"><span>    A, Z <span style="color:#f92672">=</span> sigmoid(Z)
+</span></span><span style="display:flex;"><span>    dZ <span style="color:#f92672">=</span> dA <span style="color:#f92672">*</span> A <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> A)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dZ
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tanh_gradient</span>(dA, Z):
+</span></span><span style="display:flex;"><span>    A, Z <span style="color:#f92672">=</span> tanh(Z)
+</span></span><span style="display:flex;"><span>    dZ <span style="color:#f92672">=</span> dA <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>square(A))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dZ
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">relu_gradient</span>(dA, Z):
+</span></span><span style="display:flex;"><span>    A, Z <span style="color:#f92672">=</span> relu(Z)
+</span></span><span style="display:flex;"><span>    dZ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>multiply(dA, np<span style="color:#f92672">.</span>int64(A <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dZ
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># define helper functions that will be used in L-model back-prop</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">linear_backword</span>(dZ, cache):
+</span></span><span style="display:flex;"><span>    A_prev, W, b <span style="color:#f92672">=</span> cache
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> A_prev<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dW <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>dot(dZ, A_prev<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span>    db <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> m) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(dZ, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, keepdims<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    dA_prev <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(W<span style="color:#f92672">.</span>T, dZ)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> dA_prev<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> A_prev<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> dW<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> W<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> db<span style="color:#f92672">.</span>shape <span style="color:#f92672">==</span> b<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dA_prev, dW, db
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">linear_activation_backward</span>(dA, cache, activation_fn):
+</span></span><span style="display:flex;"><span>    linear_cache, activation_cache <span style="color:#f92672">=</span> cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sigmoid&#34;</span>:
+</span></span><span style="display:flex;"><span>        dZ <span style="color:#f92672">=</span> sigmoid_gradient(dA, activation_cache)
+</span></span><span style="display:flex;"><span>        dA_prev, dW, db <span style="color:#f92672">=</span> linear_backword(dZ, linear_cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;tanh&#34;</span>:
+</span></span><span style="display:flex;"><span>        dZ <span style="color:#f92672">=</span> tanh_gradient(dA, activation_cache)
+</span></span><span style="display:flex;"><span>        dA_prev, dW, db <span style="color:#f92672">=</span> linear_backword(dZ, linear_cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> activation_fn <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;relu&#34;</span>:
+</span></span><span style="display:flex;"><span>        dZ <span style="color:#f92672">=</span> relu_gradient(dA, activation_cache)
+</span></span><span style="display:flex;"><span>        dA_prev, dW, db <span style="color:#f92672">=</span> linear_backword(dZ, linear_cache)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dA_prev, dW, db
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">L_model_backward</span>(AL, y, caches, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> y<span style="color:#f92672">.</span>reshape(AL<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(caches)
+</span></span><span style="display:flex;"><span>    grads <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dAL <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>divide(AL <span style="color:#f92672">-</span> y, np<span style="color:#f92672">.</span>multiply(AL, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> AL))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)], grads[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(L)], grads[
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(L)] <span style="color:#f92672">=</span> linear_activation_backward(
+</span></span><span style="display:flex;"><span>            dAL, caches[L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34;sigmoid&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(L <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        current_cache <span style="color:#f92672">=</span> caches[l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)], grads[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(l)], grads[
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> linear_activation_backward(
+</span></span><span style="display:flex;"><span>                grads[<span style="color:#e6db74">&#34;dA&#34;</span> <span style="color:#f92672">+</span> str(l)], current_cache,
+</span></span><span style="display:flex;"><span>                hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> grads
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># define the function to update both weight matrices and bias vectors</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update_parameters</span>(parameters, grads, learning_rate):
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> len(parameters) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, L <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> parameters[
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;W&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> grads[<span style="color:#e6db74">&#34;dW&#34;</span> <span style="color:#f92672">+</span> str(l)]
+</span></span><span style="display:flex;"><span>        parameters[<span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">=</span> parameters[
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;b&#34;</span> <span style="color:#f92672">+</span> str(l)] <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> grads[<span style="color:#e6db74">&#34;db&#34;</span> <span style="color:#f92672">+</span> str(l)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span></code></pre></div><p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>The dataset that we&rsquo;ll be working on has 209 images. Each image is 64 x 64 pixels on RGB scale. We&rsquo;ll build a neural network to classify if the image has a cat or not. Therefore, $y^i \in {0, 1}.$</p>
 <ul>
-<li>We'll first load the images.</li>
+<li>We&rsquo;ll first load the images.</li>
 <li>Show sample image for a cat.</li>
-<li>Reshape input matrix so that each column would be one example. Also, since each image is 64 x 64 x 3, we'll end up having 12,288 features for each image. Therefore, the input matrix would be 12,288 x 209.</li>
-<li>Standardize the data so that the gradients don't go out of control. Also, it will help hidden units have similar range of values. For now, we'll divide every pixel by 255 which shouldn't be an issue. However, it's better to standardize the data to have a mean of 0 and a standard deviation of 1.</li>
+<li>Reshape input matrix so that each column would be one example. Also, since each image is 64 x 64 x 3, we&rsquo;ll end up having 12,288 features for each image. Therefore, the input matrix would be 12,288 x 209.</li>
+<li>Standardize the data so that the gradients don&rsquo;t go out of control. Also, it will help hidden units have similar range of values. For now, we&rsquo;ll divide every pixel by 255 which shouldn&rsquo;t be an issue. However, it&rsquo;s better to standardize the data to have a mean of 0 and a standard deviation of 1.</li>
 </ul>
-
-<pre><code class="language-python"># Import training dataset
-train_dataset = h5py.File(&quot;../data/train_catvnoncat.h5&quot;)
-X_train = np.array(train_dataset[&quot;train_set_x&quot;])
-y_train = np.array(train_dataset[&quot;train_set_y&quot;])
-
-test_dataset = h5py.File(&quot;../data/test_catvnoncat.h5&quot;)
-X_test = np.array(test_dataset[&quot;test_set_x&quot;])
-y_test = np.array(test_dataset[&quot;test_set_y&quot;])
-
-# print the shape of input data and label vector
-print(f&quot;&quot;&quot;Original dimensions:\n{20 * '-'}\nTraining: {X_train.shape}, {y_train.shape}
-Test: {X_test.shape}, {y_test.shape}&quot;&quot;&quot;)
-
-# plot cat image
-plt.figure(figsize=(6, 6))
-plt.imshow(X_train[50])
-plt.axis(&quot;off&quot;);
-
-# Transform input data and label vector
-X_train = X_train.reshape(209, -1).T
-y_train = y_train.reshape(-1, 209)
-
-X_test = X_test.reshape(50, -1).T
-y_test = y_test.reshape(-1, 50)
-
-# standarize the data
-X_train = X_train / 255
-X_test = X_test / 255
-
-print(f&quot;&quot;&quot;\nNew dimensions:\n{15 * '-'}\nTraining: {X_train.shape}, {y_train.shape}
-Test: {X_test.shape}, {y_test.shape}&quot;&quot;&quot;)
-</code></pre>
-
-<pre><code>Original dimensions:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import training dataset</span>
+</span></span><span style="display:flex;"><span>train_dataset <span style="color:#f92672">=</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;../data/train_catvnoncat.h5&#34;</span>)
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(train_dataset[<span style="color:#e6db74">&#34;train_set_x&#34;</span>])
+</span></span><span style="display:flex;"><span>y_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(train_dataset[<span style="color:#e6db74">&#34;train_set_y&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>test_dataset <span style="color:#f92672">=</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;../data/test_catvnoncat.h5&#34;</span>)
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(test_dataset[<span style="color:#e6db74">&#34;test_set_x&#34;</span>])
+</span></span><span style="display:flex;"><span>y_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(test_dataset[<span style="color:#e6db74">&#34;test_set_y&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print the shape of input data and label vector</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;Original dimensions:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span><span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Training: </span><span style="color:#e6db74">{</span>X_train<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y_train<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Test: </span><span style="color:#e6db74">{</span>X_test<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y_test<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># plot cat image</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(X_train[<span style="color:#ae81ff">50</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#34;off&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Transform input data and label vector</span>
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> X_train<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">209</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>y_train <span style="color:#f92672">=</span> y_train<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">209</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> X_test<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">50</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>y_test <span style="color:#f92672">=</span> y_test<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># standarize the data</span>
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> X_train <span style="color:#f92672">/</span> <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> X_test <span style="color:#f92672">/</span> <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">New dimensions:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span><span style="color:#ae81ff">15</span> <span style="color:#f92672">*</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Training: </span><span style="color:#e6db74">{</span>X_train<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y_train<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Test: </span><span style="color:#e6db74">{</span>X_test<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y_test<span style="color:#f92672">.</span>shape<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
+</span></span></code></pre></div><pre><code>Original dimensions:
 --------------------
 Training: (209, 64, 64, 3), (209,)
 Test: (50, 64, 64, 3), (50,)
@@ -1031,7 +980,6 @@ New dimensions:
 Training: (12288, 209), (1, 209)
 Test: (12288, 50), (1, 50)
 </code></pre>
-
 
 
 
@@ -1055,76 +1003,69 @@ Test: (12288, 50), (1, 50)
 
 </figure>
 
-
-<p>Now, our dataset is ready to be used and test our neural network implementation. Let's first write <strong>multi-layer model</strong> function to implement gradient-based learning using predefined number of iterations and learning rate.</p>
-
-<pre><code class="language-python"># Define the multi-layer model using all the helper functions we wrote before
-def L_layer_model(
-        X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
-        print_cost=True, hidden_layers_activation_fn=&quot;relu&quot;):
-    np.random.seed(1)
-
-    # initialize parameters
-    parameters = initialize_parameters(layers_dims)
-
-    # intialize cost list
-    cost_list = []
-
-    # iterate over num_iterations
-    for i in range(num_iterations):
-        # iterate over L-layers to get the final output and the cache
-        AL, caches = L_model_forward(
-            X, parameters, hidden_layers_activation_fn)
-
-        # compute cost to plot it
-        cost = compute_cost(AL, y)
-
-        # iterate over L-layers backward to get gradients
-        grads = L_model_backward(AL, y, caches, hidden_layers_activation_fn)
-
-        # update parameters
-        parameters = update_parameters(parameters, grads, learning_rate)
-
-        # append each 100th cost to the cost list
-        if (i + 1) % 100 == 0 and print_cost:
-            print(f&quot;The cost after {i + 1} iterations is: {cost:.4f}&quot;)
-
-        if i % 100 == 0:
-            cost_list.append(cost)
-
-    # plot the cost curve
-    plt.figure(figsize=(10, 6))
-    plt.plot(cost_list)
-    plt.xlabel(&quot;Iterations (per hundreds)&quot;)
-    plt.ylabel(&quot;Loss&quot;)
-    plt.title(f&quot;Loss curve for the learning rate = {learning_rate}&quot;)
-
-    return parameters
-
-
-def accuracy(X, parameters, y, activation_fn=&quot;relu&quot;):
-    probs, caches = L_model_forward(X, parameters, activation_fn)
-    labels = (probs &gt;= 0.5) * 1
-    accuracy = np.mean(labels == y) * 100
-
-    return f&quot;The accuracy rate is: {accuracy:.2f}%.&quot;
-</code></pre>
-
-<p>Next, we'll train two versions of the neural network where each one will use different activation function on hidden layers: One will use rectified linear unit (<strong>ReLU</strong>) and the second one will use hyperbolic tangent function (<strong>tanh</strong>). Finally we'll use the parameters we get from both neural networks to classify training examples and compute the training accuracy rates for each version to see which activation function works best on this problem.</p>
-
-<pre><code class="language-python"># Setting layers dims
-layers_dims = [X_train.shape[0], 5, 5, 1]
-
-# NN with tanh activation fn
-parameters_tanh = L_layer_model(
-    X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
-    hidden_layers_activation_fn=&quot;tanh&quot;)
-
-# Print the accuracy
-accuracy(X_test, parameters_tanh, y_test, activation_fn=&quot;tanh&quot;)
-</code></pre>
-
-<pre><code>The cost after 100 iterations is: 0.6556
+<p>Now, our dataset is ready to be used and test our neural network implementation. Let&rsquo;s first write <strong>multi-layer model</strong> function to implement gradient-based learning using predefined number of iterations and learning rate.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define the multi-layer model using all the helper functions we wrote before</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">L_layer_model</span>(
+</span></span><span style="display:flex;"><span>        X, y, layers_dims, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3000</span>,
+</span></span><span style="display:flex;"><span>        print_cost<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># initialize parameters</span>
+</span></span><span style="display:flex;"><span>    parameters <span style="color:#f92672">=</span> initialize_parameters(layers_dims)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># intialize cost list</span>
+</span></span><span style="display:flex;"><span>    cost_list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># iterate over num_iterations</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(num_iterations):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># iterate over L-layers to get the final output and the cache</span>
+</span></span><span style="display:flex;"><span>        AL, caches <span style="color:#f92672">=</span> L_model_forward(
+</span></span><span style="display:flex;"><span>            X, parameters, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># compute cost to plot it</span>
+</span></span><span style="display:flex;"><span>        cost <span style="color:#f92672">=</span> compute_cost(AL, y)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># iterate over L-layers backward to get gradients</span>
+</span></span><span style="display:flex;"><span>        grads <span style="color:#f92672">=</span> L_model_backward(AL, y, caches, hidden_layers_activation_fn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># update parameters</span>
+</span></span><span style="display:flex;"><span>        parameters <span style="color:#f92672">=</span> update_parameters(parameters, grads, learning_rate)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># append each 100th cost to the cost list</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> print_cost:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;The cost after </span><span style="color:#e6db74">{</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> iterations is: </span><span style="color:#e6db74">{</span>cost<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            cost_list<span style="color:#f92672">.</span>append(cost)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># plot the cost curve</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(cost_list)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Iterations (per hundreds)&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Loss&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Loss curve for the learning rate = </span><span style="color:#e6db74">{</span>learning_rate<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parameters
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">accuracy</span>(X, parameters, y, activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>):
+</span></span><span style="display:flex;"><span>    probs, caches <span style="color:#f92672">=</span> L_model_forward(X, parameters, activation_fn)
+</span></span><span style="display:flex;"><span>    labels <span style="color:#f92672">=</span> (probs <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0.5</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    accuracy <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(labels <span style="color:#f92672">==</span> y) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;The accuracy rate is: </span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%.&#34;</span>
+</span></span></code></pre></div><p>Next, we&rsquo;ll train two versions of the neural network where each one will use different activation function on hidden layers: One will use rectified linear unit (<strong>ReLU</strong>) and the second one will use hyperbolic tangent function (<strong>tanh</strong>). Finally we&rsquo;ll use the parameters we get from both neural networks to classify training examples and compute the training accuracy rates for each version to see which activation function works best on this problem.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Setting layers dims</span>
+</span></span><span style="display:flex;"><span>layers_dims <span style="color:#f92672">=</span> [X_train<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># NN with tanh activation fn</span>
+</span></span><span style="display:flex;"><span>parameters_tanh <span style="color:#f92672">=</span> L_layer_model(
+</span></span><span style="display:flex;"><span>    X_train, y_train, layers_dims, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.03</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3000</span>,
+</span></span><span style="display:flex;"><span>    hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Print the accuracy</span>
+</span></span><span style="display:flex;"><span>accuracy(X_test, parameters_tanh, y_test, activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tanh&#34;</span>)
+</span></span></code></pre></div><pre><code>The cost after 100 iterations is: 0.6556
 The cost after 200 iterations is: 0.6468
 The cost after 300 iterations is: 0.6447
 The cost after 400 iterations is: 0.6441
@@ -1160,7 +1101,6 @@ The cost after 3000 iterations is: 0.1040
 
 
 
-
   
 
 
@@ -1181,17 +1121,14 @@ The cost after 3000 iterations is: 0.1040
 
 </figure>
 
-
-<pre><code class="language-python"># NN with relu activation fn
-parameters_relu = L_layer_model(
-    X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
-    hidden_layers_activation_fn=&quot;relu&quot;)
-
-# Print the accuracy
-accuracy(X_test, parameters_relu, y_test, activation_fn=&quot;relu&quot;)
-</code></pre>
-
-<pre><code>The cost after 100 iterations is: 0.6556
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># NN with relu activation fn</span>
+</span></span><span style="display:flex;"><span>parameters_relu <span style="color:#f92672">=</span> L_layer_model(
+</span></span><span style="display:flex;"><span>    X_train, y_train, layers_dims, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.03</span>, num_iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3000</span>,
+</span></span><span style="display:flex;"><span>    hidden_layers_activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Print the accuracy</span>
+</span></span><span style="display:flex;"><span>accuracy(X_test, parameters_relu, y_test, activation_fn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;relu&#34;</span>)
+</span></span></code></pre></div><pre><code>The cost after 100 iterations is: 0.6556
 The cost after 200 iterations is: 0.6468
 The cost after 300 iterations is: 0.6447
 The cost after 400 iterations is: 0.6441
@@ -1227,7 +1164,6 @@ The cost after 3000 iterations is: 0.3641
 
 
 
-
   
 
 
@@ -1248,45 +1184,39 @@ The cost after 3000 iterations is: 0.3641
 
 </figure>
 
-
 <p>Please note that the accuracy rates above are expected to overestimate the generalization accuracy rates.</p>
-
-<h2 style="font-family: Georgia; font-size:2em;color:purple; font-style:bold">
-Conclusion
-</h2>
-
-<p>The purpose of this post is to code Deep Neural Network step-by-step and explain the important concepts while doing that. We don't really care about the accuracy rate at this moment since there are tons of things we could've done to increase the accuracy which would be the subject of following posts. Below are some takeaways:</p>
-
+<!-- raw HTML omitted -->
+<p>The purpose of this post is to code Deep Neural Network step-by-step and explain the important concepts while doing that. We don&rsquo;t really care about the accuracy rate at this moment since there are tons of things we could&rsquo;ve done to increase the accuracy which would be the subject of following posts. Below are some takeaways:</p>
 <ul>
 <li>Even if neural network can represent any function, it may fail to learn for two reasons:
-
 <ol>
 <li>The optimization algorithm may fail to find the best value for the parameters of the desired (true) function.
 It can stuck in a local optimum.</li>
 <li>The learning algorithm may find different functional form that is different than the intended function due to overfitting.</li>
-</ol></li>
+</ol>
+</li>
 <li>Even if neural network rarely converges and always stuck in a local minimum, it is still able to reduce the cost significantly and come up with very complex models with high test accuracy.</li>
 <li>The neural network we used in this post is standard fully connected network. However, there are two other kinds of networks:
-
 <ul>
-<li>Convolutional NN: Where not all nodes are connected. It's best in class for image recognition.</li>
-<li>Recurrent NN: There is a feedback connections where output of the model is fed back into itself. It's used mainly in sequence modeling.</li>
-</ul></li>
-<li>The fully connected neural network also forgets what happened in previous steps and also doesn't know anything about the output.</li>
+<li>Convolutional NN: Where not all nodes are connected. It&rsquo;s best in class for image recognition.</li>
+<li>Recurrent NN: There is a feedback connections where output of the model is fed back into itself. It&rsquo;s used mainly in sequence modeling.</li>
+</ul>
+</li>
+<li>The fully connected neural network also forgets what happened in previous steps and also doesn&rsquo;t know anything about the output.</li>
 <li>There are number of hyperparameters that we can tune using cross validation to get the best performance of our network:
-
 <ol>
 <li>Learning rate ($\alpha$): Determines how big the step for each update of parameters.
-
 <ul>
 <li>Small $\alpha$ leads to slow convergence and may become computationally very expensive.</li>
 <li>Large $\alpha$ may lead to overshooting where our learning algorithm may never converge.</li>
-</ul></li>
+</ul>
+</li>
 <li>Number of hidden layers (depth): The more hidden layers the better, but comes at a cost computationally.</li>
-<li>Number of units per hidden layer (width): Research proven that huge number of hidden units per layer doesn't add to the improvement of the network.</li>
-<li>Activation function: Which function to use on hidden layers differs among applications and domains. It's a trial and error process to try different functions and see which one works best.</li>
+<li>Number of units per hidden layer (width): Research proven that huge number of hidden units per layer doesn&rsquo;t add to the improvement of the network.</li>
+<li>Activation function: Which function to use on hidden layers differs among applications and domains. It&rsquo;s a trial and error process to try different functions and see which one works best.</li>
 <li>Number of iterations.</li>
-</ol></li>
+</ol>
+</li>
 <li>Standardize data would help activation units have similar range of values and avoid gradients to go out of control.</li>
 </ul>
 
@@ -1530,8 +1460,6 @@ It can stuck in a local optimum.</li>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -1616,7 +1544,7 @@ It can stuck in a local optimum.</li>
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1631,7 +1559,7 @@ It can stuck in a local optimum.</li>
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

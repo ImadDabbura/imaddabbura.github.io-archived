@@ -84,7 +84,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.dd629241ea9333c62c071f4a25f829ff.css">
+  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
 
   
 
@@ -285,6 +285,26 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/til/"><span>Today I Learned</span></a>
         </li>
 
         
@@ -599,7 +619,7 @@
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 743px;">
   <div style="position: relative">
-    <img src="/project/data-modeling-with-postgres/featured_hu0d3b546bb12fa4ffb11becb049cccdfa_123064_720x0_resize_lanczos_2.png" alt="" class="featured-image">
+    <img src="/project/data-modeling-with-postgres/featured_hu0d3b546bb12fa4ffb11becb049cccdfa_123064_720x0_resize_lanczos_3.png" alt="" class="featured-image">
     
   </div>
 </div>
@@ -609,71 +629,61 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      
-
-<h2 id="introduction">Introduction</h2>
-
+      <h2 id="introduction">Introduction</h2>
 <p>The goal of this project is to build a PostgreSQL database utilizing the data on users activity and songs metadata. Building the database helps us do complex analytics regarding users activity as well as song play analysis.</p>
-
 <h2 id="data">Data</h2>
-
-<p>The songs&rsquo; metadata sourse is a subset of the <a href="https://labrosa.ee.columbia.edu/millionsong/" target="_blank">Million Song Dataset</a>. Also, the users&rsquo; activities is a simulated data using <a href="https://github.com/Interana/eventsim" target="_blank">eventsim</a>. The data resides in two main directories:</p>
-
+<p>The songs&rsquo; metadata sourse is a subset of the <a href="https://labrosa.ee.columbia.edu/millionsong/">Million Song Dataset</a>. Also, the users&rsquo; activities is a simulated data using <a href="https://github.com/Interana/eventsim">eventsim</a>. The data resides in two main directories:</p>
 <ul>
 <li>Songs metadata: collection of JSON files that describes the songs such as title, artist name, year, etc.</li>
 <li>Logs data: collection of JSON files where each file covers the users activities over a given day.</li>
 </ul>
-
 <h2 id="methodology">Methodology</h2>
-
 <p>We&rsquo;ll build the database by optimizing the tables around efficient reads for complex queries. To do that, <strong>Star</strong> schema will be used utilizing dimensional modeling as follows:</p>
-
 <ul>
 <li>Fact table: songplays.</li>
 <li>Dimensions tables: songs, artist, users, time.</li>
 </ul>
-
 <p>The three most important advantages of using Star schema are:</p>
-
 <ul>
 <li>Denormalized tables.</li>
 <li>Simplified queries.</li>
 <li>Fast aggregation.</li>
 </ul>
-
 <h2 id="how-to">HOW TO</h2>
-
 <p>The source code is available in three separate <strong>Python</strong> scripts. Below is a brief description of the main files:</p>
-
 <ol>
 <li><code>sql_queries.py</code> has all the queries needed to both create/drop tables for the database as well as a SQL query to get song_id and artist_id from other tables since they are not provided in logs dataset.</li>
 <li><code>create_tables.py</code> creates the database, establish the connection and creates/drops all the tables required using sql_queries module.</li>
 <li><code>etl.py</code> build the pipeline that extracts the data from JSON files, does some transformation (such as adding different time attributes from timestamp) and then insert all the data into the corresponding tables.</li>
 </ol>
-
 <p>Therefore, we first run <code>create_tables.py</code> then <code>etl.py</code> to create the database, create tables, and then insert the data using the ETL pipeline.</p>
-
 <h2 id="examples">Examples</h2>
-
-<pre><code class="language-python">%load_ext sql
-%sql postgresql://student:student@127.0.0.1/sparkifydb
-%%sql
-SELECT COUNT(*) from songplays;
-</code></pre>
-
-<blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>load_ext sql
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>sql postgresql:<span style="color:#f92672">//</span>student:student<span style="color:#f92672">@</span><span style="color:#ae81ff">127.0.0.1</span><span style="color:#f92672">/</span>sparkifydb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%%</span>sql
+</span></span><span style="display:flex;"><span>SELECT COUNT(<span style="color:#f92672">*</span>) <span style="color:#f92672">from</span> songplays;
+</span></span></code></pre></div><blockquote>
 <blockquote>
 <blockquote>
 <p>postgresql://student:***@127.0.0.1/sparkifydb</p>
-
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
 <p>1 rows affected.</p>
-
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
 <p>Out[1]: count 6820</p>
 </blockquote>
 </blockquote>
 </blockquote>
-
-<p>Check out the project on <a href="https://github.com/ImadDabbura/data-modeling-with-postgres" target="_blank">github</a>.</p>
+<p>Check out the project on <a href="https://github.com/ImadDabbura/data-modeling-with-postgres">github</a>.</p>
 
     </div>
 
@@ -902,8 +912,6 @@ SELECT COUNT(*) from songplays;
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/python.min.js"></script>
         
       
@@ -988,7 +996,7 @@ SELECT COUNT(*) from songplays;
     
     
     
-    <script src="/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
 
     
 
@@ -1003,7 +1011,7 @@ SELECT COUNT(*) from songplays;
   
 
   <p class="powered-by">
-    &copy; Imad Dabbura 2018 &middot; 
+    © Imad Dabbura 2018 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
