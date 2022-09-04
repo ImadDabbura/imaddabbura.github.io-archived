@@ -29,7 +29,7 @@
     
   
   <meta name="description" content="Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&rsquo;s the task of minimizing the cost/loss function J(w) parameterized by the model&rsquo;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
- Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum.">
+Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://imaddabbura.github.io/post/gradient-descent-algorithm/">
@@ -85,7 +85,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.e8b81181bd18f58d8990b40dc8a5e4b8.css">
+  <link rel="stylesheet" href="/css/academic.min.2a1836334f0eacc81815993d549766bf.css">
 
   
 
@@ -131,7 +131,7 @@
   <meta property="og:url" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/">
   <meta property="og:title" content="Gradient Descent Algorithm and Its Variants | Imad Dabbura">
   <meta property="og:description" content="Optimization refers to the task of minimizing/maximizing an objective function f(x) parameterized by x. In machine/deep learning terminology, it&rsquo;s the task of minimizing the cost/loss function J(w) parameterized by the model&rsquo;s parameters $w \in \mathbb{R}^d$. Optimization algorithms (in case of minimization) have one of the following goals:
- Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum."><meta property="og:image" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/featured.PNG">
+Find the global minimum of the objective function. This is feasible if the objective function is convex, i.e. any local minimum is a global minimum."><meta property="og:image" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/featured.PNG">
   <meta property="twitter:image" content="https://imaddabbura.github.io/post/gradient-descent-algorithm/featured.PNG"><meta property="og:locale" content="en-us">
   
     
@@ -617,32 +617,32 @@
 </ul>
 <p>Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn&rsquo;t converge so that we would have a very fast learning algorithm that converges (see figure 1).
 
-
-
-  
-
-
-
-
-<figure>
-
-  <a data-fancybox="" href="/img/gradient-descent-algorithms/learning_rate.PNG" >
-
-<img src="/img/gradient-descent-algorithms/learning_rate.PNG" >
-</a>
-
-
-<figcaption data-pre="Figure " data-post=":" class="numbered">
-  <h4>Gradient descent with different learning rates.</h4>
-  <p>
-    
-    <a href="http://cs231n.github.io/neural-networks-3/"> 
-    Source
-    </a> 
-  </p> 
-</figcaption>
-
-</figure>
+       
+       
+         
+       
+       
+       
+       
+       <figure>
+       
+         <a data-fancybox="" href="/img/gradient-descent-algorithms/learning_rate.PNG" >
+       
+       <img src="/img/gradient-descent-algorithms/learning_rate.PNG" >
+       </a>
+       
+       
+       <figcaption data-pre="Figure " data-post=":" class="numbered">
+         <h4>Gradient descent with different learning rates.</h4>
+         <p>
+           
+           <a href="http://cs231n.github.io/neural-networks-3/"> 
+           Source
+           </a> 
+         </p> 
+       </figcaption>
+       
+       </figure>
 </p>
 <ul>
 <li>The most commonly used rates are : <em>0.001, 0.003, 0.01, 0.03, 0.1, 0.3</em>.</li>
@@ -651,27 +651,27 @@
 <li>
 <p>Make sure to scale the data if it&rsquo;s on very different scales. If we don&rsquo;t scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 2).
 
-
-
-  
-
-
-
-
-<figure>
-
-  <a data-fancybox="" href="/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG" >
-
-<img src="/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG" >
-</a>
-
-
-<figcaption data-pre="Figure " data-post=":" class="numbered">
-  <h4>Gradient descent: normalized versus unnormalized level curves.</h4>
-  
-</figcaption>
-
-</figure>
+    
+    
+      
+    
+    
+    
+    
+    <figure>
+    
+      <a data-fancybox="" href="/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG" >
+    
+    <img src="/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG" >
+    </a>
+    
+    
+    <figcaption data-pre="Figure " data-post=":" class="numbered">
+      <h4>Gradient descent: normalized versus unnormalized level curves.</h4>
+      
+    </figcaption>
+    
+    </figure>
 </p>
 <p>Scale the data to have μ = 0 and σ = 1. Below is the formula for scaling each example:
 $$\frac {x_i - \mu}{\sigma}$$</p>
@@ -688,27 +688,27 @@ $$\frac {x_i - \mu}{\sigma}$$</p>
 <ul>
 <li>For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of <em>w &gt; 0</em>, this means that we are to the right of optimal <em>w</em>*. Therefore, the update will be negative, and will start getting close to the optimal values of <em>w</em>*. However, if it’s negative, the update will be positive and will increase the current values of <em>w</em> to converge to the optimal values of <em>w</em>*(see figure 3):
 
-
-
-  
-
-
-
-
-<figure>
-
-  <a data-fancybox="" href="/img/gradient-descent-algorithms/gradients.PNG" >
-
-<img src="/img/gradient-descent-algorithms/gradients.PNG" >
-</a>
-
-
-<figcaption data-pre="Figure " data-post=":" class="numbered">
-  <h4>Gradient descent. An illustration of how gradient descent algorithm uses the first derivative of the loss function to follow downhill it&rsquo;s minimum.</h4>
-  
-</figcaption>
-
-</figure>
+    
+    
+      
+    
+    
+    
+    
+    <figure>
+    
+      <a data-fancybox="" href="/img/gradient-descent-algorithms/gradients.PNG" >
+    
+    <img src="/img/gradient-descent-algorithms/gradients.PNG" >
+    </a>
+    
+    
+    <figcaption data-pre="Figure " data-post=":" class="numbered">
+      <h4>Gradient descent. An illustration of how gradient descent algorithm uses the first derivative of the loss function to follow downhill it&rsquo;s minimum.</h4>
+      
+    </figcaption>
+    
+    </figure>
 
 <ul>
 <li>Continue the process until the cost function converges. That is, until the error curve becomes flat and doesn&rsquo;t change.</li>
@@ -759,27 +759,27 @@ $$w = w - \alpha \nabla_w J(x^{{i:i + b}}, y^{{i: i + b}}; w, b)$$</p>
 <li>It won&rsquo;t converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.</li>
 <li>Due to the noise, the learning steps have more oscillations (see figure 4) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
 
-
-
-  
-
-
-
-
-<figure>
-
-  <a data-fancybox="" href="/img/gradient-descent-algorithms/batch-vs-minibatch.PNG" >
-
-<img src="/img/gradient-descent-algorithms/batch-vs-minibatch.PNG" >
-</a>
-
-
-<figcaption data-pre="Figure " data-post=":" class="numbered">
-  <h4>Gradient descent: batch versus mini-batch loss function.</h4>
-  
-</figcaption>
-
-</figure>
+    
+    
+      
+    
+    
+    
+    
+    <figure>
+    
+      <a data-fancybox="" href="/img/gradient-descent-algorithms/batch-vs-minibatch.PNG" >
+    
+    <img src="/img/gradient-descent-algorithms/batch-vs-minibatch.PNG" >
+    </a>
+    
+    
+    <figcaption data-pre="Figure " data-post=":" class="numbered">
+      <h4>Gradient descent: batch versus mini-batch loss function.</h4>
+      
+    </figcaption>
+    
+    </figure>
 
 With large training datasets, we don&rsquo;t usually need more than 2-10 passes over all training examples (epochs). Note: with batch size <em>b = m</em>, we get the Batch Gradient Descent.</li>
 </ul>
@@ -1254,7 +1254,7 @@ As the figure above shows, SGD direction is very noisy compared to mini-batch.</
     
     
     
-    <script src="/js/academic.min.9224c1df7774818c46d3c5196c37127b.js"></script>
+    <script src="/js/academic.min.842f599ee533ad7f6dbd4e00e95d3d79.js"></script>
 
     
 

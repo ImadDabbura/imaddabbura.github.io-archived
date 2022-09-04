@@ -2543,32 +2543,32 @@ Smoothed loss: 13.3380
 &lt;/ul&gt;
 &lt;p&gt;Therefore, plot the cost function against different values of α and pick the value of α that is right before the first value that didn&amp;rsquo;t converge so that we would have a very fast learning algorithm that converges (see figure 1).
 
-
-
-  
-
-
-
-
-&lt;figure&gt;
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/learning_rate.PNG&#34; &gt;
-
-&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/learning_rate.PNG&#34; &gt;
-&lt;/a&gt;
-
-
-&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
-  &lt;h4&gt;Gradient descent with different learning rates.&lt;/h4&gt;
-  &lt;p&gt;
-    
-    &lt;a href=&#34;http://cs231n.github.io/neural-networks-3/&#34;&gt; 
-    Source
-    &lt;/a&gt; 
-  &lt;/p&gt; 
-&lt;/figcaption&gt;
-
-&lt;/figure&gt;
+       
+       
+         
+       
+       
+       
+       
+       &lt;figure&gt;
+       
+         &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/learning_rate.PNG&#34; &gt;
+       
+       &lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/learning_rate.PNG&#34; &gt;
+       &lt;/a&gt;
+       
+       
+       &lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+         &lt;h4&gt;Gradient descent with different learning rates.&lt;/h4&gt;
+         &lt;p&gt;
+           
+           &lt;a href=&#34;http://cs231n.github.io/neural-networks-3/&#34;&gt; 
+           Source
+           &lt;/a&gt; 
+         &lt;/p&gt; 
+       &lt;/figcaption&gt;
+       
+       &lt;/figure&gt;
 &lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The most commonly used rates are : &lt;em&gt;0.001, 0.003, 0.01, 0.03, 0.1, 0.3&lt;/em&gt;.&lt;/li&gt;
@@ -2577,27 +2577,27 @@ Smoothed loss: 13.3380
 &lt;li&gt;
 &lt;p&gt;Make sure to scale the data if it&amp;rsquo;s on very different scales. If we don&amp;rsquo;t scale the data, the level curves (contours) would be narrower and taller which means it would take longer time to converge (see figure 2).
 
-
-
-  
-
-
-
-
-&lt;figure&gt;
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG&#34; &gt;
-
-&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG&#34; &gt;
-&lt;/a&gt;
-
-
-&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
-  &lt;h4&gt;Gradient descent: normalized versus unnormalized level curves.&lt;/h4&gt;
-  
-&lt;/figcaption&gt;
-
-&lt;/figure&gt;
+    
+    
+      
+    
+    
+    
+    
+    &lt;figure&gt;
+    
+      &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG&#34; &gt;
+    
+    &lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/normalized-vs-unnormalized.PNG&#34; &gt;
+    &lt;/a&gt;
+    
+    
+    &lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+      &lt;h4&gt;Gradient descent: normalized versus unnormalized level curves.&lt;/h4&gt;
+      
+    &lt;/figcaption&gt;
+    
+    &lt;/figure&gt;
 &lt;/p&gt;
 &lt;p&gt;Scale the data to have μ = 0 and σ = 1. Below is the formula for scaling each example:
 $$\frac {x_i - \mu}{\sigma}$$&lt;/p&gt;
@@ -2614,27 +2614,27 @@ $$\frac {x_i - \mu}{\sigma}$$&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;For the sake of illustration, let’s assume we don’t have bias. If the slope of the current value of &lt;em&gt;w &amp;gt; 0&lt;/em&gt;, this means that we are to the right of optimal &lt;em&gt;w&lt;/em&gt;*. Therefore, the update will be negative, and will start getting close to the optimal values of &lt;em&gt;w&lt;/em&gt;*. However, if it’s negative, the update will be positive and will increase the current values of &lt;em&gt;w&lt;/em&gt; to converge to the optimal values of &lt;em&gt;w&lt;/em&gt;*(see figure 3):
 
-
-
-  
-
-
-
-
-&lt;figure&gt;
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradients.PNG&#34; &gt;
-
-&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradients.PNG&#34; &gt;
-&lt;/a&gt;
-
-
-&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
-  &lt;h4&gt;Gradient descent. An illustration of how gradient descent algorithm uses the first derivative of the loss function to follow downhill it&amp;rsquo;s minimum.&lt;/h4&gt;
-  
-&lt;/figcaption&gt;
-
-&lt;/figure&gt;
+    
+    
+      
+    
+    
+    
+    
+    &lt;figure&gt;
+    
+      &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradients.PNG&#34; &gt;
+    
+    &lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/gradients.PNG&#34; &gt;
+    &lt;/a&gt;
+    
+    
+    &lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+      &lt;h4&gt;Gradient descent. An illustration of how gradient descent algorithm uses the first derivative of the loss function to follow downhill it&amp;rsquo;s minimum.&lt;/h4&gt;
+      
+    &lt;/figcaption&gt;
+    
+    &lt;/figure&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Continue the process until the cost function converges. That is, until the error curve becomes flat and doesn&amp;rsquo;t change.&lt;/li&gt;
@@ -2685,27 +2685,27 @@ $$w = w - \alpha \nabla_w J(x^{{i:i + b}}, y^{{i: i + b}}; w, b)$$&lt;/p&gt;
 &lt;li&gt;It won&amp;rsquo;t converge. On each iteration, the learning step may go back and forth due to the noise. Therefore, it wanders around the minimum region but never converges.&lt;/li&gt;
 &lt;li&gt;Due to the noise, the learning steps have more oscillations (see figure 4) and requires adding learning-decay to decrease the learning rate as we become closer to the minimum.
 
-
-
-  
-
-
-
-
-&lt;figure&gt;
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch.PNG&#34; &gt;
-
-&lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch.PNG&#34; &gt;
-&lt;/a&gt;
-
-
-&lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
-  &lt;h4&gt;Gradient descent: batch versus mini-batch loss function.&lt;/h4&gt;
-  
-&lt;/figcaption&gt;
-
-&lt;/figure&gt;
+    
+    
+      
+    
+    
+    
+    
+    &lt;figure&gt;
+    
+      &lt;a data-fancybox=&#34;&#34; href=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch.PNG&#34; &gt;
+    
+    &lt;img src=&#34;https://imaddabbura.github.io/img/gradient-descent-algorithms/batch-vs-minibatch.PNG&#34; &gt;
+    &lt;/a&gt;
+    
+    
+    &lt;figcaption data-pre=&#34;Figure &#34; data-post=&#34;:&#34; class=&#34;numbered&#34;&gt;
+      &lt;h4&gt;Gradient descent: batch versus mini-batch loss function.&lt;/h4&gt;
+      
+    &lt;/figcaption&gt;
+    
+    &lt;/figure&gt;
 
 With large training datasets, we don&amp;rsquo;t usually need more than 2-10 passes over all training examples (epochs). Note: with batch size &lt;em&gt;b = m&lt;/em&gt;, we get the Batch Gradient Descent.&lt;/li&gt;
 &lt;/ul&gt;
