@@ -49,7 +49,10 @@
       <link>https://imaddabbura.github.io/til/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://imaddabbura.github.io/til/</guid>
-      <description>&lt;p&gt;Placeholder for TIL summary and link on Github.&lt;/p&gt;
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Today I learned&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In an effort to learn in public, &lt;a href=&#34;https://github.com/ImadDabbura/til&#34;&gt;this repo&lt;/a&gt; is a collection things that I learn day-to-day mainly in technology and languages.&lt;/p&gt;
 </description>
     </item>
     
